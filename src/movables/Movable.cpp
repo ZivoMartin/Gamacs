@@ -5,10 +5,10 @@
 #define BASE_HEIGHT 60
 #define BASE_SPEED 10;
 
-Movable::Movable(Env* env, const char* img_path, SDL_FPoint pos) {
+Movable::Movable(Env* env, const char* img_path, SDL_Point pos) {
 	this->env = env;
 	this->text = (SDL_Texture*)  cp(IMG_LoadTexture(env->get_ren(), img_path));
-	this->pos = {(int) (env->win_width()*pos.x), (int) (env->win_height()*pos.y)};
+	this->pos = {TILE_SIZE*pos.x, TILE_SIZE*pos.y};
 	this->speed = BASE_SPEED;
 }
 

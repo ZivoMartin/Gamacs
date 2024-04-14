@@ -1,7 +1,6 @@
 #ifndef SAFE_GOLEM
 #define SAFE_GOLEM
 
-#include "../include.hpp"
 #include "Movable.hpp"
 
 class Env;
@@ -9,9 +8,10 @@ class Env;
 class Golem : public Movable {
 
 public:
-	Golem(Env* env, SDL_FPoint pos);
+	Golem(Env* env, SDL_Point pos);
 	~Golem();
 	void action();
+	void draw() override;
 };
 
 #endif

@@ -1,11 +1,11 @@
 #ifndef ENV_SAFE
 #define ENV_SAFE
 
-#include "include.hpp"
-#include "movables/Golem.hpp"
-#include "movables/Player.hpp"
-#include "RegularAction.hpp"
 #include "view/Map.hpp"
+#include "movables/Player.hpp"
+#include "movables/Golem.hpp"
+#include "RegularAction.hpp"
+
 #include <vector>
 #define BACKGROUND_COLOR 100, 80, 160, 255
 
@@ -36,6 +36,9 @@ public:
 	void test_regular_actions();
 	int get_now();
 	void place_golem();
+	SDL_Point convert_coord_to_pixels(SDL_Point c);
+	SDL_Point game_dim();
+	int compute_ts();
 	
 private:
 	bool running;

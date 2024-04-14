@@ -8,15 +8,16 @@ class Env;
 class Movable {
 
 public:
-	Movable(Env* env, const char* img_path, SDL_FPoint pos);
+	Movable(Env* env, const char* img_path, SDL_Point pos);
 	~Movable();
 	Env* get_env();
-	void draw();
+	virtual void draw();
 	SDL_Texture* get_text();
 	SDL_Renderer* get_ren();
 	SDL_Point* get_pos();
-	void move(int dx, int dy);
+	virtual void move(int dx, int dy);
 	int get_speed();
+	void recompute_position();
 
 private:
 	Env* env;

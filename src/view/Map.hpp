@@ -1,15 +1,14 @@
 #ifndef MAP_SAFE
 #define MAP_SAVE
+
 #include "../include.hpp"
-
-#define MAP_WIDTH 30
-#define MAP_HEIGHT 30
-
 
 class Env;
 
 enum GroundType {
 	Rock,
+	LightGrass,
+	DarkGrass,
 	NbGround
 };
 

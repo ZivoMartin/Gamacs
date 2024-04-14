@@ -19,6 +19,7 @@ Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	init_regular_actions();
+	place_golem();
 	running = false;
 	map = new Map(this);
 	this->player = new Player(this);
@@ -42,8 +43,11 @@ int Env::get_now() {
 
 void Env::init_regular_actions() {}
 
+
+#define NB_GOLEM 2
 void Env::place_golem() {
-	
+	SDL_Point positions[NB_GOLEM] = {{30, 50}, {45, 50}};
+	for (auto &p : positions) golems.push_back(new Golem(this, p));				
 }
 
 void Env::test_regular_actions() {
@@ -62,8 +66,27 @@ bool Env::is_running() {
 	return this->running;
 }
 
-void Env::spawn_golem() {
-	golems.push_back(new Golem(this, {0.0, 0.5}));
+void Env::spawn_golem() {}
+
+SDL_Point Env::game_dim() {
+	SDL_Point res;
+	SDL_GetWindowSize(get_win(), &res.x, &res.y);
+	return res;
+}
+
+int Env::compute_ts() {
+	int width = win_width(), height = win_height();
+	return std::max(width/VISION_RANGE, height/VISION_RANGE);
+}
+
+SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
+	Player* player = get_player();
+	int tile_size = compute_ts();
+	int x = player->get_pos()->x;   // Local coordonate of the player
+	int y = player->get_pos()->y;
+	SDL_Point res = {VISION_RANGE*TILE_SIZE + (p.x-x), VISION_RANGE*TILE_SIZE + (p.y-y)};
+	res = {(res.x*tile_size)/TILE_SIZE, (res.y*tile_size)/TILE_SIZE};
+	return res;
 }
 
 #define DELAY 15
@@ -73,7 +96,6 @@ void Env::game_loop() {
     while (is_running()) {
         handdle_events();
 		handdle_keypress();
-		move_golems();
 		test_regular_actions();
 		render();
 		SDL_Delay(DELAY);
@@ -88,6 +110,7 @@ void Env::move_golems() {
 
 void Env::render() {
 	map->draw();
+	move_golems();
 	get_player()->draw();
 	SDL_RenderPresent(get_ren());
 	SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
