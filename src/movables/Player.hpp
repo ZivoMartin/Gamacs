@@ -1,19 +1,17 @@
 #ifndef SAFE_PLAYER
 #define SAFE_PLAYER
 
+#include "../include.hpp"
+#include "Movable.hpp"
+
 class Env;
 
-class Player {
+class Player : public Movable {
 
 public:
 	Player(Env* env);
 	~Player();
-	Env* get_env();
-	void draw();
-	
-private:
-	Env* env;
-	
+
 };
 
 #endif

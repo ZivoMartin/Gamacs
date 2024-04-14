@@ -1,8 +1,22 @@
 cmake_minimum_required(VERSION 3.7)
-project(GamMacs)
+project(gamacs)
+
 
 find_package(SDL2 REQUIRED)
-include_directories(gamacs ${SDL2_INCLUDE_DIRS})
 
-add_executable(gamacs src/main.cpp src/Env.cpp src/Player.cpp)
-target_link_libraries(gamacs ${SDL2_LIBRARIES})
+
+set(SOURCES
+    src/main.cpp
+    src/Env.cpp
+    src/movables/Player.cpp
+    src/movables/Movable.cpp
+    src/movables/Golem.cpp
+)
+
+# Add an executable with the above sources
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_link_libraries(gamacs ${SDL2_LIBRARIES} SDL2_image)
+
+# Set the directories that should be included in the build command for this target
+include_directories(${SDL2_INCLUDE_DIRS})
