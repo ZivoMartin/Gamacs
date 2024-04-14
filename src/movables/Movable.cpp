@@ -5,10 +5,10 @@
 #define BASE_HEIGHT 60
 #define BASE_SPEED 10;
 
-Movable::Movable(Env* env, const char* img_path) {
+Movable::Movable(Env* env, const char* img_path, SDL_FPoint pos) {
 	this->env = env;
 	this->text = (SDL_Texture*)  cp(IMG_LoadTexture(env->get_ren(), img_path));
-	this->pos = {100, 100};
+	this->pos = {(int) (env->win_width()*pos.x), (int) (env->win_height()*pos.y)};
 	this->speed = BASE_SPEED;
 }
 
@@ -29,7 +29,6 @@ void Movable::move(int dx, int dy) {
 void Movable::draw() {
   SDL_Point* pos = get_pos();
   SDL_Rect r = (SDL_Rect){pos->x, pos->y, BASE_WIDTH, BASE_HEIGHT};
-  SDL_RenderFillRect(get_ren(), &r);
   cc(SDL_RenderCopy(get_ren(), get_text(), NULL, &r));
 }
 

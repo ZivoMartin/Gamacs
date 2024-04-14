@@ -9,9 +9,9 @@ class Env;
 class Golem : public Movable {
 
 public:
-	Golem(Env* env);
+	Golem(Env* env, SDL_FPoint pos);
 	~Golem();
-
+	void action();
 };
 
 #endif

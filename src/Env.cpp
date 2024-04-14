@@ -18,7 +18,9 @@ void cc(int c) {
 Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
+	init_regular_actions();
 	running = false;
+	map = new Map(this);
 	this->player = new Player(this);
 }
 
@@ -26,7 +28,26 @@ Env::~Env() {
 	SDL_DestroyRenderer(get_ren());
 	SDL_DestroyWindow(get_win());
     SDL_Quit();
-	delete get_player();
+	for (auto &golem : golems) delete golem;
+	for (auto &act : regular_actions) delete act;
+	delete player;
+	delete map;
+}
+
+int Env::get_now() {
+	return now;
+}
+
+#define GOLEM_SPAWN_CD 200
+
+void Env::init_regular_actions() {}
+
+void Env::place_golem() {
+	
+}
+
+void Env::test_regular_actions() {
+	for (auto &act : regular_actions) act->try_do();
 }
 
 SDL_Window* Env::get_win() {
@@ -41,6 +62,9 @@ bool Env::is_running() {
 	return this->running;
 }
 
+void Env::spawn_golem() {
+	golems.push_back(new Golem(this, {0.0, 0.5}));
+}
 
 #define DELAY 15
 
@@ -49,17 +73,25 @@ void Env::game_loop() {
     while (is_running()) {
         handdle_events();
 		handdle_keypress();
+		move_golems();
+		test_regular_actions();
 		render();
 		SDL_Delay(DELAY);
+		now += 1;
 	}
 	delete this;
 }
 
+void Env::move_golems() {
+	for (auto &golem : golems) golem->action();
+}
+
 void Env::render() {
-	SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
-	SDL_RenderClear(get_ren());
+	map->draw();
 	get_player()->draw();
 	SDL_RenderPresent(get_ren());
+	SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
+	SDL_RenderClear(get_ren());
 }
 
 void Env::handdle_events() {
@@ -99,7 +131,17 @@ void Env::handdle_keypress() {
 	get_player()->move(dx, dy);
 }
 
+int Env::win_width() {
+	int w, h;
+	SDL_GetWindowSize(get_win(), &w, &h);
+	return w;
+}
 
+int Env::win_height() {
+	int w, h;
+	SDL_GetWindowSize(get_win(), &w, &h);
+	return h;
+}
 
 Player* Env::get_player() {
 	return this->player;

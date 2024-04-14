@@ -11,6 +11,8 @@ set(SOURCES
     src/movables/Player.cpp
     src/movables/Movable.cpp
     src/movables/Golem.cpp
+    src/RegularAction.cpp
+    src/view/Map.cpp
 )
 
 # Add an executable with the above sources

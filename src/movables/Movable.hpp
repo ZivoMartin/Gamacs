@@ -8,7 +8,7 @@ class Env;
 class Movable {
 
 public:
-	Movable(Env* env, const char* img_path);
+	Movable(Env* env, const char* img_path, SDL_FPoint pos);
 	~Movable();
 	Env* get_env();
 	void draw();
