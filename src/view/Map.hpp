@@ -9,6 +9,8 @@ enum GroundType {
 	Rock,
 	LightGrass,
 	DarkGrass,
+	LightGrassNorth,
+	LightGrassSouth,
 	NbGround
 };
 
@@ -19,9 +21,12 @@ public:
 	void draw();
 		
 private:
+	void save_texture(const char* path, int index);
+	
 	Env* env;
 	SDL_Texture* ground_textures[NbGround];
 	GroundType map[MAP_WIDTH][MAP_HEIGHT];
+	void load_game();
 };
 
 

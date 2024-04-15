@@ -1,25 +1,33 @@
 #include <stdlib.h>
 
+using namespace std;
+
 #include "../Env.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
 #define ROCK_IMG_PATH "../res/rock_ground.png"
 #define LIGHT_GRASS_IMG_PATH "../res/light_grass.png"
 #define DARK_GRASS_IMG_PATH "../res/dark_grass.png"
+#define LIGHT_GRASS_S_IMG_PATH "../res/light_grassSouth.png"
+#define LIGHT_GRASS_N_IMG_PATH "../res/light_grassNorth.png"
+#define MAP_FILE_PATH "../res/map.txt"
 
 Map::Map(Env* env) {
 	this->env = env;
-	for (int i=0; i<MAP_WIDTH; i++)
-		for(int j=0; j<MAP_HEIGHT; j++) {
-			if (j%3 == 1 && i%3 == 1) map[i][j] = DarkGrass;
-			else map[i][j] = LightGrass;
-		}
-			
-	ground_textures[Rock] = (SDL_Texture*) cp(IMG_LoadTexture(env->get_ren(), ROCK_IMG_PATH));
-	ground_textures[LightGrass] = (SDL_Texture*) cp(IMG_LoadTexture(env->get_ren(), LIGHT_GRASS_IMG_PATH));
-	ground_textures[DarkGrass] = (SDL_Texture*) cp(IMG_LoadTexture(env->get_ren(), DARK_GRASS_IMG_PATH));
-	
+	load_game();
+	save_texture(ROCK_IMG_PATH, Rock);
+	save_texture(LIGHT_GRASS_IMG_PATH, LightGrass);
+	save_texture(LIGHT_GRASS_S_IMG_PATH, LightGrassSouth);
+	save_texture(LIGHT_GRASS_N_IMG_PATH, LightGrassNorth);
 }
+
 Map::~Map() {
 	for (auto &text: ground_textures) SDL_DestroyTexture(text);
+}
+
+void Map::save_texture(const char* path, int index) {
+	ground_textures[index] =  (SDL_Texture*) cp(IMG_LoadTexture(env->get_ren(), path));
 }
 
 void Map::draw() {
@@ -43,3 +51,22 @@ void Map::draw() {
 	}
  }
 
+void Map::load_game() {
+	int i = 0, j = 0;
+	ifstream f(MAP_FILE_PATH);
+    char c;
+    while(f.good()) {
+		f.get(c);
+		if (c == 10) {
+			i += 1;
+			j = 0;
+		} else {
+			if (c == 'L') map[j][i] = LightGrass;
+			else if (c == 'R') map[j][i] = Rock;
+			else if (c == 'S') map[j][i] = LightGrassSouth;
+			else if (c == 'N') map[j][i] = LightGrassNorth;
+			j += 1;
+		} 
+    }
+    f.close();
+}

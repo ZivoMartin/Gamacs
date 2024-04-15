@@ -46,7 +46,7 @@ void Env::init_regular_actions() {}
 
 #define NB_GOLEM 2
 void Env::place_golem() {
-	SDL_Point positions[NB_GOLEM] = {{30, 50}, {45, 50}};
+	SDL_Point positions[NB_GOLEM] = {{17, 20}, {15, 15}};
 	for (auto &p : positions) golems.push_back(new Golem(this, p));				
 }
 
