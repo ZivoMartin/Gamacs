@@ -22,4 +22,7 @@ void Player::draw() {
 	Movable::draw(x/2 - get_width()/2, y/2 - get_height()/2);
 }
 
+void Player::interact() {
+	
+}
 

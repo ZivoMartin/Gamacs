@@ -12,6 +12,7 @@ public:
 	~Player();
 	void draw() override;
 	void action() override;
+	void interact();
 };
 
 #endif

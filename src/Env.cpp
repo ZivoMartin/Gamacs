@@ -166,6 +166,7 @@ void Env::handdle_keypress_game() {
 	if (is_active(SDLK_a)) player->attack(0);
 	else if (is_active(SDLK_z)) player->attack(1);
 	else if (is_active(SDLK_e)) player->attack(2);
+	else if (is_active(SDLK_f)) player->interact();
 	get_player()->move(dx, dy);
 }
 
@@ -189,8 +190,8 @@ void Env::sort_sprites() {
 	for (int i=1; i<movables.size(); i++) {
 		int j = i;
 		while (j >= 1 &&
-			   (movables[j-1]->get_pos()->y - movables[j-1]->get_height()) <
-			   (movables[j]->get_pos()->y   - movables[j]->get_height())) {
+			   (movables[j-1]->get_pos()->y + movables[j-1]->get_height()) >
+			   (movables[j]->get_pos()->y   + movables[j]->get_height())) {
 			Movable* tmp = movables[j];
 			movables[j] = movables[j-1];
 			movables[j-1] = tmp;
