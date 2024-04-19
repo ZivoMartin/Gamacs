@@ -1,19 +1,14 @@
 #include "Env.hpp"
 
-void* cp(void* p) {
-	if (!cp) {
-		fprintf(stderr, "SDL ERROR: %s\n", SDL_GetError());
-		exit(1);
-	}
-	return p;
+enum SceneIndex {
+	Menu,
+	Game
+};
+
+void go_game(Button* b) {
+	lablib_change_scene(button_lablib(b), Game);
 }
 
-void cc(int c) {
-	if (c < 0) {
-		fprintf(stderr, "SDL ERROR: %s\n", SDL_GetError());
-		exit(1);
-	}
-}
 
 Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
@@ -21,18 +16,30 @@ Env::Env() {
 	init_regular_actions();
 	place_monsters();
 	running = false;
+	this->init_lablib();
 	map = new Map(this);
 	this->player = new Player(this);
+	movables.push_back(player);
 }
 
 Env::~Env() {
 	SDL_DestroyRenderer(get_ren());
 	SDL_DestroyWindow(get_win());
     SDL_Quit();
-	for (auto &monster : monsters) delete monster;
+	for (auto &movable : movables) delete movable;
 	for (auto &act : regular_actions) delete act;
-	delete player;
 	delete map;
+	lablib_destroy(lablib);
+}
+
+void Env::init_lablib() {
+	lablib = lablib_init(get_win(), get_ren(), 2);
+	Scene* menu = create_scene(lablib, 1);
+	scene_add_button(menu, 0.2, 0.2, 0.2, 0.2, "Start", false, go_game);
+	render_function.insert(std::pair(menu, &Env::render_menu));
+	Scene* game = create_scene(lablib, 1);
+	scene_add_button(game, 0.4, 0.4, 0.2, 0.2, "OK", false, NULL);
+	render_function.insert(std::pair(game, &Env::render_game));
 }
 
 int Env::get_now() {
@@ -44,7 +51,7 @@ void Env::init_regular_actions() {}
 #define NB_ORC 2
 void Env::place_monsters() {
 	SDL_Point orc_positions[NB_ORC] = {{17, 20}, {15, 15}};
-	for (auto &p : orc_positions) monsters.push_back(new Orc(this, p));				
+	for (auto &p : orc_positions) movables.push_back(new Orc(this, p));				
 }
 
 void Env::test_regular_actions() {
@@ -90,32 +97,37 @@ SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
 void Env::game_loop() {
     this->running =  true;
     while (is_running()) {
+		sort_sprites();
         handdle_events();
-		handdle_keypress();
-		test_regular_actions();
-		render();
+		lablib_render(lablib);
+		(this->*render_function[lablib_get_current_scene(lablib)])();
+		SDL_RenderPresent(get_ren());
+		SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
+	   	SDL_RenderClear(get_ren());
 		SDL_Delay(DELAY);
 		now += 1;
 	}
 	delete this;
 }
 
-void Env::move_monsters() {
-	for (auto &monster : monsters) monster->action();
+void Env::active_movables() {
+	for (auto &movable : movables) movable->action();
 }
 
-void Env::render() {
+void Env::render_game() {
+	handdle_keypress_game();
 	map->draw();
-	move_monsters();
-	get_player()->action();
-	SDL_RenderPresent(get_ren());
-	SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
-	SDL_RenderClear(get_ren());
+	active_movables();
+}
+
+
+void Env::render_menu() {
+	// Todo: rien pour l'instant
 }
 
 void Env::handdle_events() {
 	SDL_Event events;
-	while (SDL_PollEvent(&events)) {
+	while (Lablib_PollEvent(lablib, &events)) {
     	switch (events.type) {
 			case SDL_QUIT:
 				this->running = false;break;
@@ -128,13 +140,11 @@ void Env::handdle_events() {
 }
 
 void Env::enable_key(SDL_Keycode c) {
-	if (c == SDLK_LSHIFT) events[0] = true;
-	if (c < MAX_KEYCODE) events[c] = true;
+	events[c] = true;
 }
 
 void Env::disable_key(SDL_Keycode c) {
-	if (c == SDLK_LSHIFT) events[0] = false;
-	if (c < MAX_KEYCODE) events[c] = false;
+	events[c] = false;
 }
 
 bool Env::is_active(SDL_Keycode c) {
@@ -145,14 +155,17 @@ bool Env::player_is_running() {
 	return is_active(0);
 }
 
-void Env::handdle_keypress() {
+void Env::handdle_keypress_game() {
 	int dx = 0, dy = 0;
 	int speed = get_player()->get_speed();
 	Player* player = get_player();
-	if (is_active(SDLK_z)) player->move(Top);
-	if (is_active(SDLK_s)) player->move(Bot);
-	if (is_active(SDLK_q)) player->move(Left);
-	if (is_active(SDLK_d)) player->move(Right);
+	if (is_active(SDLK_UP)) player->move(Top);
+	else if (is_active(SDLK_DOWN)) player->move(Bot);
+	else if (is_active(SDLK_LEFT)) player->move(Left);
+	else if (is_active(SDLK_RIGHT)) player->move(Right);
+	if (is_active(SDLK_a)) player->attack(0);
+	else if (is_active(SDLK_z)) player->attack(1);
+	else if (is_active(SDLK_e)) player->attack(2);
 	get_player()->move(dx, dy);
 }
 
@@ -170,4 +183,18 @@ int Env::win_height() {
 
 Player* Env::get_player() {
 	return this->player;
+}
+
+void Env::sort_sprites() {
+	for (int i=1; i<movables.size(); i++) {
+		int j = i;
+		while (j >= 1 &&
+			   (movables[j-1]->get_pos()->y - movables[j-1]->get_height()) <
+			   (movables[j]->get_pos()->y   - movables[j]->get_height())) {
+			Movable* tmp = movables[j];
+			movables[j] = movables[j-1];
+			movables[j-1] = tmp;
+			j--;
+		}
+	}
 }

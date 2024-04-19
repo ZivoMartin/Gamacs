@@ -1,9 +1,9 @@
 #include "Movable.hpp"
 #include "../Env.hpp"
+#include "../sprite_data.hpp"
 
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
-#define BASE_SPEED 3;
 
 Movable::Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) {
 	this->env = env;
@@ -13,7 +13,6 @@ Movable::Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float 
 	this->width = BASE_WIDTH;
 	this->height = BASE_HEIGHT;
 	this->factors = {fx, fy};
-	this->current_sprite = {0, 10};
 }
 
 Movable::~Movable() {
@@ -26,9 +25,14 @@ void Movable::set_frame_speed(int new_frame_speed) {
 
 void Movable::update() {
 	int win_size = std::min(get_env()->win_width(), get_env()->win_height());
+	update_frame();
 	set_size(win_size*fx(), win_size*fy());
-	if (!has_move) set_sprite_col(0);
+	if (!has_move && !is_doing_something) set_sprite_col(0);
 	has_move = false;
+}
+
+void Movable::set_speed(int s) {
+	speed = s;
 }
 
 SDL_Texture* Movable::get_text() {
@@ -37,10 +41,6 @@ SDL_Texture* Movable::get_text() {
 
 void Movable::move(int dx, int dy) {
 	SDL_Point* pos = get_pos();
-	if (frame_speed == RUN_MOD) {
-		dx *= 2;
-		dy *= 2;
-	}
 	pos->x += dx;
 	pos->y += dy;
 }
@@ -52,12 +52,12 @@ void Movable::draw() {
 void Movable::draw(int x, int y) {
   SDL_Point* pos = get_pos();
   SDL_Rect src = (SDL_Rect){
-	  TOP_SS_X + current_sprite.x*SPRITE_W + current_sprite.x*SPRITE_DECALL_X,
-	  TOP_SS_Y + current_sprite.y*SPRITE_H + current_sprite.y*SPRITE_DECALL_Y,
-	  SPRITE_W,
-	  SPRITE_H
+	  TOP_SS_X + current_sprite.x*SPRITE_W + current_sprite.x*SPRITE_DECALL_X-13,
+	  TOP_SS_Y + current_sprite.y*SPRITE_H + current_sprite.y*SPRITE_DECALL_Y-10,
+	  SPRITE_W+30,
+	  SPRITE_H+10
   };
-  SDL_Rect dest = (SDL_Rect){x, y, width, height};
+  SDL_Rect dest = (SDL_Rect){x, y, width+10, height};
   cc(SDL_RenderCopy(get_ren(), get_text(), &src, &dest));
 }
 
@@ -122,7 +122,8 @@ int Movable::get_sprite_row() {
 }
 
 void Movable::inc_sprite_col() {
-    set_sprite_col((get_sprite_col()+1)%NB_MOVE_SPRITE);
+    set_sprite_col((get_sprite_col()+1)%nb_sprite_col);
+	if (get_sprite_col() == 0) is_doing_something = false;
 }
 
 
@@ -131,28 +132,29 @@ void Movable::set_current_sprite(int x, int y) {
 	set_sprite_row(y);
 }
 
-void Movable::move(Direction dir) {
+void Movable::update_frame() {
 	if (env->get_now()%frame_speed == 0) inc_sprite_col();
-	if (dir == Top)   {
-		set_sprite_row(SPRITE_TOP_ROW);	
-		move(0, -speed);
+}
+
+void Movable::move(Direction dir) {
+	if (!is_doing_something) {
+		current_dir = dir;
+		nb_sprite_col = NB_MOVE_SPRITE;
+		update_frame();
+		set_sprite_row(SPRITE_MOVE_ROW + dir);
+		has_move = true;
 	}
-	else if (dir == Bot){
-		set_sprite_row(SPRITE_BOT_ROW);
-		move(0, speed);
-	}   
-	else if (dir == Left) {
-		set_sprite_row(SPRITE_LEFT_ROW);
-		move(-speed, 0);
-	}  
-	else if (dir == Right) {
-		set_sprite_row(SPRITE_RIGHT_ROW);
-		move(speed, 0);
-	}
-	has_move = true;
+	if (dir == Top) move(0, -speed);
+	else if (dir == Bot) move(0, speed);
+	else if (dir == Left) move(-speed, 0);
+	else if (dir == Right) move(speed, 0);
 }
 
 
-void Movable::attack() {
-	
+void Movable::attack(int attack_number) {
+	if (!is_doing_something) {
+		is_doing_something = true;
+		set_sprite_row(attack_sprites_number[attack_number][0] + current_dir);
+		nb_sprite_col = attack_sprites_number[attack_number][1];
+	}
 }

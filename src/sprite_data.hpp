@@ -8,10 +8,12 @@
 #define TOP_SS_X 17
 #define TOP_SS_Y 11
 
-#define SPRITE_LEFT_ROW 9
-#define SPRITE_RIGHT_ROW 11
-#define SPRITE_TOP_ROW 8
-#define SPRITE_BOT_ROW 10
+#define NB_SPELL 3
+#define SPELL_0_SPRITE {0, 7}
+#define SPELL_1_SPRITE {4, 8}
+#define SPELL_2_SPRITE {12, 6}
+#define SPRITE_MOVE_ROW 8
 
-#define NB_MOVE_SPRITE 9
+#define NB_MOVE_SPRITE 10
+#define NB_CAST_SPELL_SPRITE 7
 #endif
