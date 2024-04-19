@@ -11,6 +11,7 @@ public:
 	Player(Env* env);
 	~Player();
 	void draw() override;
+	void action() override;
 };
 
 #endif

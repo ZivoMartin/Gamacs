@@ -10,7 +10,8 @@ set(SOURCES
     src/Env.cpp
     src/movables/Player.cpp
     src/movables/Movable.cpp
-    src/movables/Golem.cpp
+    src/movables/monsters/Monster.cpp
+    src/movables/monsters/Orc.cpp
     src/RegularAction.cpp
     src/view/Map.cpp
 )

@@ -19,7 +19,7 @@ Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	init_regular_actions();
-	place_golem();
+	place_monsters();
 	running = false;
 	map = new Map(this);
 	this->player = new Player(this);
@@ -29,7 +29,7 @@ Env::~Env() {
 	SDL_DestroyRenderer(get_ren());
 	SDL_DestroyWindow(get_win());
     SDL_Quit();
-	for (auto &golem : golems) delete golem;
+	for (auto &monster : monsters) delete monster;
 	for (auto &act : regular_actions) delete act;
 	delete player;
 	delete map;
@@ -39,15 +39,12 @@ int Env::get_now() {
 	return now;
 }
 
-#define GOLEM_SPAWN_CD 200
-
 void Env::init_regular_actions() {}
 
-
-#define NB_GOLEM 2
-void Env::place_golem() {
-	SDL_Point positions[NB_GOLEM] = {{17, 20}, {15, 15}};
-	for (auto &p : positions) golems.push_back(new Golem(this, p));				
+#define NB_ORC 2
+void Env::place_monsters() {
+	SDL_Point orc_positions[NB_ORC] = {{17, 20}, {15, 15}};
+	for (auto &p : orc_positions) monsters.push_back(new Orc(this, p));				
 }
 
 void Env::test_regular_actions() {
@@ -66,7 +63,6 @@ bool Env::is_running() {
 	return this->running;
 }
 
-void Env::spawn_golem() {}
 
 SDL_Point Env::game_dim() {
 	SDL_Point res;
@@ -104,14 +100,14 @@ void Env::game_loop() {
 	delete this;
 }
 
-void Env::move_golems() {
-	for (auto &golem : golems) golem->action();
+void Env::move_monsters() {
+	for (auto &monster : monsters) monster->action();
 }
 
 void Env::render() {
 	map->draw();
-	move_golems();
-	get_player()->draw();
+	move_monsters();
+	get_player()->action();
 	SDL_RenderPresent(get_ren());
 	SDL_SetRenderDrawColor(get_ren(), BACKGROUND_COLOR);
 	SDL_RenderClear(get_ren());
@@ -132,10 +128,12 @@ void Env::handdle_events() {
 }
 
 void Env::enable_key(SDL_Keycode c) {
+	if (c == SDLK_LSHIFT) events[0] = true;
 	if (c < MAX_KEYCODE) events[c] = true;
 }
 
 void Env::disable_key(SDL_Keycode c) {
+	if (c == SDLK_LSHIFT) events[0] = false;
 	if (c < MAX_KEYCODE) events[c] = false;
 }
 
@@ -143,14 +141,18 @@ bool Env::is_active(SDL_Keycode c) {
 	return events[c];
 }
 
+bool Env::player_is_running() {
+	return is_active(0);
+}
+
 void Env::handdle_keypress() {
 	int dx = 0, dy = 0;
 	int speed = get_player()->get_speed();
 	Player* player = get_player();
-	if (is_active(SDLK_z)) player->move(0, -speed);
-	if (is_active(SDLK_s)) player->move(0, speed);
-	if (is_active(SDLK_q)) player->move(-speed, 0);
-	if (is_active(SDLK_d)) player->move(speed, 0);
+	if (is_active(SDLK_z)) player->move(Top);
+	if (is_active(SDLK_s)) player->move(Bot);
+	if (is_active(SDLK_q)) player->move(Left);
+	if (is_active(SDLK_d)) player->move(Right);
 	get_player()->move(dx, dy);
 }
 
