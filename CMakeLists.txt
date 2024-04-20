@@ -62,6 +62,7 @@ include_directories(${SDL2_ALL_INC})
 set(SOURCES
     src/main.cpp
     src/Env.cpp
+    src/Sprite.cpp
     src/movables/Player.cpp 
     src/movables/Movable.cpp
     src/movables/monsters/Monster.cpp

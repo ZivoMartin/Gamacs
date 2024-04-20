@@ -14,6 +14,6 @@
 #define SPELL_2_SPRITE {12, 6}
 #define SPRITE_MOVE_ROW 8
 
-#define NB_MOVE_SPRITE 10
+#define NB_MOVE_SPRITE 9
 #define NB_CAST_SPELL_SPRITE 7
 #endif

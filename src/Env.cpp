@@ -19,14 +19,14 @@ Env::Env() {
 	this->init_lablib();
 	map = new Map(this);
 	this->player = new Player(this);
-	movables.push_back(player);
+	sprites.push_back(player);
 }
 
 Env::~Env() {
 	SDL_DestroyRenderer(get_ren());
 	SDL_DestroyWindow(get_win());
     SDL_Quit();
-	for (auto &movable : movables) delete movable;
+	for (auto &movable : sprites) delete movable;
 	for (auto &act : regular_actions) delete act;
 	delete map;
 	lablib_destroy(lablib);
@@ -48,10 +48,10 @@ int Env::get_now() {
 
 void Env::init_regular_actions() {}
 
-#define NB_ORC 2
+#define NB_ORC 1
 void Env::place_monsters() {
-	SDL_Point orc_positions[NB_ORC] = {{17, 20}, {15, 15}};
-	for (auto &p : orc_positions) movables.push_back(new Orc(this, p));				
+	SDL_Point orc_positions[NB_ORC] = {{17, 20}};
+	for (auto &p : orc_positions) sprites.push_back(new Orc(this, p));				
 }
 
 void Env::test_regular_actions() {
@@ -77,18 +77,20 @@ SDL_Point Env::game_dim() {
 	return res;
 }
 
-int Env::compute_ts() {
-	int width = win_width(), height = win_height();
-	return std::max(width/VISION_RANGE, height/VISION_RANGE);
-}
-
+// Compute the pixels coord of the point p, depends of the player position.
 SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
 	Player* player = get_player();
-	int tile_size = compute_ts();
-	int x = player->get_pos()->x;   // Local coordonate of the player
-	int y = player->get_pos()->y;
-	SDL_Point res = {VISION_RANGE*TILE_SIZE + (p.x-x), VISION_RANGE*TILE_SIZE + (p.y-y)};
-	res = {(res.x*tile_size)/TILE_SIZE, (res.y*tile_size)/TILE_SIZE};
+	int x = std::abs(player->get_pos()->x-p.x);   
+	int y = std::abs(player->get_pos()->y-p.y);
+	int w, h;
+	SDL_GetWindowSize(get_win(), &w, &h);
+	w = w/2;
+	h = h/2;
+	x = (x/TILE_SIZE) * PIXEL_TILE_SIZE + ((x%TILE_SIZE)*TILE_SIZE)/PIXEL_TILE_SIZE;
+	y = (y/TILE_SIZE) * PIXEL_TILE_SIZE + ((y%TILE_SIZE)*TILE_SIZE)/PIXEL_TILE_SIZE;
+	SDL_Point res = {w - x, h - y};
+	if (player->get_pos()->x < p.x) res.x = w+x;
+	if (player->get_pos()->y < p.y) res.y = h+y;
 	return res;
 }
 
@@ -110,14 +112,14 @@ void Env::game_loop() {
 	delete this;
 }
 
-void Env::active_movables() {
-	for (auto &movable : movables) movable->action();
+void Env::update_sprites() {
+	for (auto &sprite : sprites) sprite->update();
 }
 
 void Env::render_game() {
 	handdle_keypress_game();
 	map->draw();
-	active_movables();
+	update_sprites();
 }
 
 
@@ -187,14 +189,14 @@ Player* Env::get_player() {
 }
 
 void Env::sort_sprites() {
-	for (int i=1; i<movables.size(); i++) {
+	for (int i=1; i<sprites.size(); i++) {
 		int j = i;
 		while (j >= 1 &&
-			   (movables[j-1]->get_pos()->y + movables[j-1]->get_height()) >
-			   (movables[j]->get_pos()->y   + movables[j]->get_height())) {
-			Movable* tmp = movables[j];
-			movables[j] = movables[j-1];
-			movables[j-1] = tmp;
+			   (sprites[j-1]->get_pos()->y) >
+			   (sprites[j]->get_pos()->y)) {
+			Sprite* tmp = sprites[j];
+			sprites[j] = sprites[j-1];
+			sprites[j-1] = tmp;
 			j--;
 		}
 	}

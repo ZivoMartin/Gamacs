@@ -16,7 +16,6 @@ void Monster::action() {
 	else if (now%200<100) this->move(Right);
 	else if (now%200<150) this->move(Top);
 	else if (now%200<200) this->move(Left);
-	this->update();
 	this->draw();
 }
 

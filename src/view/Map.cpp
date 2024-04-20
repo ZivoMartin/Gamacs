@@ -34,20 +34,24 @@ void Map::draw() {
 	SDL_Point* pos = env->get_player()->get_pos();
 	int player_x = pos->x/TILE_SIZE, 
 		player_y = pos->y/TILE_SIZE;
-   SDL_Point xy = env->convert_coord_to_pixels({
-		   pos->x-VISION_RANGE*TILE_SIZE - (pos->x - player_x*TILE_SIZE),
-		   pos->y-VISION_RANGE*TILE_SIZE - (pos->y - player_y*TILE_SIZE)
-	   });
-	int tile_size = env->compute_ts();
-	int start_y = xy.y;
-	for (int i=player_x-VISION_RANGE-1; i<player_x+VISION_RANGE+1; i++){
-		xy.y = start_y;
-		for(int j=player_y-VISION_RANGE-1; j<player_y+VISION_RANGE+1; j++) {
-			SDL_Rect r = {.x= xy.x, .y= xy.y, .w= tile_size, .h= tile_size};
-			cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[i][j]], NULL, &r));
-			xy.y += tile_size;
+	int mx = ((pos->x%TILE_SIZE - TILE_SIZE/2) * PIXEL_TILE_SIZE) / TILE_SIZE,
+		my = ((pos->y%TILE_SIZE - TILE_SIZE/2) * PIXEL_TILE_SIZE) / TILE_SIZE;
+	int x=0, y=0;
+	int width = env->win_width(), height = env->win_height();
+	for (int il=width/2-mx - PIXEL_TILE_SIZE, ir = width/2-mx - PIXEL_TILE_SIZE; (il+PIXEL_TILE_SIZE) > 0 || (ir-PIXEL_TILE_SIZE) < width; il-=PIXEL_TILE_SIZE, ir+=PIXEL_TILE_SIZE){
+		for (int jl=height/2-my - PIXEL_TILE_SIZE, jr=height/2-my - PIXEL_TILE_SIZE; (jl+PIXEL_TILE_SIZE) > 0 || (jr-PIXEL_TILE_SIZE) < height; jl-=PIXEL_TILE_SIZE, jr+=PIXEL_TILE_SIZE) {
+			SDL_Rect r1 = {.x=il, .y=jl, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
+			SDL_Rect r2 = {.x=ir , .y=jr, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
+			cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[player_x-x][player_y-y]], NULL, &r1));
+			cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[player_x+x][player_y+y]], NULL, &r2));
+			SDL_Rect r3 = {.x=il, .y=jr, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
+			SDL_Rect r4 = {.x=ir , .y=jl, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
+			cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[player_x-x][player_y+y]], NULL, &r3));
+			cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[player_x+x][player_y-y]], NULL, &r4));
+			y += 1;
 		}
-		xy.x += tile_size;
+		y = 0;
+		x += 1;
 	}
  }
 

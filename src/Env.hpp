@@ -5,6 +5,7 @@
 #include "movables/Player.hpp"
 #include "movables/monsters/Monster.hpp"
 #include "movables/monsters/Orc.hpp"
+#include "Sprite.hpp"
 #include "RegularAction.hpp"
 #include <vector>
 #include <map>
@@ -32,7 +33,7 @@ public:
 	bool is_active(SDL_Keycode c);
 	void enable_key(SDL_Keycode c);
 	void disable_key(SDL_Keycode c);
-	void active_movables();
+	void update_sprites();
 	int win_width();
 	int win_height();
 	void init_regular_actions();
@@ -52,7 +53,7 @@ private:
 	SDL_Window* w;
 	SDL_Renderer* ren;
 	Player* player;
-	std::vector<Movable*> movables;
+	std::vector<Sprite*> sprites;
 	std::vector<RegularAction*> regular_actions;
 	std::map<Scene*, void (Env::*)()> render_function;
 	std::map<SDL_Keycode, bool> events;
