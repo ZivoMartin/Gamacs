@@ -18,7 +18,7 @@ void Player::action() {
 void Player::draw() {
 	int x, y;
 	SDL_GetWindowSize(get_env()->get_win(), &x, &y);
-	Movable::draw(x/2 - get_width()/2, y/2 - get_height()/2);
+	Movable::draw(x/2, y/2);
 }
 
 void Player::interact() {

@@ -1,6 +1,6 @@
 #include "Sprite.hpp"
-#include "sprite_data.hpp"
-#include "Env.hpp"
+#include "../sprite_data.hpp"
+#include "../Env.hpp"
 
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
@@ -8,7 +8,7 @@
 Sprite::Sprite(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) {
 	this->env = env;
 	this->sprite_sheet = (SDL_Texture*)  cp(IMG_LoadTexture(env->get_ren(), img_path));
-	this->pos = {TILE_SIZE*pos.x, TILE_SIZE*pos.y};
+	this->pos = {PIXEL_TILE_SIZE*pos.x, PIXEL_TILE_SIZE*pos.y};
 	this->width = BASE_WIDTH;
 	this->height = BASE_HEIGHT;
 	this->factors = {fx, fy};

@@ -1,6 +1,6 @@
 #ifndef SAFE_SPRITE
 #define SAFE_SPRITE
-#include "include.hpp"
+#include "../include.hpp"
 
 class Env;
 

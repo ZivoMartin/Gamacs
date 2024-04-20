@@ -1,12 +1,7 @@
 #ifndef ENV_SAFE
 #define ENV_SAFE
 
-#include "view/Map.hpp"
-#include "movables/Player.hpp"
-#include "movables/monsters/Monster.hpp"
-#include "movables/monsters/Orc.hpp"
-#include "Sprite.hpp"
-#include "RegularAction.hpp"
+#include "include.hpp"
 #include <vector>
 #include <map>
 
@@ -14,6 +9,10 @@
 
 #define MAX_KEYCODE 322
 
+class Player;
+class Sprite;
+class RegularAction;
+class Map;
 
 class Env {
 
@@ -42,10 +41,7 @@ public:
 	void place_monsters();
 	SDL_Point convert_coord_to_pixels(SDL_Point c);
 	SDL_Point game_dim();
-	int compute_ts();
 	bool player_is_running();
-
-	void sort_sprites();
 	
 private:
 	Lablib* lablib;

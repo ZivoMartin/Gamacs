@@ -19,6 +19,7 @@ public:
 	Map(Env* env);
 	~Map();
 	void draw();
+	void draw_square(int x, int y, int i, int j);
 		
 private:
 	void save_texture(const char* path, int index);

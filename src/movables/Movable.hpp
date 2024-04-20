@@ -2,7 +2,7 @@
 #define SAFE_MOVABLE
 #include "../include.hpp"
 #include "../sprite_data.hpp"
-#include "../Sprite.hpp"
+#include "../view/Sprite.hpp"
 #define BASE_SPEED 3
 #define BASE_FRAME_SPEED 10
 

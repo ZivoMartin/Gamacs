@@ -1,4 +1,9 @@
 #include "Env.hpp"
+#include "movables/Player.hpp"
+#include "movables/monsters/Orc.hpp"
+#include "view/Map.hpp"
+#include "view/Sprite.hpp"
+#include "RegularAction.hpp"
 
 enum SceneIndex {
 	Menu,
@@ -50,7 +55,7 @@ void Env::init_regular_actions() {}
 
 #define NB_ORC 1
 void Env::place_monsters() {
-	SDL_Point orc_positions[NB_ORC] = {{17, 20}};
+	SDL_Point orc_positions[NB_ORC] = {{18, 20}};
 	for (auto &p : orc_positions) sprites.push_back(new Orc(this, p));				
 }
 
@@ -80,18 +85,12 @@ SDL_Point Env::game_dim() {
 // Compute the pixels coord of the point p, depends of the player position.
 SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
 	Player* player = get_player();
-	int x = std::abs(player->get_pos()->x-p.x);   
-	int y = std::abs(player->get_pos()->y-p.y);
 	int w, h;
 	SDL_GetWindowSize(get_win(), &w, &h);
-	w = w/2;
-	h = h/2;
-	x = (x/TILE_SIZE) * PIXEL_TILE_SIZE + ((x%TILE_SIZE)*TILE_SIZE)/PIXEL_TILE_SIZE;
-	y = (y/TILE_SIZE) * PIXEL_TILE_SIZE + ((y%TILE_SIZE)*TILE_SIZE)/PIXEL_TILE_SIZE;
-	SDL_Point res = {w - x, h - y};
-	if (player->get_pos()->x < p.x) res.x = w+x;
-	if (player->get_pos()->y < p.y) res.y = h+y;
-	return res;
+	return {
+		w/2 - (player->get_pos()->x - p.x),
+		h/2 - (player->get_pos()->y - p.y)
+	};
 }
 
 #define DELAY 15
@@ -99,7 +98,6 @@ SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
 void Env::game_loop() {
     this->running =  true;
     while (is_running()) {
-		sort_sprites();
         handdle_events();
 		lablib_render(lablib);
 		(this->*render_function[lablib_get_current_scene(lablib)])();
@@ -113,7 +111,17 @@ void Env::game_loop() {
 }
 
 void Env::update_sprites() {
-	for (auto &sprite : sprites) sprite->update();
+	for (int i=0; i<sprites.size(); i++) {
+		sprites[i]->update();
+		int j = i;
+		while (j >= 1 &&
+			   (sprites[j-1]->get_pos()->y + sprites[j-1]->get_height()) >
+			   (sprites[j]->get_pos()->y   + sprites[j]->get_height())) {
+			Sprite* tmp = sprites[j];
+			sprites[j] = sprites[j-1];
+			sprites[--j] = tmp;
+		}
+	}
 }
 
 void Env::render_game() {
@@ -186,18 +194,4 @@ int Env::win_height() {
 
 Player* Env::get_player() {
 	return this->player;
-}
-
-void Env::sort_sprites() {
-	for (int i=1; i<sprites.size(); i++) {
-		int j = i;
-		while (j >= 1 &&
-			   (sprites[j-1]->get_pos()->y) >
-			   (sprites[j]->get_pos()->y)) {
-			Sprite* tmp = sprites[j];
-			sprites[j] = sprites[j-1];
-			sprites[j-1] = tmp;
-			j--;
-		}
-	}
 }

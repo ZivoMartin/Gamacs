@@ -10,8 +10,7 @@ extern "C" {
 
 #define MAP_WIDTH 50
 #define MAP_HEIGHT 50
-#define TILE_SIZE 100
-#define PIXEL_TILE_SIZE 80
+#define PIXEL_TILE_SIZE 100
 #define NB_SPELL 3
 
 enum Direction {
