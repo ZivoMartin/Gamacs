@@ -2,12 +2,12 @@
 #define SAFE_MOVABLE
 #include "../include.hpp"
 #include "../sprite_data.hpp"
-#include "../view/Sprite.hpp"
+#include "Sprite.hpp"
+
 #define BASE_SPEED 3
 #define BASE_FRAME_SPEED 10
 
 class Env;
-class Sprite;
 
 class Movable : public Sprite {
 
@@ -15,7 +15,7 @@ public:
 	Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy);
 	~Movable();
 	void update() override;
-	virtual void action() = 0 ;
+	virtual void action() = 0;
 	virtual void draw(int x, int y) override;
 	virtual void move(int dx, int dy);
 	virtual void move(Direction dir);
@@ -33,6 +33,8 @@ public:
 
 	void set_frame_speed(int new_frame_speed);
 	void update_frame();
+	bool occupated();
+	void set_activity(bool act);
 	
 private:
 	int speed;

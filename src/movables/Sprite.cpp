@@ -1,5 +1,7 @@
 #include "Sprite.hpp"
 #include "../sprite_data.hpp"
+#include "../movables/monsters/Monster.hpp"
+#include "../movables/Player.hpp"
 #include "../Env.hpp"
 
 #define BASE_WIDTH 60
@@ -7,7 +9,11 @@
 
 Sprite::Sprite(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) {
 	this->env = env;
-	this->sprite_sheet = (SDL_Texture*)  cp(IMG_LoadTexture(env->get_ren(), img_path));
+	SDL_Surface* surf = IMG_Load(img_path);
+	if (!surf) 
+		surf = TTF_RenderText_Blended(lablib_get_font(env->get_lablib()), img_path, (SDL_Color) {255, 255, 255, 255});  
+	this->sprite_sheet = SDL_CreateTextureFromSurface(env->get_ren(), surf);
+	SDL_FreeSurface(surf);
 	this->pos = {PIXEL_TILE_SIZE*pos.x, PIXEL_TILE_SIZE*pos.y};
 	this->width = BASE_WIDTH;
 	this->height = BASE_HEIGHT;
@@ -28,7 +34,10 @@ SDL_Texture* Sprite::get_text() {
 }
 
 void Sprite::draw() {
-	draw(get_pos()->x, get_pos()->y);
+	SDL_Point p = get_env()->convert_coord_to_pixels(*get_pos());
+	SDL_Point map_dim = get_env()->game_dim();
+	if (p.x > -get_width() && p.y > -get_height() && p.x < map_dim.x && p.y < map_dim.y)
+		draw(p.x, p.y);
 }
 
 void Sprite::draw(int x, int y) {
@@ -77,3 +86,10 @@ float Sprite::fy() {
 	return this->factors.y;
 }
 
+void Sprite::set_interactible() {
+	can_interact_with_player = true;
+}
+
+bool Sprite::get_can_interact_with_player() {
+	return can_interact_with_player;
+}

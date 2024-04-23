@@ -5,9 +5,6 @@ using namespace std;
 #include "../movables/Player.hpp"
 #include "Map.hpp"
 #include "../Env.hpp"
-#include <iostream>
-#include <fstream>
-#include <string>
 
 #define ROCK_IMG_PATH "../res/rock_ground.png"
 #define LIGHT_GRASS_IMG_PATH "../res/light_grass.png"

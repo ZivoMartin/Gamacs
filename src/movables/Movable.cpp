@@ -19,7 +19,7 @@ void Movable::update() {
 	this->action();
 	Sprite::update();
 	update_frame();
-	if (!has_move && !is_doing_something) set_sprite_col(0);
+	if (!has_move && !occupated()) set_sprite_col(0);
 	has_move = false;
 }
 
@@ -67,7 +67,7 @@ int Movable::get_sprite_row() {
 
 void Movable::inc_sprite_col() {
     set_sprite_col((get_sprite_col()+1)%nb_sprite_col);
-	if (get_sprite_col() == 0) is_doing_something = false;
+	if (get_sprite_col() == 0) set_activity(false);
 }
 
 
@@ -81,7 +81,7 @@ void Movable::update_frame() {
 }
 
 void Movable::move(Direction dir) {
-	if (!is_doing_something) {
+	if (!occupated()) {
 		current_dir = dir;
 		nb_sprite_col = NB_MOVE_SPRITE;
 		update_frame();
@@ -96,9 +96,17 @@ void Movable::move(Direction dir) {
 
 
 void Movable::attack(int attack_number) {
-	if (!is_doing_something) {
-		is_doing_something = true;
+	if (!occupated()) {
+		set_activity(true);
 		set_sprite_row(attack_sprites_number[attack_number][0] + current_dir);
 		nb_sprite_col = attack_sprites_number[attack_number][1];
 	}
+}
+
+bool Movable::occupated() {
+	return is_doing_something;
+}
+
+void Movable::set_activity(bool act) {
+	is_doing_something = act;
 }

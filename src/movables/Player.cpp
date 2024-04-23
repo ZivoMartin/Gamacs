@@ -1,5 +1,7 @@
 #include "Player.hpp"
 #include "../Env.hpp"
+#include "../Pnj.hpp"
+#include "monsters/Monster.hpp"
 #define IMG_PLAYER_PATH "../res/mageSheet.png"
 #define PLAYER_WIDTH 0.07
 #define PLAYER_HEIGHT 0.1
@@ -21,7 +23,21 @@ void Player::draw() {
 	Movable::draw(x/2, y/2);
 }
 
+void Player::collide(Sprite* sprite) {
+	if (sprite->get_can_interact_with_player()) 
+		sprites_around.push_back(sprite);
+	sprite->collide(this);
+}
+
+void Player::collide(Monster* monster) {
+	printf("Player touched a monster\n");
+}
+
+void Player::collide(Pnj* pnj) {}
+
 void Player::interact() {
-	
+	if (sprites_around.size() > 0)
+		sprites_around[0]->interact_with_player();
+	sprites_around.clear();
 }
 

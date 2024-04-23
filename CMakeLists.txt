@@ -62,13 +62,15 @@ include_directories(${SDL2_ALL_INC})
 set(SOURCES
     src/main.cpp
     src/Env.cpp
-    src/view/Sprite.cpp
+    src/movables/Sprite.cpp
     src/movables/Player.cpp 
     src/movables/Movable.cpp
     src/movables/monsters/Monster.cpp
     src/movables/monsters/Orc.cpp
     src/RegularAction.cpp
     src/view/Map.cpp
+    src/Pnj.cpp
+    src/TxtBubble.cpp
 )
 
 # Add an executable with the above sources

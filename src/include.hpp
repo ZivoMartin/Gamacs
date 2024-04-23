@@ -7,6 +7,11 @@ extern "C" {
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <vector>
+#include <map>
+#include <string>
+#include <iostream>
+#include <fstream>
 
 #define MAP_WIDTH 50
 #define MAP_HEIGHT 50
@@ -19,5 +24,10 @@ enum Direction {
 	Bot,
 	Right
 };
+
+class Env;
+class Pnj;
+
+typedef std::vector<std::pair<void (Env::*)(Pnj*), bool (Env::*)()>> ActionVec;
 
 #endif
