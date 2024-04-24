@@ -13,7 +13,7 @@ public:
 	void action() override;
 	void collide(Sprite* sprite) override;
 	void collide(Player* player) override;
-	
+	void interact_with_player() override;
 };
 
 #endif

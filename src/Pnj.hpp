@@ -6,12 +6,13 @@
 
 
 class Env;
+class MainGame;
 
 class Pnj : public Sprite {
 	
 public:
 
-	Pnj(Env* env, const char* img_path, SDL_Point pos, ActionVec actions);
+	Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos, ActionVec actions);
 	~Pnj();
 	void update() override;
 	void interact_with_player() override;
@@ -21,6 +22,7 @@ public:
 	void inc_dialog_index();
 	void reset_dialog_index();
 	void set_dialog(const char* file_path);
+	MainGame* get_game();
 	
 private:
 
@@ -29,6 +31,7 @@ private:
 	int current_action = 0;
 	std::vector<std::string> dialog_vec;
 	ActionVec actions;
+	MainGame* game;
 	
 };
 

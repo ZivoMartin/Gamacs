@@ -30,7 +30,7 @@ void Player::collide(Sprite* sprite) {
 }
 
 void Player::collide(Monster* monster) {
-	printf("Player touched a monster\n");
+
 }
 
 void Player::collide(Pnj* pnj) {}

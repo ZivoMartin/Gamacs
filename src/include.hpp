@@ -12,6 +12,7 @@ extern "C" {
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <algorithm> 
 
 #define MAP_WIDTH 50
 #define MAP_HEIGHT 50
@@ -25,9 +26,18 @@ enum Direction {
 	Right
 };
 
+enum SceneIndex {
+	Menu,
+	Game,
+	Battle,
+	TotalScene
+};
+
+
 class Env;
 class Pnj;
+class MainGame;
 
-typedef std::vector<std::pair<void (Env::*)(Pnj*), bool (Env::*)()>> ActionVec;
+typedef std::vector<std::pair<void (MainGame::*)(Pnj*), bool (MainGame::*)()>> ActionVec;
 
 #endif

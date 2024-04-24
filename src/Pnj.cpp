@@ -6,8 +6,9 @@
 #define BASE_FX 0.07
 #define BASE_FY 0.11
 
-Pnj::Pnj(Env* env, const char* img_path, SDL_Point pos,  ActionVec actions) : Sprite(env, img_path, pos, BASE_FX, BASE_FY){
+Pnj::Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos,  ActionVec actions) : Sprite(env, img_path, pos, BASE_FX, BASE_FY){
 	this->actions = actions;
+	this->game = game;
 	set_interactible();
 }
 
@@ -23,8 +24,8 @@ void Pnj::update() {
 
 void Pnj::interact_with_player() {
 	if (timer < get_env()->get_now() && current_action < actions.size()) {
-		(get_env()->*(actions[current_action].first))(this);
-		if (!actions[current_action].second || (get_env()->*(actions[current_action].second))()) {
+		(get_game()->*(actions[current_action].first))(this);
+		if (!actions[current_action].second || (get_game()->*(actions[current_action].second))()) {
 			current_action += 1;
 		}
 		timer = get_env()->get_now() + ACTION_TIME;
@@ -35,6 +36,10 @@ void Pnj::collide(Player* player) {}
 
 void Pnj::collide(Sprite* sprite) {
 	sprite->collide(this);
+}
+
+MainGame* Pnj::get_game() {
+	return game;
 }
 
 std::string* Pnj::get_dialog() {

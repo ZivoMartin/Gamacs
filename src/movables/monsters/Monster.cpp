@@ -6,6 +6,7 @@
 
 Monster::Monster(Env* env, const char* sheet_p, SDL_Point pos, float w, float h) : Movable(env, sheet_p, pos, w, h){
 	set_speed(MONSTER_SPEED);
+	set_interactible();
 }
 
 Monster::~Monster() {}
@@ -27,5 +28,9 @@ void Monster::collide(Sprite* sprite) {
 }
 
 void Monster::collide(Player* player) {
-	this->attack(1);
+
+}
+
+void Monster::interact_with_player() {
+	get_env()->go_battle(this);
 }

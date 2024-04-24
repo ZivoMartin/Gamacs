@@ -10,41 +10,44 @@
 class Player;
 class Sprite;
 class RegularAction;
-class Map;
-class TxtBubble;
+class Renderer;
+class Monster;
+class MainBattle;
+class MainGame;
 
 class Env {
 
 public:
 	Env();
 	~Env();
-	void init_lablib();
-	void init_pnj();
+
+	void init_renderers();
 	void game_loop();
 	SDL_Window* get_win();
 	SDL_Renderer* get_ren();
 	bool is_running();
 	void handdle_events();
-	void render_game();
 	void render_menu();
 	Player* get_player();
-	void handdle_keypress_game();
 	bool is_active(SDL_Keycode c);
 	void enable_key(SDL_Keycode c);
 	void disable_key(SDL_Keycode c);
-	void update_sprites();
+	
 	Lablib* get_lablib();
 	int win_width();
 	int win_height();
 	void init_regular_actions();
 	void test_regular_actions();
 	int get_now();
-	void place_monsters();
 	SDL_Point convert_coord_to_pixels(SDL_Point c);
 	SDL_Point game_dim();
-	bool player_is_running();
-
-	bool stop_inc_action() {return false;}
+	void go_battle(Monster* monster);
+	void go_game();
+	void set_scene(Scene* scene, Renderer* renderer);
+	MainBattle* get_battle();
+	MainGame* get_game();
+	void set_battle(MainBattle* battle);
+	void set_game(MainGame* game);
 	void talk(Pnj* pnj);
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);
@@ -55,13 +58,12 @@ private:
 	SDL_Window* w;
 	SDL_Renderer* ren;
 	Player* player;
-	std::vector<Sprite*> sprites;
+	MainBattle* battle;
+	MainGame* game;
 	std::vector<RegularAction*> regular_actions;
-	std::map<Scene*, void (Env::*)()> render_function;
+	std::map<Scene*, Renderer*> renderers;
 	std::map<SDL_Keycode, bool> events;
-	Map* map;
 	long long unsigned int now = 0;
-	TxtBubble* txt_bubble = nullptr;
 };
 
 #endif

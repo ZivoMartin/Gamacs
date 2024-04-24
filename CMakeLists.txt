@@ -71,6 +71,10 @@ set(SOURCES
     src/view/Map.cpp
     src/Pnj.cpp
     src/TxtBubble.cpp
+    src/renderers/Renderer.cpp
+    src/renderers/MainGame.cpp
+    src/renderers/MainMenu.cpp
+    src/renderers/MainBattle.cpp
 )
 
 # Add an executable with the above sources
