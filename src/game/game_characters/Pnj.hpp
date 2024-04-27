@@ -1,9 +1,9 @@
 #ifndef PNJ_SAFE
 #define PNJ_SAFE
 
-#include "movables/Static.hpp"
-#include "movables/MapEntity.hpp"
-#include "include.hpp"
+#include "../../sprites/Static.hpp"
+#include "MapEntity.hpp"
+#include "../../include/global_include.hpp"
 
 
 class Env;
@@ -16,8 +16,6 @@ public:
 	Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos, ActionVec actions);
 	~Pnj();
 	void update() override;
-	void draw() override {Static::draw();}
-	void draw(int x, int y) override {Static::draw(x, y);}
 	void interact_with_player() override;
 	void collide(Player* player) override;
 	void collide(MapEntity* entity) override;

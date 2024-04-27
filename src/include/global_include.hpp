@@ -2,7 +2,7 @@
 #define SAFE_MAIN_INCLUDE
 
 extern "C" {
-	#include "../Lablib/include/settings.h"	
+	#include "../../Lablib/include/settings.h"	
 }
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

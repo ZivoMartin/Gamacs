@@ -1,8 +1,8 @@
 #ifndef SAFE_GAMESCENE
 #define SAFE_GAMESCENE
 
-#include "Renderer.hpp"
-#include "../include.hpp"
+#include "../interfaces/Renderer.hpp"
+#include "../include/global_include.hpp"
 
 class MapEntity;
 class Map;

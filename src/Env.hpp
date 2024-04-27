@@ -1,15 +1,13 @@
 #ifndef ENV_SAFE
 #define ENV_SAFE
 
-#include "include.hpp"
+#include "include/global_include.hpp"
 
 #define BACKGROUND_COLOR 100, 80, 160, 255
 
 #define MAX_KEYCODE 322
 
 class Player;
-class Sprite;
-class RegularAction;
 class Renderer;
 class Monster;
 class MainBattle;
@@ -36,8 +34,6 @@ public:
 	Lablib* get_lablib();
 	int win_width();
 	int win_height();
-	void init_regular_actions();
-	void test_regular_actions();
 	int get_now();
 	SDL_Point convert_coord_to_pixels(SDL_Point c);
 	SDL_Point game_dim();
@@ -60,7 +56,6 @@ private:
 	Player* player;
 	MainBattle* battle;
 	MainGame* game;
-	std::vector<RegularAction*> regular_actions;
 	std::map<Scene*, Renderer*> renderers;
 	std::map<SDL_Keycode, bool> events;
 	long long unsigned int now = 0;

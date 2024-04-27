@@ -1,6 +1,6 @@
 #include "Movable.hpp"
 #include "../Env.hpp"
-#include "../sprite_data.hpp"
+#include "../include/sprite_data.hpp"
 
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60

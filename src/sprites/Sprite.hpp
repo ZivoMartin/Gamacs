@@ -1,9 +1,9 @@
 #ifndef SPRITE_SAFE
 #define SPRITE_SAFE
 
-#include "include.hpp"
+#include "../include/global_include.hpp"
 
-#include "Updatable.hpp"
+#include "../interfaces/Updatable.hpp"
 
 class Env;
 

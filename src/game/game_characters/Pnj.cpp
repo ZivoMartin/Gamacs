@@ -1,6 +1,6 @@
 #include "Pnj.hpp"
-#include "Env.hpp"
-#include "movables/Player.hpp"
+#include "../../Env.hpp"
+#include "Player.hpp"
 
 #define ACTION_TIME 30
 #define BASE_FX 0.07

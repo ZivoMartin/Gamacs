@@ -1,11 +1,11 @@
 #ifndef MAPENTITY_SAFE
 #define MAPENTITY_SAFE
 
-#include "../include.hpp"
-#include "Collider.hpp"
-#include "../Updatable.hpp"
+#include "../../include/global_include.hpp"
+#include "../../interfaces/Collider.hpp"
+#include "../../interfaces/Updatable.hpp"
 
-class MapEntity : virtual public Updatable, public Collider {
+class MapEntity : virtual public Updatable, virtual public Collider {
 
 public:
 	virtual void interact_with_player() {}

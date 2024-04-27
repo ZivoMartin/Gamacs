@@ -1,7 +1,5 @@
 #include "Static.hpp"
-#include "../sprite_data.hpp"
-#include "../movables/monsters/Monster.hpp"
-#include "../movables/Player.hpp"
+#include "../include/sprite_data.hpp"
 #include "../Env.hpp"
 
 

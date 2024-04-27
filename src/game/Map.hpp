@@ -1,7 +1,7 @@
 #ifndef MAP_SAFE
 #define MAP_SAVE
 
-#include "../include.hpp"
+#include "../include/global_include.hpp"
 
 class Env;
 

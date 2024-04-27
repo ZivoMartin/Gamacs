@@ -1,8 +1,8 @@
 #ifndef SAFE_MENU
 #define SAFE_MENU
 
-#include "Renderer.hpp"
-#include "../include.hpp"
+#include "../interfaces/Renderer.hpp"
+#include "../include/global_include.hpp"
 
 
 class MainMenu : public Renderer {

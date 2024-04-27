@@ -1,8 +1,8 @@
 #include "Player.hpp"
-#include "../Env.hpp"
-#include "../Pnj.hpp"
+#include "../../Env.hpp"
+#include "Pnj.hpp"
 #include "monsters/Monster.hpp"
-#define IMG_PLAYER_PATH "../res/mageSheet.png"
+#define IMG_PLAYER_PATH "res/mageSheet.png"
 #define PLAYER_WIDTH 0.07
 #define PLAYER_HEIGHT 0.1
 #define BASE_PLAYER_POS {17, 20}

@@ -1,6 +1,6 @@
 #include "Monster.hpp"
 #include "../Player.hpp"
-#include "../../Env.hpp"
+#include "../../../Env.hpp"
 
 #define MONSTER_SPEED 1
 
@@ -19,7 +19,6 @@ void Monster::action() {
 		else if (now%200<150) this->move(Top);
 		else if (now%200<200) this->move(Left);
 	}
-	printf("here\n");
 	Movable::draw();
 }
 

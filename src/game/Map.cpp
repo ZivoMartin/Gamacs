@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#include "../movables/Player.hpp"
+#include "game_characters/Player.hpp"
 #include "Map.hpp"
 #include "../Env.hpp"
 

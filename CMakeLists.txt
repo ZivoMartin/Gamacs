@@ -60,24 +60,30 @@ add_library(lablib
 include_directories(${SDL2_ALL_INC})
     
 set(SOURCES
-    src/Sprite.cpp
     src/main.cpp
     src/Env.cpp
-    src/movables/Static.cpp
-    src/movables/Player.cpp 
-    src/movables/Movable.cpp
-    src/movables/monsters/Monster.cpp
-    src/movables/monsters/Orc.cpp
-    src/movables/MapEntity.cpp
-    src/RegularAction.cpp
-    src/view/Map.cpp
-    src/Pnj.cpp
-    src/TxtBubble.cpp
-    src/renderers/Renderer.cpp
-    src/renderers/MainGame.cpp
-    src/renderers/MainMenu.cpp
-    src/renderers/MainBattle.cpp
-    src/Updatable.hpp
+    
+    src/sprites/Sprite.cpp
+    src/sprites/Static.cpp
+    src/sprites/Movable.cpp
+
+    src/game/MainGame.cpp  
+    
+    src/game/game_characters/MapEntity.cpp
+    src/game/game_characters/Player.cpp
+    src/game/game_characters/Pnj.cpp
+    src/game/game_characters/monsters/Monster.cpp
+    src/game/game_characters/monsters/Orc.cpp
+
+    src/game/Map.cpp
+    src/game/TxtBubble.cpp
+    
+    src/main_menu/MainMenu.cpp
+    
+    src/battle/MainBattle.cpp
+
+    src/interfaces/Renderer.cpp
+
 )
 
 # Add an executable with the above sources

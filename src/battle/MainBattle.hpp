@@ -1,11 +1,11 @@
 #ifndef SAFE_BATTLE
 #define SAFE_BATTLE
 
-#include "Renderer.hpp"
-#include "../include.hpp"
+#include "../interfaces/Renderer.hpp"
+#include "../include/global_include.hpp"
 
-#define BATTLE_SQUARE_PATH "../res/battle_square.png"
-#define BATTLE_BG "../res/battle_bg.png"
+#define BATTLE_SQUARE_PATH "res/battle_square.png"
+#define BATTLE_BG "res/battle_bg.png"
 #define BATTLE_TILE_SIZE 0.12
 #define BATTLE_WIDTH 10
 #define BATTLE_HEIGHT 7

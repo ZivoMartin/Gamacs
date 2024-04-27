@@ -2,7 +2,7 @@
 #define SAFE_MONSTER
 
 #include "../MapEntity.hpp"
-#include "../Movable.hpp"
+#include "../../../sprites/Movable.hpp"
 
 class Env;
 

@@ -1,7 +1,7 @@
 #ifndef SAFE_TXT_BUBBLE
 #define SAFE_TXT_BUBBLE
 
-#include "movables/Static.hpp"
+#include "../sprites/Static.hpp"
 
 class TxtBubble : public Static {
 

@@ -1,10 +1,10 @@
 #include "../Env.hpp"
-#include "../movables/Player.hpp"
-#include "../movables/monsters/Orc.hpp"
-#include "../view/Map.hpp"
-#include "../Pnj.hpp"
-#include "../Sprite.hpp"
-#include "../TxtBubble.hpp"
+#include "game_characters/Player.hpp"
+#include "game_characters/monsters/Orc.hpp"
+#include "Map.hpp"
+#include "game_characters/Pnj.hpp"
+#include "../sprites/Sprite.hpp"
+#include "TxtBubble.hpp"
 #include "MainGame.hpp"
 
 MainGame::MainGame(Env* env, Lablib* lablib) : Renderer(env, lablib) {

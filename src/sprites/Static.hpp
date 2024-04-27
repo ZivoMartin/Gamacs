@@ -1,9 +1,9 @@
 #ifndef SAFE_STATIC
 #define SAFE_STATIC
-#include "../include.hpp"
-#include "Collider.hpp"
+#include "../include/global_include.hpp"
+#include "../interfaces/Collider.hpp"
 
-#include "../Sprite.hpp"
+#include "Sprite.hpp"
 
 class Env;
 class Monster;

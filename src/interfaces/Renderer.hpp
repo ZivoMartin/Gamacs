@@ -1,7 +1,7 @@
 #ifndef SAFE_RENDERER
 #define SAFE_RENDERER
 
-#include "../include.hpp"
+#include "../include/global_include.hpp"
 
 class Env;
 

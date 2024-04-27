@@ -1,17 +1,14 @@
-#include "renderers/MainGame.hpp"
-#include "renderers/MainMenu.hpp"
-#include "renderers/MainBattle.hpp"
+#include "game/MainGame.hpp"
+#include "main_menu/MainMenu.hpp"
+#include "battle/MainBattle.hpp"
 #include "Env.hpp"
-#include "movables/Player.hpp"
-#include "movables/Static.hpp"
-#include "RegularAction.hpp"
-#include "movables/monsters/Monster.hpp"
+#include "game/game_characters/Player.hpp"
+#include "game/game_characters/monsters/Monster.hpp"
 
 
 Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
-	init_regular_actions();
 	running = false;
 	player = new Player(this);
 	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
@@ -22,7 +19,6 @@ Env::~Env() {
 	SDL_DestroyRenderer(get_ren());
 	SDL_DestroyWindow(get_win());
     SDL_Quit();
-	for (auto &act : regular_actions) delete act;
 	lablib_destroy(lablib);
 	std::for_each(renderers.begin(), renderers.end(),  [](std::pair<Scene*, Renderer*> p) { 
 		delete p.second;
@@ -47,12 +43,6 @@ Lablib* Env::get_lablib() {
 
 int Env::get_now() {
 	return now;
-}
-
-void Env::init_regular_actions() {}
-
-void Env::test_regular_actions() {
-	for (auto &act : regular_actions) act->try_do();
 }
 
 SDL_Window* Env::get_win() {
