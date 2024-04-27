@@ -1,0 +1,18 @@
+#ifndef UPDATABLE_SAFE
+#define UPDATABLE_SAFE
+
+class Updatable {
+
+public:
+	virtual void draw() = 0;
+	virtual void draw(int x, int y) = 0;
+	virtual void update() = 0;
+	virtual SDL_Point* get_pos() = 0;
+	virtual int get_width() = 0;
+	virtual int get_height() = 0;
+
+
+};
+
+
+#endif

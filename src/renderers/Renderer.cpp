@@ -20,3 +20,7 @@ SDL_Window* Renderer::get_win() {
 bool Renderer::is_active(SDL_Keycode c) {
 	return get_env()->is_active(c);
 }
+
+Lablib* Renderer::get_lablib() {
+	return get_env()->get_lablib();
+}

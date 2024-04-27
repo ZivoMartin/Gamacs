@@ -5,7 +5,7 @@
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
 
-Movable::Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy){
+Movable::Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy) {
 	this->speed = BASE_SPEED;
 }
 
@@ -16,8 +16,8 @@ void Movable::set_frame_speed(int new_frame_speed) {
 }
 
 void Movable::update() {
-	this->action();
 	Sprite::update();
+	this->action();
 	update_frame();
 	if (!has_move && !occupated()) set_sprite_col(0);
 	has_move = false;
@@ -31,6 +31,13 @@ void Movable::move(int dx, int dy) {
 	SDL_Point* pos = get_pos();
 	pos->x += dx;
 	pos->y += dy;
+}
+
+void Movable::draw() {
+	SDL_Point p = get_env()->convert_coord_to_pixels(*get_pos());
+	SDL_Point map_dim = get_env()->game_dim();
+	if (p.x > -get_width() && p.y > -get_height() && p.x < map_dim.x && p.y < map_dim.y)
+		draw(p.x, p.y);
 }
 
 void Movable::draw(int x, int y) {
@@ -69,7 +76,6 @@ void Movable::inc_sprite_col() {
     set_sprite_col((get_sprite_col()+1)%nb_sprite_col);
 	if (get_sprite_col() == 0) set_activity(false);
 }
-
 
 void Movable::set_current_sprite(int x, int y) {
 	set_sprite_col(x);

@@ -6,7 +6,7 @@
 #define BASE_FX 0.07
 #define BASE_FY 0.11
 
-Pnj::Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos,  ActionVec actions) : Sprite(env, img_path, pos, BASE_FX, BASE_FY){
+Pnj::Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos,  ActionVec actions) : Static(env, img_path, pos, BASE_FX, BASE_FY){
 	this->actions = actions;
 	this->game = game;
 	set_interactible();
@@ -17,7 +17,7 @@ Pnj::~Pnj() {}
 
 
 void Pnj::update() {
-	Sprite::update();
+	Static::update();
 	this->draw();
 }
 
@@ -34,8 +34,8 @@ void Pnj::interact_with_player() {
 
 void Pnj::collide(Player* player) {}
 
-void Pnj::collide(Sprite* sprite) {
-	sprite->collide(this);
+void Pnj::collide(MapEntity* entity) {
+	entity->collide(this);
 }
 
 MainGame* Pnj::get_game() {

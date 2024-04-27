@@ -7,7 +7,7 @@
 #define PLAYER_HEIGHT 0.1
 #define BASE_PLAYER_POS {17, 20}
 
-Player::Player(Env* env) : Movable(env, IMG_PLAYER_PATH, BASE_PLAYER_POS, PLAYER_WIDTH, PLAYER_HEIGHT) {
+Player::Player(Env* env) : Movable(env, IMG_PLAYER_PATH, BASE_PLAYER_POS, PLAYER_WIDTH, PLAYER_HEIGHT)  {
 	this->set_current_sprite(0, 10);
 }
 
@@ -23,10 +23,10 @@ void Player::draw() {
 	Movable::draw(x/2, y/2);
 }
 
-void Player::collide(Sprite* sprite) {
-	if (sprite->get_can_interact_with_player()) 
-		sprites_around.push_back(sprite);
-	sprite->collide(this);
+void Player::collide(MapEntity* entity) {
+	if (entity->get_can_interact_with_player()) 
+		entity_around.push_back(entity);
+	entity->collide(this);
 }
 
 void Player::collide(Monster* monster) {
@@ -36,8 +36,8 @@ void Player::collide(Monster* monster) {
 void Player::collide(Pnj* pnj) {}
 
 void Player::interact() {
-	if (sprites_around.size() > 0)
-		sprites_around[0]->interact_with_player();
-	sprites_around.clear();
+	if (entity_around.size() > 0)
+		entity_around[0]->interact_with_player();
+	entity_around.clear();
 }
 

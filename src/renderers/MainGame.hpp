@@ -4,7 +4,7 @@
 #include "Renderer.hpp"
 #include "../include.hpp"
 
-class Sprite;
+class MapEntity;
 class Map;
 class TxtBubble;
 class Player;
@@ -20,7 +20,7 @@ public:
 	void init_pnj();
 	void render() override;
 	void handdle_keypress() override;
-	void update_sprites();	
+	void update_entities();	
 	bool stop_inc_action() {return false;}
 	Player* get_player();
 	void talk(Pnj* pnj);
@@ -28,9 +28,10 @@ public:
 	void talk_and_reset(Pnj* pnj);
 	
 private:
-	std::vector<Sprite*> sprites;
+	std::vector<MapEntity*> entities;
 	Map* map;
 	TxtBubble* txt_bubble = nullptr;
+	
 	
 };
 

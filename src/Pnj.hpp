@@ -1,23 +1,26 @@
 #ifndef PNJ_SAFE
 #define PNJ_SAFE
 
-#include "movables/Sprite.hpp"
+#include "movables/Static.hpp"
+#include "movables/MapEntity.hpp"
 #include "include.hpp"
 
 
 class Env;
 class MainGame;
 
-class Pnj : public Sprite {
+class Pnj : public Static, public MapEntity {
 	
 public:
 
 	Pnj(Env* env, MainGame* game, const char* img_path, SDL_Point pos, ActionVec actions);
 	~Pnj();
 	void update() override;
+	void draw() override {Static::draw();}
+	void draw(int x, int y) override {Static::draw(x, y);}
 	void interact_with_player() override;
 	void collide(Player* player) override;
-	void collide(Sprite* sprite) override;
+	void collide(MapEntity* entity) override;
 	std::string* get_dialog();
 	void inc_dialog_index();
 	void reset_dialog_index();

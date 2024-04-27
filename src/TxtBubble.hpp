@@ -1,9 +1,9 @@
 #ifndef SAFE_TXT_BUBBLE
 #define SAFE_TXT_BUBBLE
 
-#include "movables/Sprite.hpp"
+#include "movables/Static.hpp"
 
-class TxtBubble : public Sprite {
+class TxtBubble : public Static {
 
 public:
 	TxtBubble(Env* env, const char* txt, SDL_Point p);

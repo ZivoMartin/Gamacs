@@ -3,7 +3,7 @@
 #include "renderers/MainBattle.hpp"
 #include "Env.hpp"
 #include "movables/Player.hpp"
-#include "movables/Sprite.hpp"
+#include "movables/Static.hpp"
 #include "RegularAction.hpp"
 #include "movables/monsters/Monster.hpp"
 
