@@ -17,7 +17,7 @@ public:
 	~Pnj();
 	void update() override;
 	void interact_with_player() override;
-	void collide(Player* player) override;
+	void collide(GamePlayer* player) override;
 	void collide(MapEntity* entity) override;
 	std::string* get_dialog();
 	void inc_dialog_index();

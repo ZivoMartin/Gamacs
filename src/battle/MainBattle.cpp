@@ -1,7 +1,7 @@
 #include "MainBattle.hpp"
 #include "../Env.hpp"
 #include "../sprites/Sprite.hpp"
-#include "../game/game_characters/Player.hpp"
+#include "../interfaces/Player.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
 

@@ -13,7 +13,7 @@ public:
 	~Monster();
 	void action() override;
 	void collide(MapEntity* entity) override;
-	void collide(Player* player) override;
+	void collide(GamePlayer* player) override;
 	void interact_with_player() override;
 };
 

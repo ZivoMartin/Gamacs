@@ -7,7 +7,7 @@
 class MapEntity;
 class Map;
 class TxtBubble;
-class Player;
+class GamePlayer;
 class Pnj;
 
 class MainGame : public Renderer {
@@ -22,7 +22,7 @@ public:
 	void handdle_keypress() override;
 	void update_entities();	
 	bool stop_inc_action() {return false;}
-	Player* get_player();
+	GamePlayer* get_player();
 	void talk(Pnj* pnj);
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);

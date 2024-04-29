@@ -1,5 +1,4 @@
 #include "Orc.hpp"
-#include "../Player.hpp"
 #include "../../../Env.hpp"
 #define IMG_ORC_PATH "../res/orcSheet.png"
 #define ORC_WIDTH 0.12

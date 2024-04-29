@@ -50,11 +50,11 @@ set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
 
 
 add_library(lablib
-    /home/martin/Travail/Gamacs/Lablib/lib/button.c
-    /home/martin/Travail/Gamacs/Lablib/lib/lablib.c
-    /home/martin/Travail/Gamacs/Lablib/lib/cursor.c
-    /home/martin/Travail/Gamacs/Lablib/lib/scene.c
-    /home/martin/Travail/Gamacs/Lablib/lib/input.c
+    Lablib/lib/button.c
+    Lablib/lib/lablib.c
+    Lablib/lib/cursor.c
+    Lablib/lib/scene.c
+    Lablib/lib/input.c
 )
 
 include_directories(${SDL2_ALL_INC})
@@ -70,7 +70,7 @@ set(SOURCES
     src/game/MainGame.cpp  
     
     src/game/game_characters/MapEntity.cpp
-    src/game/game_characters/Player.cpp
+    src/game/game_characters/GamePlayer.cpp
     src/game/game_characters/Pnj.cpp
     src/game/game_characters/monsters/Monster.cpp
     src/game/game_characters/monsters/Orc.cpp
@@ -82,6 +82,7 @@ set(SOURCES
     
     src/battle/MainBattle.cpp
 
+    src/interfaces/Player.cpp
     src/interfaces/Renderer.cpp
 
 )

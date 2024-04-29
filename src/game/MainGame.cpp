@@ -1,5 +1,5 @@
 #include "../Env.hpp"
-#include "game_characters/Player.hpp"
+#include "game_characters/GamePlayer.hpp"
 #include "game_characters/monsters/Orc.hpp"
 #include "Map.hpp"
 #include "game_characters/Pnj.hpp"
@@ -23,7 +23,7 @@ MainGame::~MainGame() {
 	delete txt_bubble;
 }
 
-Player* MainGame::get_player() {
+GamePlayer* MainGame::get_player() {
 	return get_env()->get_player();
 }
 
@@ -52,7 +52,7 @@ void MainGame::render() {
 void MainGame::handdle_keypress() {
 	int dx = 0, dy = 0;
 	int speed = get_player()->get_speed();
-	Player* player = get_player();
+	GamePlayer* player = get_player();
 	if (is_active(SDLK_UP)) 	   player->move(Top);
 	else if (is_active(SDLK_DOWN)) player->move(Bot);
 	else if (is_active(SDLK_LEFT)) player->move(Left);

@@ -1,6 +1,6 @@
 #include "Pnj.hpp"
 #include "../../Env.hpp"
-#include "Player.hpp"
+#include "GamePlayer.hpp"
 
 #define ACTION_TIME 30
 #define BASE_FX 0.07
@@ -32,7 +32,7 @@ void Pnj::interact_with_player() {
 	}
 }
 
-void Pnj::collide(Player* player) {}
+void Pnj::collide(GamePlayer* player) {}
 
 void Pnj::collide(MapEntity* entity) {
 	entity->collide(this);

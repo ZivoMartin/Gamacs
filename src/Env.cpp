@@ -2,7 +2,7 @@
 #include "main_menu/MainMenu.hpp"
 #include "battle/MainBattle.hpp"
 #include "Env.hpp"
-#include "game/game_characters/Player.hpp"
+#include "game/game_characters/GamePlayer.hpp"
 #include "game/game_characters/monsters/Monster.hpp"
 
 
@@ -10,7 +10,7 @@ Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	running = false;
-	player = new Player(this);
+	player = new GamePlayer(this);
 	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
 }
@@ -80,17 +80,6 @@ SDL_Point Env::game_dim() {
 	return res;
 }
 
-// Compute the pixels coord of the point p, depends of the player position.
-SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
-	Player* player = get_player();
-	int w, h;
-	SDL_GetWindowSize(get_win(), &w, &h);
-	return {
-		w/2 - (player->get_pos()->x - p.x),
-		h/2 - (player->get_pos()->y - p.y)
-	};
-}
-
 #define DELAY 15
 
 void Env::game_loop() {
@@ -157,6 +146,6 @@ void Env::go_battle(Monster* monster) {
 	lablib_change_scene(lablib, Battle);
 }
 
-Player* Env::get_player() {
+GamePlayer* Env::get_player() {
 	return this->player;
 }

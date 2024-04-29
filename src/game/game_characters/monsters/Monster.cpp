@@ -1,5 +1,5 @@
 #include "Monster.hpp"
-#include "../Player.hpp"
+#include "../GamePlayer.hpp"
 #include "../../../Env.hpp"
 
 #define MONSTER_SPEED 1
@@ -27,9 +27,7 @@ void Monster::collide(MapEntity* entity) {
 	entity->collide(this);
 }
 
-void Monster::collide(Player* player) {
-
-}
+void Monster::collide(GamePlayer* player) {}
 
 void Monster::interact_with_player() {
 	get_env()->go_battle(this);
