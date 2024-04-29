@@ -11,6 +11,10 @@ MainBattle* Pown::get_battle() {
     return battle;
 }
 
+void Pown::set_initial_pos(Position pos) {
+	get_pos()->set_pos(pos.x(), pos.y());
+}
+
 void Pown::draw() {
     int ts = battle->get_ts();
     Updatable::draw(

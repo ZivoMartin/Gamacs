@@ -9,8 +9,8 @@ class Env;
 class Sprite : virtual public Updatable {
 
 public:
-	Sprite(Env* env, SpriteSheet sprite_sheet, Position pos, float fx, float fy);
-    Sprite(Env* env, const char* text, Position pos, float fx, float fy);
+	Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy);
+    Sprite(Env* env, const char* text, float fx, float fy);
 	~Sprite();
 	Env* get_env() const override;
 	SDL_Renderer* get_ren() const;
@@ -28,7 +28,7 @@ public:
 	float fy();
 	
 private:
-    void init(Env* env, Position pos, float fx, float fy);    
+    void init(Env* env, float fx, float fy);    
 	Env* env;
 	int width, height;
 	SDL_Texture* sprite_sheet;

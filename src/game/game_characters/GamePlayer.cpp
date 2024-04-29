@@ -3,9 +3,11 @@
 
 #define PLAYER_WIDTH 0.07
 #define PLAYER_HEIGHT 0.1
-#define BASE_PLAYER_POS {17, 20}
+#define BASE_PLAYER_POS 17, 20
 
-GamePlayer::GamePlayer(Env* env) : Player(env), Movable(env, PLAYER_SHEET, BASE_PLAYER_POS, PLAYER_WIDTH, PLAYER_HEIGHT) {}
+GamePlayer::GamePlayer(Env* env) : Player(env), Movable(env, PLAYER_SHEET, PLAYER_WIDTH, PLAYER_HEIGHT) {
+	set_initial_pos(Position(BASE_PLAYER_POS));
+}
 
 GamePlayer::~GamePlayer() {}
 

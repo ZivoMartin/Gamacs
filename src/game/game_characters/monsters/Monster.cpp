@@ -4,7 +4,8 @@
 
 #define MONSTER_SPEED 1
 
-Monster::Monster(Env* env, SpriteSheet sprite_sheet, Position pos, float w, float h) : Movable(env, sprite_sheet, pos, w, h) {
+Monster::Monster(Env* env, SpriteSheet sprite_sheet, Position pos, float w, float h) : Movable(env, sprite_sheet, w, h) {
+	set_initial_pos(pos);
 	set_speed(MONSTER_SPEED);
 	set_interactible();
 }

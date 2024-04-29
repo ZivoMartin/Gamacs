@@ -6,7 +6,7 @@
 class TxtBubble : public Static, public MapEntity {
 
 public:
-	TxtBubble(Env* env, const char* txt, Position p);
+	TxtBubble(Env* env, const char* txt, Position pos);
 	~TxtBubble();
 	void update() override;
 	

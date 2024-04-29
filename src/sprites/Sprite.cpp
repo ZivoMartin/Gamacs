@@ -4,23 +4,22 @@
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
 
-Sprite::Sprite(Env* env, SpriteSheet sprite_sheet, Position pos, float fx, float fy) {
+Sprite::Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy) {
 	this->sprite_sheet = env->get_text(sprite_sheet);
-    init(env, pos, fx, fy);
+    init(env, fx, fy);
 }
 
-Sprite::Sprite(Env* env, const char* text, Position pos, float fx, float fy) {
+Sprite::Sprite(Env* env, const char* text, float fx, float fy) {
     SDL_Surface* surf = TTF_RenderText_Blended(lablib_get_font(env->get_lablib()), text, {255, 255, 255, 255});
     this->sprite_sheet = (SDL_Texture*) cp(SDL_CreateTextureFromSurface(env->get_ren(), surf));
     SDL_FreeSurface(surf);
-    init(env, pos, fx, fy);
+    init(env, fx, fy);
 }
 
 Sprite::~Sprite() {}
 
-void Sprite::init(Env* env, Position pos, float fx, float fy) {
+void Sprite::init(Env* env, float fx, float fy) {
     this->env = env;
-	this->pos = Position(pos.x()*PIXEL_TILE_SIZE, pos.y()*PIXEL_TILE_SIZE);
     set_width(BASE_WIDTH);
 	set_height(BASE_HEIGHT);
 	this->factors = {fx, fy};
@@ -34,6 +33,7 @@ void Sprite::update() {
 Env* Sprite::get_env() const {
 	return env;
 }
+
 
 SDL_Renderer* Sprite::get_ren() const {
 	return get_env()->get_ren();

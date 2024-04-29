@@ -14,6 +14,7 @@ public:
     Pown(MainBattle* battle);
     ~Pown();
 
+	void set_initial_pos(Position p) override;
     void draw() override;
     
     MainBattle* get_battle();

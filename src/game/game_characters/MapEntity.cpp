@@ -2,6 +2,13 @@
 #include "../../Env.hpp"
 #include "../MainGame.hpp"
 
+void MapEntity::set_initial_pos(Position pos) {
+	get_pos()->set_pos(
+		pos.x()*PIXEL_TILE_SIZE,
+		pos.y()*PIXEL_TILE_SIZE
+	);   
+}
+
 void MapEntity::set_interactible() {
 	can_interact_with_player = true;
 }

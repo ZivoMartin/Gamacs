@@ -7,6 +7,7 @@ class Updatable {
 
 public:
     virtual Env* get_env() const = 0;
+	virtual void set_initial_pos(Position pos) = 0;
 	virtual void draw() = 0;
     virtual void draw(int x, int y) {
         if (stop) {
