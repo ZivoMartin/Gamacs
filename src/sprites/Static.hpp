@@ -12,10 +12,9 @@ class Player;
 class Static : public Sprite {
 
 public:
-	Static(Env* env, const char* img_path, SDL_Point pos, float fx, float fy);
+	Static(Env* env, const char* img_path, Position pos, float fx, float fy);
 	~Static();
 	virtual void draw(int x, int y) override;
-	virtual void draw() override;
 
 private:
 

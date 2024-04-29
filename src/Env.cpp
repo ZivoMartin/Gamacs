@@ -74,22 +74,13 @@ bool Env::is_running() {
 }
 
 
-SDL_Point Env::game_dim() {
-	SDL_Point res;
-	SDL_GetWindowSize(get_win(), &res.x, &res.y);
-	return res;
+Position Env::game_dim() {
+	int x, y;
+	SDL_GetWindowSize(get_win(), &x, &y);
+	return Position(x, y);
 }
 
-// Compute the pixels coord of the point p, depends of the player position.
-SDL_Point Env::convert_coord_to_pixels(SDL_Point p) {
-	Player* player = get_player();
-	int w, h;
-	SDL_GetWindowSize(get_win(), &w, &h);
-	return {
-		w/2 - (player->get_pos()->x - p.x),
-		h/2 - (player->get_pos()->y - p.y)
-	};
-}
+
 
 #define DELAY 15
 

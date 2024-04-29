@@ -12,7 +12,7 @@ class Env;
 class Movable : public Sprite {
 
 public:
-	Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy);
+	Movable(Env* env, const char* img_path, Position pos, float fx, float fy);
 	~Movable();
 	virtual void update() override;
 	virtual void action() = 0;
@@ -20,7 +20,6 @@ public:
 	virtual void move(Direction dir);
 	virtual void attack(int attack_number);
 	virtual void draw(int x, int y) override;
-	virtual void draw() override;
 	int get_speed();
 	void set_speed(int s);
 		
@@ -38,7 +37,7 @@ public:
 	
 private:
 	int speed;
-	SDL_Point current_sprite = {0, 10};
+	Position current_sprite = {0, 10};
 	bool has_move = false;
 	int frame_speed = BASE_FRAME_SPEED;
 	bool is_doing_something = false;

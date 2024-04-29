@@ -33,6 +33,7 @@ enum SceneIndex {
 	TotalScene
 };
 
+#include "../game/GamePosition.hpp"
 
 class Env;
 class Pnj;

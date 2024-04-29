@@ -4,7 +4,7 @@
 
 #define MONSTER_SPEED 1
 
-Monster::Monster(Env* env, const char* sheet_p, SDL_Point pos, float w, float h) : Movable(env, sheet_p, pos, w, h) {
+Monster::Monster(Env* env, const char* sheet_p, Position pos, float w, float h) : Movable(env, sheet_p, pos, w, h) {
 	set_speed(MONSTER_SPEED);
 	set_interactible();
 }
@@ -19,7 +19,7 @@ void Monster::action() {
 		else if (now%200<150) this->move(Top);
 		else if (now%200<200) this->move(Left);
 	}
-	Movable::draw();
+	Sprite::draw();
 }
 
 

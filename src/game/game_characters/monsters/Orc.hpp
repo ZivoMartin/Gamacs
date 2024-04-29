@@ -8,7 +8,7 @@ class Env;
 class Orc : public Monster {
 
 public:
-	Orc(Env* env, SDL_Point pos);
+	Orc(Env* env, Position pos);
 	~Orc();
 };
 

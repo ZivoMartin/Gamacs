@@ -32,7 +32,9 @@ void MainBattle::render() {
 			Sprite* sprite = get(i, j);
 			if (sprite != nullptr){
 				sprite->Sprite::update();
-				sprite->draw(decal_w+i*tile_size+tile_size/2-sprite->get_width()/2, decal_h+j*tile_size);
+				sprite->draw(
+					decal_w+i * tile_size + tile_size/2 - sprite->get_width()/2,
+					decal_h+j*tile_size);
 			}
 		}
 }

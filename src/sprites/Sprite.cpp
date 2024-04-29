@@ -4,9 +4,9 @@
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
 
-Sprite::Sprite(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) {
+Sprite::Sprite(Env* env, const char* img_path, Position pos, float fx, float fy) {
 	this->env = env;
-	this->pos = {pos.x*PIXEL_TILE_SIZE, pos.y*PIXEL_TILE_SIZE};
+	this->pos = Position(pos.x()*PIXEL_TILE_SIZE, pos.y()*PIXEL_TILE_SIZE);
 	SDL_Surface* surf = IMG_Load(img_path);
 	if (!surf) 
 		surf = TTF_RenderText_Blended(lablib_get_font(env->get_lablib()), img_path, (SDL_Color) {255, 255, 255, 255});  
@@ -21,6 +21,14 @@ Sprite::Sprite() {}
 
 Sprite::~Sprite() {
 	SDL_DestroyTexture(get_text());
+}
+
+
+void Sprite::draw() {
+	Position p = get_pos()->convert_coord_to_pixels(get_env());
+	Position map_dim = get_env()->game_dim();
+	if (p.x() > -get_width() && p.y() > -get_height() && p.x() < map_dim.x() && p.y() < map_dim.y())
+		draw(p.x(), p.y());
 }
 
 void Sprite::update() {
@@ -57,7 +65,7 @@ void Sprite::set_height(int h) {
 	this->height = h;
 }
 
-SDL_Point* Sprite::get_pos() {
+Position* Sprite::get_pos() {
 	return &this->pos;
 }
 
