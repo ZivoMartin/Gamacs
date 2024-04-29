@@ -1,7 +1,7 @@
 #ifndef GAME_POSITION_SAFE
 #define GAME_POSITION_SAFE
 
-#include "../include/global_include.hpp"
+#include "include/global_include.hpp"
 
 class Env;
 

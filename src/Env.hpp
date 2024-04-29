@@ -35,7 +35,7 @@ public:
 	int win_width();
 	int win_height();
 	int get_now();
-	GamePosition game_dim();
+	Position game_dim();
 	void go_battle(Monster* monster);
 	void go_game();
 	void set_scene(Scene* scene, Renderer* renderer);

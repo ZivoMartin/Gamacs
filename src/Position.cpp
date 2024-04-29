@@ -1,6 +1,6 @@
-#include "GamePosition.hpp"
-#include "../Env.hpp"
-#include "game_characters/Player.hpp"
+#include "Position.hpp"
+#include "Env.hpp"
+#include "game/game_characters/GamePlayer.hpp"
 
 Position::Position() {
 	set_pos(0, 0);
@@ -56,7 +56,7 @@ void Position::inc_x(int dx) {
 }
 
 Position Position::convert_coord_to_pixels(Env* env) {
-	Player* player = env->get_player();
+	GamePlayer* player = env->get_player();
 	int w, h;
 	SDL_GetWindowSize(env->get_win(), &w, &h);
 	return Position(

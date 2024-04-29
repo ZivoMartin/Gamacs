@@ -75,7 +75,7 @@ set(SOURCES
     src/game/game_characters/monsters/Monster.cpp
     src/game/game_characters/monsters/Orc.cpp
 
-    src/game/GamePosition.cpp
+    src/Position.cpp
     src/game/Map.cpp
     src/game/TxtBubble.cpp
     

@@ -10,5 +10,5 @@ Player::Player(Env* env) : Movable(env, IMG_PLAYER_PATH, BASE_PLAYER_POS, PLAYER
 Player::~Player() {}
 
 void Player::action() {
-	draw();
+    draw();
 }
