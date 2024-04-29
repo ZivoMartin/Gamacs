@@ -7,7 +7,6 @@
 
 #define MAX_KEYCODE 322
 
-class GamePlayer;
 class Renderer;
 class Monster;
 class MainBattle;
@@ -23,15 +22,16 @@ public:
 	void game_loop();
 	SDL_Window* get_win();
 	SDL_Renderer* get_ren();
+    void init_textures();
 	bool is_running();
 	void handdle_events();
 	void render_menu();
-	GamePlayer* get_player();
 	bool is_active(SDL_Keycode c);
 	void enable_key(SDL_Keycode c);
 	void disable_key(SDL_Keycode c);
 	
 	Lablib* get_lablib();
+    SDL_Texture* get_text(SpriteSheet i);
 	int win_width();
 	int win_height();
 	int get_now();
@@ -52,12 +52,13 @@ private:
 	bool running;
 	SDL_Window* w;
 	SDL_Renderer* ren;
-	GamePlayer* player;
 	MainBattle* battle;
 	MainGame* game;
 	std::map<Scene*, Renderer*> renderers;
 	std::map<SDL_Keycode, bool> events;
 	long long unsigned int now = 0;
+
+    SDL_Texture* textures[NbSpriteSheet];
 };
 
 #endif

@@ -6,8 +6,8 @@
 #define BASE_HEIGHT 60
 #define BASE_SPRITE 0, 10
 
-Movable::Movable(Env* env, const char* img_path, Position pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy) {
-	this->speed = BASE_SPEED;
+Movable::Movable(Env* env, const SpriteSheet sprite_sheet, Position pos, float fx, float fy) : Sprite(env, sprite_sheet, pos, fx, fy) {
+    this->speed = BASE_SPEED;
     set_current_sprite(BASE_SPRITE);
 }
 

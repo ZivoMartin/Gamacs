@@ -3,7 +3,7 @@
 
 #include "include/global_include.hpp"
 
-class Env;
+class MainGame;
 
 class Position {
 
@@ -23,7 +23,7 @@ public:
 	void set_pos(Position p);
 	Position clone();
 
-	Position convert_coord_to_pixels(Env* env);
+	Position convert_coord_to_pixels(MainGame* game);
 	
 private:
 	int the_x, the_y;

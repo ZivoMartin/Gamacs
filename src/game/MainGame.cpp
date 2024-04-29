@@ -9,10 +9,11 @@
 
 MainGame::MainGame(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	env->set_game(this);
+    player = new GamePlayer(env);
 	entities.push_back(get_player());
 	place_monsters();
 	init_pnj();
-	map = new Map(env);
+	map = new Map(this);
 	init_lablib(lablib);
 }
 
@@ -24,7 +25,7 @@ MainGame::~MainGame() {
 }
 
 GamePlayer* MainGame::get_player() {
-	return get_env()->get_player();
+	return player;
 }
 
 #define NB_ORC 4
@@ -37,7 +38,7 @@ void MainGame::place_monsters() {
 void MainGame::init_pnj() {
 	ActionVec vec;
 	vec.push_back(std::pair(&MainGame::talk_and_inc, &MainGame::stop_inc_action));
-	Pnj* pnj = new Pnj(get_env(), this, "../res/golem.png", {14, 21}, vec);
+	Pnj* pnj = new Pnj(get_env(), this, GolemSheet, {14, 21}, vec);
 	pnj->set_dialog("../res/test_dialog.txt");
 	entities.push_back(pnj);
 }

@@ -2,7 +2,6 @@
 #include "main_menu/MainMenu.hpp"
 #include "battle/MainBattle.hpp"
 #include "Env.hpp"
-#include "game/game_characters/GamePlayer.hpp"
 #include "game/game_characters/monsters/Monster.hpp"
 
 
@@ -10,7 +9,7 @@ Env::Env() {
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	running = false;
-	player = new GamePlayer(this);
+    init_textures();
 	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
 }
@@ -22,7 +21,23 @@ Env::~Env() {
 	lablib_destroy(lablib);
 	std::for_each(renderers.begin(), renderers.end(),  [](std::pair<Scene*, Renderer*> p) { 
 		delete p.second;
-	}); 
+	});
+    for (int i = 0; i<NbSpriteSheet; i++) 
+        SDL_DestroyTexture(textures[i]);
+}
+
+
+SDL_Texture* Env::get_text(SpriteSheet i) {
+    if (i == NbSpriteSheet) {
+        fprintf(stderr, "NbSpritesheet represents the number of texture not a specific one");
+        exit(1);
+    }
+    return textures[i];
+}
+
+void Env::init_textures() {
+    for (int i = 0; i<NbSpriteSheet; i++) 
+        textures[i] = IMG_LoadTexture(get_ren(), sprite_sheet_paths[i]);    
 }
 
 void Env::init_renderers() {
@@ -144,8 +159,4 @@ void Env::go_game() {
 
 void Env::go_battle(Monster* monster) {
 	lablib_change_scene(lablib, Battle);
-}
-
-GamePlayer* Env::get_player() {
-	return this->player;
 }

@@ -8,13 +8,11 @@
 
 class Env;
 
-class Player : public Movable, virtual Updatable {
+class Player  {
 
 public:
 	Player(Env* env);
 	~Player();
-	void action() override;
-    virtual void draw() override = 0;
 
 private:
 };

@@ -28,6 +28,7 @@ public:
 	void talk_and_reset(Pnj* pnj);
 	
 private:
+    GamePlayer* player;
 	std::vector<MapEntity*> entities;
 	Map* map;
 	TxtBubble* txt_bubble = nullptr;

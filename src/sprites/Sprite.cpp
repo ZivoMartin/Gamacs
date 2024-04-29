@@ -4,31 +4,26 @@
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
 
-Sprite::Sprite(Env* env, const char* img_path, Position pos, float fx, float fy) {
-	this->env = env;
+Sprite::Sprite(Env* env, SpriteSheet sprite_sheet, Position pos, float fx, float fy) {
+	this->sprite_sheet = env->get_text(sprite_sheet);
+    init(env, pos, fx, fy);
+}
+
+Sprite::Sprite(Env* env, const char* text, Position pos, float fx, float fy) {
+    SDL_Surface* surf = TTF_RenderText_Blended(lablib_get_font(env->get_lablib()), text, {255, 255, 255, 255});
+    this->sprite_sheet = (SDL_Texture*) cp(SDL_CreateTextureFromSurface(env->get_ren(), surf));
+    SDL_FreeSurface(surf);
+    init(env, pos, fx, fy);
+}
+
+Sprite::~Sprite() {}
+
+void Sprite::init(Env* env, Position pos, float fx, float fy) {
+    this->env = env;
 	this->pos = Position(pos.x()*PIXEL_TILE_SIZE, pos.y()*PIXEL_TILE_SIZE);
-	SDL_Surface* surf = IMG_Load(img_path);
-	if (!surf) 
-		surf = TTF_RenderText_Blended(lablib_get_font(env->get_lablib()), img_path, (SDL_Color) {255, 255, 255, 255});  
-	this->sprite_sheet = SDL_CreateTextureFromSurface(env->get_ren(), surf);
-	SDL_FreeSurface(surf);
-	set_width(BASE_WIDTH);
+    set_width(BASE_WIDTH);
 	set_height(BASE_HEIGHT);
 	this->factors = {fx, fy};
-}
-
-Sprite::Sprite() {}
-
-Sprite::~Sprite() {
-	SDL_DestroyTexture(get_text());
-}
-
-
-void Sprite::draw() {
-	Position p = get_pos()->convert_coord_to_pixels(get_env());
-	Position map_dim = get_env()->game_dim();
-	if (p.x() > -get_width() && p.y() > -get_height() && p.x() < map_dim.x() && p.y() < map_dim.y())
-		draw(p.x(), p.y());
 }
 
 void Sprite::update() {

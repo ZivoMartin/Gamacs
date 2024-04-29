@@ -4,6 +4,7 @@ using namespace std;
 
 #include "game_characters/GamePlayer.hpp"
 #include "Map.hpp"
+#include "MainGame.hpp"
 #include "../Env.hpp"
 
 #define ROCK_IMG_PATH "../res/rock_ground.png"
@@ -13,8 +14,8 @@ using namespace std;
 #define LIGHT_GRASS_N_IMG_PATH "../res/light_grassNorth.png"
 #define MAP_FILE_PATH "../res/map.txt"
 
-Map::Map(Env* env) {
-	this->env = env;
+Map::Map(MainGame* game) {
+	this->game = game;
 	load_game();
 	save_texture(ROCK_IMG_PATH, Rock);
 	save_texture(LIGHT_GRASS_IMG_PATH, LightGrass);
@@ -27,23 +28,23 @@ Map::~Map() {
 }
 
 void Map::save_texture(const char* path, int index) {
-	ground_textures[index] =  (SDL_Texture*) cp(IMG_LoadTexture(env->get_ren(), path));
+	ground_textures[index] =  (SDL_Texture*) cp(IMG_LoadTexture(game->get_ren(), path));
 }
 
 void Map::draw_square(int x, int y, int i, int j) {
 	SDL_Rect r = {.x=x, .y=y, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
-	cc(SDL_RenderCopy(env->get_ren(), ground_textures[map[i][j]], NULL, &r));
+	cc(SDL_RenderCopy(game->get_ren(), ground_textures[map[i][j]], NULL, &r));
 }
 
 void Map::draw() {
 	int p = PIXEL_TILE_SIZE;
-	Position* pos = env->get_player()->get_pos();
+	Position* pos = game->get_player()->get_pos();
 	int player_x = pos->x()/p, 
 		player_y = pos->y()/p;
 	int mx = pos->x()%p - p/2,
 		my = pos->y()%p - p/2;
 	int x=0, y=0;
-	int width = env->win_width(), height = env->win_height();
+	int width = game->get_env()->win_width(), height = game->get_env()->win_height();
 	for (int il=width/2-mx - p, ir = width/2-mx - p; (il+p) > 0 || (ir-p) < width; il-=p, ir+=p){
 		for (int jl=height/2-my - p, jr=height/2-my - p; (jl+p) > 0 || (jr-p) < height; jl-=p, jr+=p) {
 			draw_square(il, jl, player_x-x, player_y-y);

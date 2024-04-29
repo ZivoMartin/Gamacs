@@ -3,8 +3,8 @@
 #include "../Env.hpp"
 
 
-Static::Static(Env* env, const char* img_path, Position pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy) {}
-
+Static::Static(Env* env, const char* text, Position pos, float fx, float fy) : Sprite(env, text, pos, fx, fy) {}
+Static::Static(Env* env, SpriteSheet sprite_sheet, Position pos, float fx, float fy) : Sprite(env, sprite_sheet, pos, fx, fy) {}
 Static::~Static() {}
 
 

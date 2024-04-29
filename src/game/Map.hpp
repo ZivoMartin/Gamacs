@@ -3,7 +3,7 @@
 
 #include "../include/global_include.hpp"
 
-class Env;
+class MainGame;
 
 enum GroundType {
 	Rock,
@@ -16,15 +16,15 @@ enum GroundType {
 
 class Map {
 public:
-	Map(Env* env);
+	Map(MainGame* game);
 	~Map();
 	void draw();
 	void draw_square(int x, int y, int i, int j);
 		
 private:
 	void save_texture(const char* path, int index);
-	
-	Env* env;
+
+	MainGame* game;
 	SDL_Texture* ground_textures[NbGround];
 	GroundType map[MAP_WIDTH][MAP_HEIGHT];
 	void load_game();

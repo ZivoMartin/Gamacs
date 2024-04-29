@@ -9,7 +9,7 @@ class Env;
 class Monster : public Movable, public MapEntity {
 
 public:
-	Monster(Env* env, const char* sheet_p, Position pos, float w, float h);
+	Monster(Env* env, SpriteSheet sprite_sheet, Position pos, float w, float h);
 	~Monster();
 	void action() override;
 	void collide(MapEntity* entity) override;

@@ -2,7 +2,6 @@
 #define SPRITE_SAFE
 
 #include "../include/global_include.hpp"
-
 #include "../interfaces/Updatable.hpp"
 
 class Env;
@@ -10,16 +9,13 @@ class Env;
 class Sprite : virtual public Updatable {
 
 public:
-	Sprite(Env* env, const char* img_path, Position pos, float fx, float fy);
-	Sprite();
+	Sprite(Env* env, SpriteSheet sprite_sheet, Position pos, float fx, float fy);
+    Sprite(Env* env, const char* text, Position pos, float fx, float fy);
 	~Sprite();
-	Env* get_env() const;
+	Env* get_env() const override;
 	SDL_Renderer* get_ren() const;
 	SDL_Window* get_win() const;
-
 	virtual void update() override;
-	virtual void draw() override;
-	virtual void draw(int x, int y) override = 0;
 	Position* get_pos() override;
 	int get_width() override;
 	int get_height() override;
@@ -32,6 +28,7 @@ public:
 	float fy();
 	
 private:
+    void init(Env* env, Position pos, float fx, float fy);    
 	Env* env;
 	int width, height;
 	SDL_Texture* sprite_sheet;

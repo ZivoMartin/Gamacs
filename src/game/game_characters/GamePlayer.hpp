@@ -5,14 +5,16 @@
 
 #include "../../include/global_include.hpp"
 #include "../../interfaces/Player.hpp"
+#include "../../sprites/Movable.hpp"
 
 class Env;
 
-class GamePlayer : public Player, public MapEntity {
+class GamePlayer : public Movable, public Player, public MapEntity {
 
 public:
     GamePlayer(Env* env);
     ~GamePlayer();
+    void action() override;
     void draw() override;
     void interact();
 	void collide(Monster* monster) override;

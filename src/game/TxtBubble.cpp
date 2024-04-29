@@ -9,5 +9,5 @@ TxtBubble::~TxtBubble() {}
 
 void TxtBubble::update() {
 	Static::update();
-	Sprite::draw();
+	MapEntity::draw();
 }

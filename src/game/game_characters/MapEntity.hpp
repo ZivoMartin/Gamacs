@@ -11,10 +11,10 @@ public:
 	virtual void interact_with_player() {}
 	void set_interactible();
 	bool get_can_interact_with_player();
-
+    virtual void draw() override;
+    
 private:
 	bool can_interact_with_player = false;
-	
 };
 
 #endif

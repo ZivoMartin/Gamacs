@@ -41,4 +41,22 @@ class MainGame;
 
 typedef std::vector<std::pair<void (MainGame::*)(Pnj*), bool (MainGame::*)()>> ActionVec;
 
+typedef enum SpriteSheet{
+    MageSheet,
+    WarriorSheet,
+    OrcSheet,
+    GolemSheet,
+    NbSpriteSheet
+} SpriteSheet;
+
+#define PLAYER_SHEET WarriorSheet
+
+static const char* sprite_sheet_paths[NbSpriteSheet] = {
+    "../res/mageSheet.png",
+    "../res/templierSheet.png",
+    "../res/orcSheet.png",
+    "../res/golem.png"
+};
+
+
 #endif

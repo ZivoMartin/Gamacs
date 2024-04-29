@@ -13,6 +13,7 @@ class Static : public Sprite {
 
 public:
 	Static(Env* env, const char* img_path, Position pos, float fx, float fy);
+    Static(Env* env, const SpriteSheet sprite_sheet, Position pos, float fx, float fy);
 	~Static();
 	virtual void draw(int x, int y) override;
 
