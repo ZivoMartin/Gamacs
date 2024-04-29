@@ -2,6 +2,8 @@
 #include "../Env.hpp"
 #include "../sprites/Sprite.hpp"
 #include "../interfaces/Player.hpp"
+#include "PownPlayer.hpp"
+#include "Pown.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
 
@@ -15,7 +17,7 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
 			set(i, j, nullptr);
-	set(BASE_PLAYER_X, BASE_PLAYER_Y, (Sprite*) env->get_player());
+	set(BASE_PLAYER_X, BASE_PLAYER_Y, (Pown*) new PownPlayer(env));
 }
 
 MainBattle::~MainBattle() {
@@ -29,12 +31,13 @@ void MainBattle::render() {
 	decal_h = GRID_DECAL_TOP*h;
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) {
-			Sprite* sprite = get(i, j);
-			if (sprite != nullptr){
-				sprite->Sprite::update();
-				sprite->draw(
-					decal_w+i * tile_size + tile_size/2 - sprite->get_width()/2,
-					decal_h+j*tile_size);
+			Pown* pown = get(i, j);
+			if (pown != nullptr){
+				pown->update();
+				pown->draw(
+					// decal_w+i * tile_size + tile_size/2 - pown->get_width()/2,
+					// decal_h+j*tile_size
+                    );
 			}
 		}
 }
@@ -57,11 +60,11 @@ int MainBattle::get_ts() {
 	return tile_size;
 }
 
-void MainBattle::set(int i, int j, Sprite* s) {
-	board[i][j] = s;
+void MainBattle::set(int i, int j, Pown* p) {
+	board[i][j] = p;
 }
 
-Sprite* MainBattle::get(int i, int j) {
+Pown* MainBattle::get(int i, int j) {
 	return board[i][j];
 }
 

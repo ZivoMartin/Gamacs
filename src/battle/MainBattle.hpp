@@ -13,8 +13,7 @@
 #define BASE_PLAYER_X 4
 #define BASE_PLAYER_Y 5
 
-class Sprite;
-class Player;
+class Pown;
 
 class MainBattle : public Renderer {
 
@@ -32,13 +31,13 @@ public:
 	void display_board();
 	void click_on_grid();
 
-	void set(int i, int j, Sprite* s);
-	Sprite* get(int i, int j);
+	void set(int i, int j, Pown* p);
+	Pown* get(int i, int j);
 	
 private:
 	SDL_Texture* square_text;
 	int decal_w, decal_h, tile_size;
-	Sprite* board[BATTLE_WIDTH][BATTLE_HEIGHT];
+	Pown* board[BATTLE_WIDTH][BATTLE_HEIGHT];
 };
 
 void b_display_board(Button* grid);
