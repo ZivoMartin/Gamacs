@@ -6,7 +6,7 @@
 class TxtBubble : public Static {
 
 public:
-	TxtBubble(Env* env, const char* txt, SDL_Point p);
+	TxtBubble(Env* env, const char* txt, Position p);
 	~TxtBubble();
 	void update() override;
 	

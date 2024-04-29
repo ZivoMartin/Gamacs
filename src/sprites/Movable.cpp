@@ -6,7 +6,7 @@
 #define BASE_HEIGHT 60
 #define BASE_SPRITE 0, 10
 
-Movable::Movable(Env* env, const char* img_path, SDL_Point pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy) {
+Movable::Movable(Env* env, const char* img_path, Position pos, float fx, float fy) : Sprite(env, img_path, pos, fx, fy) {
 	this->speed = BASE_SPEED;
     set_current_sprite(BASE_SPRITE);
 }
@@ -30,22 +30,15 @@ void Movable::set_speed(int s) {
 }
 
 void Movable::move(int dx, int dy) {
-	SDL_Point* pos = get_pos();
-	pos->x += dx;
-	pos->y += dy;
+	get_pos()->inc_x(dx);
+	get_pos()->inc_y(dy);
 }
 
-void Movable::draw() {
-	SDL_Point p = get_env()->convert_coord_to_pixels(*get_pos());
-	SDL_Point map_dim = get_env()->game_dim();
-	if (p.x > -get_width() && p.y > -get_height() && p.x < map_dim.x && p.y < map_dim.y)
-		draw(p.x, p.y);
-}
 
 void Movable::draw(int x, int y) {
 	SDL_Rect src = (SDL_Rect){
-		TOP_SS_X + current_sprite.x*SPRITE_W + current_sprite.x*SPRITE_DECALL_X-13,
-		TOP_SS_Y + current_sprite.y*SPRITE_H + current_sprite.y*SPRITE_DECALL_Y-10,
+		TOP_SS_X + current_sprite.x()*SPRITE_W + current_sprite.x()*SPRITE_DECALL_X-13,
+		TOP_SS_Y + current_sprite.y()*SPRITE_H + current_sprite.y()*SPRITE_DECALL_Y-10,
 		SPRITE_W+30,
 		SPRITE_H+10
 	};
@@ -59,19 +52,19 @@ int Movable::get_speed() {
 
 
 void Movable::set_sprite_col(int x) {
-	this->current_sprite.x = x;
+	current_sprite.set_x(x);
 }
 
 void Movable::set_sprite_row(int y) {
-	this->current_sprite.y = y;
+	current_sprite.set_y(y);
 }
 
 int Movable::get_sprite_col() {
-	return current_sprite.x;
+	return current_sprite.x();
 }
 
 int Movable::get_sprite_row() {
-	return current_sprite.y;
+	return current_sprite.y();
 }
 
 void Movable::inc_sprite_col() {

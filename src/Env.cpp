@@ -74,10 +74,10 @@ bool Env::is_running() {
 }
 
 
-SDL_Point Env::game_dim() {
-	SDL_Point res;
-	SDL_GetWindowSize(get_win(), &res.x, &res.y);
-	return res;
+Position Env::game_dim() {
+	int x, y;
+	SDL_GetWindowSize(get_win(), &x, &y);
+	return Position(x, y);
 }
 
 #define DELAY 15

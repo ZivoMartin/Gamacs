@@ -37,11 +37,11 @@ void Map::draw_square(int x, int y, int i, int j) {
 
 void Map::draw() {
 	int p = PIXEL_TILE_SIZE;
-	SDL_Point* pos = env->get_player()->get_pos();
-	int player_x = pos->x/p, 
-		player_y = pos->y/p;
-	int mx = pos->x%p - p/2,
-		my = pos->y%p - p/2;
+	Position* pos = env->get_player()->get_pos();
+	int player_x = pos->x()/p, 
+		player_y = pos->y()/p;
+	int mx = pos->x()%p - p/2,
+		my = pos->y()%p - p/2;
 	int x=0, y=0;
 	int width = env->win_width(), height = env->win_height();
 	for (int il=width/2-mx - p, ir = width/2-mx - p; (il+p) > 0 || (ir-p) < width; il-=p, ir+=p){

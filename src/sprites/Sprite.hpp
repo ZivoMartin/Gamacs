@@ -10,7 +10,7 @@ class Env;
 class Sprite : virtual public Updatable {
 
 public:
-	Sprite(Env* env, const char* img_path, SDL_Point pos, float fx, float fy);
+	Sprite(Env* env, const char* img_path, Position pos, float fx, float fy);
 	Sprite();
 	~Sprite();
 	Env* get_env() const;
@@ -18,8 +18,9 @@ public:
 	SDL_Window* get_win() const;
 
 	virtual void update() override;
-
-	SDL_Point* get_pos() override;
+	virtual void draw() override;
+	virtual void draw(int x, int y) override = 0;
+	Position* get_pos() override;
 	int get_width() override;
 	int get_height() override;
 	void set_width(int w);
@@ -35,7 +36,7 @@ private:
 	int width, height;
 	SDL_Texture* sprite_sheet;
 	SDL_FPoint factors;
-	SDL_Point pos;
+	Position pos;
 
 };
 
