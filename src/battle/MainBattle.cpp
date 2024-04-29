@@ -15,7 +15,7 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
 			set(i, j, nullptr);
-	//set(BASE_PLAYER_X, BASE_PLAYER_Y, (Sprite*) env->get_player());
+	set(BASE_PLAYER_X, BASE_PLAYER_Y, (Sprite*) env->get_player());
 }
 
 MainBattle::~MainBattle() {

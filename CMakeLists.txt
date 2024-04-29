@@ -82,7 +82,8 @@ set(SOURCES
     src/main_menu/MainMenu.cpp
     
     src/battle/MainBattle.cpp
-
+    src/battle/Pown.cpp
+    
     src/interfaces/Player.cpp
     src/interfaces/Renderer.cpp
 
