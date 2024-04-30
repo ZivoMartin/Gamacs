@@ -1,15 +1,15 @@
 #include "PownPlayer.hpp"
 #include "../Env.hpp"
 
-#define PLAYER_START_POS 4, 5
+#define PLAYER_START_POS 7, 5
 
-PownPlayer::PownPlayer(Env* env) : Pown(env->get_battle()), Player(env),  Movable(env, PLAYER_SHEET, POWN_SIZE) {
+PownPlayer::PownPlayer(Env* env) : PownMovable(env, PLAYER_SHEET), Player(env) {
 	set_initial_pos(Position(PLAYER_START_POS));
  }
 
 PownPlayer::~PownPlayer() {}
 
 
-void PownPlayer::action() {
-    Pown::draw();
+void PownPlayer::click_on_grid(Position pos) {
+    if (!is_moving()) walk_to(pos);
 }

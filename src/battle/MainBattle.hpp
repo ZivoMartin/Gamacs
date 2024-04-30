@@ -14,6 +14,7 @@
 #define BASE_PLAYER_Y 5
 
 class Pown;
+class PownPlayer;
 
 class MainBattle : public Renderer {
 
@@ -35,10 +36,12 @@ public:
 	void set(Pown* p);
     void set_empty(int i, int j);
 	Pown* get(int i, int j);
+    PownPlayer* get_player();
 	
 private:
 	SDL_Texture* square_text;
 	int decal_w, decal_h, tile_size;
+    PownPlayer* player;
 	Pown* board[BATTLE_WIDTH][BATTLE_HEIGHT];
 };
 

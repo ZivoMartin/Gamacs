@@ -29,12 +29,6 @@ void Movable::set_speed(int s) {
 	speed = s;
 }
 
-void Movable::move(int dx, int dy) {
-	get_pos()->inc_x(dx);
-	get_pos()->inc_y(dy);
-}
-
-
 void Movable::draw(int x, int y) {
 	SDL_Rect src = (SDL_Rect){
 		TOP_SS_X + current_sprite.x()*SPRITE_W + current_sprite.x()*SPRITE_DECALL_X-13,
@@ -82,6 +76,10 @@ void Movable::update_frame() {
 }
 
 void Movable::move(Direction dir) {
+    move(dir, speed);
+}
+
+void Movable::move(Direction dir, int speed) {
 	if (!occupated()) {
 		current_dir = dir;
 		nb_sprite_col = NB_MOVE_SPRITE;
@@ -93,6 +91,12 @@ void Movable::move(Direction dir) {
 	else if (dir == Bot) move(0, speed);
 	else if (dir == Left) move(-speed, 0);
 	else if (dir == Right) move(speed, 0);
+}
+
+
+void Movable::move(int dx, int dy) {
+	get_pos()->inc_x(dx);
+	get_pos()->inc_y(dy);
 }
 
 

@@ -18,6 +18,7 @@ public:
 	virtual void action() = 0;
 	virtual void move(int dx, int dy);
 	virtual void move(Direction dir);
+    virtual void move(Direction dir, int speed);
 	virtual void attack(int attack_number);
 	virtual void draw(int x, int y) override;
 	int get_speed();

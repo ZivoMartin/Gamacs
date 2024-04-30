@@ -1,19 +1,21 @@
 #ifndef SAFE_PLAYER_POWN
 #define SAFE_PLAYER_POWN
 
-#include "Pown.hpp"
+#include "PownMovable.hpp"
 #include "../interfaces/Player.hpp"
-#include "../sprites/Movable.hpp"
 
 class Env;
 
-class PownPlayer : public Movable, public Pown, public Player {
+class PownPlayer : public PownMovable, public Player {
 
 public:
     PownPlayer(Env* env);
     ~PownPlayer();
 
-    void action() override;
+    void click_on_grid(Position pos);
+
+
+
     
 }; 
 

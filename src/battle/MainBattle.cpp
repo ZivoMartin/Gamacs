@@ -17,7 +17,8 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
 			set_empty(i, j);
-	set((Pown*) new PownPlayer(env));
+    player = new PownPlayer(env);
+	set((Pown*) player);
 }
 
 MainBattle::~MainBattle() {
@@ -92,12 +93,13 @@ void MainBattle::click_on_grid() {
 	Lablib* lablib = get_lablib();
 	SDL_Point p = lablib_get_last_coordinate(lablib);
 	int w = get_env()->win_width(), h = get_env()->win_height();
-    p = {(p.x - decal_w)/tile_size, (p.y - decal_h)/tile_size};
-    Pown* pown = get(p.x, p.y);
+    Position pos = Position((p.x - decal_w)/tile_size, (p.y - decal_h)/tile_size);
+    Pown* pown = get(pos.x(), pos.y());
     if (pown == nullptr)
-        click_on_empty_square(Position(p.x, p.y));
+        click_on_empty_square(pos);
     else
         pown->clicked();
+    get_player()->click_on_grid(pos);
 }
 
 void MainBattle::click_on_empty_square(Position p) {
@@ -117,4 +119,8 @@ void MainBattle::init_lablib(Lablib* lablib) {
 void b_click_on_grid(Button* grid) {
 	Env* env = (Env*) button_get_env(grid);
 	env->get_battle()->click_on_grid();
+}
+
+PownPlayer* MainBattle::get_player() {
+    return player;
 }

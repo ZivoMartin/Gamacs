@@ -83,6 +83,7 @@ set(SOURCES
     
     src/battle/MainBattle.cpp
     src/battle/Pown.cpp
+    src/battle/PownMovable.cpp
     src/battle/PownPlayer.cpp
         
     src/interfaces/Player.cpp

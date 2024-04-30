@@ -19,8 +19,11 @@ public:
     void clicked() override;
     
     MainBattle* get_battle();
-
+    Position* get_move_delta();
+    void reset_move_delta();
+    
 private:
+    Position move_delta = Position(0, 0);
     MainBattle* battle;
 };
 
