@@ -24,6 +24,8 @@ public:
 	void init_lablib(Lablib* lablib) override;
 	void render() override;
 	void handdle_keypress() override;
+	void fight(SpriteSheet monster);
+	
 	SDL_Texture* get_square_txt();
 	int get_dw();
 	int get_dh();

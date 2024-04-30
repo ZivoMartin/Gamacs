@@ -13,8 +13,8 @@ public:
     ~PownPlayer();
 
     void click_on_grid(Position pos);
-
-
+	void reset_pos();
+	
 
     
 }; 

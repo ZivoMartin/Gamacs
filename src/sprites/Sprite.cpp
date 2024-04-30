@@ -6,6 +6,7 @@
 
 Sprite::Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy) {
 	this->sprite_sheet = env->get_text(sprite_sheet);
+	this->type_sprite_sheet = sprite_sheet;
     init(env, fx, fy);
 }
 
@@ -79,4 +80,8 @@ float Sprite::fx() {
 
 float Sprite::fy() {
 	return factors.y;
+}
+
+SpriteSheet Sprite::get_sprite_sheet() {
+	return type_sprite_sheet;
 }

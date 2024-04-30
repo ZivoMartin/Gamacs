@@ -31,5 +31,5 @@ void Monster::collide(MapEntity* entity) {
 void Monster::collide(GamePlayer* player) {}
 
 void Monster::interact_with_player() {
-	get_env()->go_battle(this);
+	get_env()->go_battle(get_sprite_sheet());
 }

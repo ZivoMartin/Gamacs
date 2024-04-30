@@ -13,3 +13,8 @@ PownPlayer::~PownPlayer() {}
 void PownPlayer::click_on_grid(Position pos) {
     if (!is_moving()) walk_to(pos);
 }
+
+
+void PownPlayer::reset_pos() {
+	get_pos()->set_pos(PLAYER_START_POS);
+}

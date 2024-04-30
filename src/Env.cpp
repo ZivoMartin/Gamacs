@@ -157,6 +157,7 @@ void Env::go_game() {
 	lablib_change_scene(lablib, Game);
 }
 
-void Env::go_battle(Monster* monster) {
+void Env::go_battle(SpriteSheet monster) {
+	battle->fight(monster);
 	lablib_change_scene(lablib, Battle);
 }

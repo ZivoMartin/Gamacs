@@ -3,6 +3,7 @@
 #include "../sprites/Sprite.hpp"
 #include "../interfaces/Player.hpp"
 #include "PownPlayer.hpp"
+#include "PownMonster.hpp"
 #include "Pown.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
@@ -123,4 +124,9 @@ void b_click_on_grid(Button* grid) {
 
 PownPlayer* MainBattle::get_player() {
     return player;
+}
+
+void MainBattle::fight(SpriteSheet monster) {
+	set(new PownMonster(get_env(), monster));
+	player->reset_pos();
 }

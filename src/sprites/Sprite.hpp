@@ -23,6 +23,7 @@ public:
 	void set_height(int h);
 	void set_size(int w, int h);
 	SDL_Texture* get_text();
+	SpriteSheet get_sprite_sheet();
 	
 	float fx();
 	float fy();
@@ -34,6 +35,7 @@ private:
 	SDL_Texture* sprite_sheet;
 	SDL_FPoint factors;
 	Position pos;
+	SpriteSheet type_sprite_sheet;
 
 };
 
