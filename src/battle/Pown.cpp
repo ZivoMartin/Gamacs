@@ -12,6 +12,7 @@ MainBattle* Pown::get_battle() {
 }
 
 void Pown::set_initial_pos(Position pos) {
+    printf("%d %d\n", pos.x(), pos.y());
 	get_pos()->set_pos(pos.x(), pos.y());
 }
 
@@ -23,3 +24,6 @@ void Pown::draw() {
     );
 }
 
+void Pown::clicked() {
+    printf("Pown clicked on %d, %d\n", get_pos()->x(), get_pos()->y());
+}

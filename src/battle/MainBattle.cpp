@@ -16,8 +16,8 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
-			set(i, j, nullptr);
-	set(BASE_PLAYER_X, BASE_PLAYER_Y, (Pown*) new PownPlayer(env));
+			set_empty(i, j);
+	set((Pown*) new PownPlayer(env));
 }
 
 MainBattle::~MainBattle() {
@@ -32,13 +32,7 @@ void MainBattle::render() {
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) {
 			Pown* pown = get(i, j);
-			if (pown != nullptr){
-				pown->update();
-				pown->draw(
-					// decal_w+i * tile_size + tile_size/2 - pown->get_width()/2,
-					// decal_h+j*tile_size
-                    );
-			}
+			if (pown != nullptr) pown->update();
 		}
 }
 
@@ -60,8 +54,12 @@ int MainBattle::get_ts() {
 	return tile_size;
 }
 
-void MainBattle::set(int i, int j, Pown* p) {
-	board[i][j] = p;
+void MainBattle::set(Pown* p) {
+	if (p != nullptr) board[p->get_pos()->x()][p->get_pos()->y()] = p;
+}
+
+void MainBattle::set_empty(int i, int j) {
+    board[i][j] = nullptr;
 }
 
 Pown* MainBattle::get(int i, int j) {
@@ -95,7 +93,15 @@ void MainBattle::click_on_grid() {
 	SDL_Point p = lablib_get_last_coordinate(lablib);
 	int w = get_env()->win_width(), h = get_env()->win_height();
     p = {(p.x - decal_w)/tile_size, (p.y - decal_h)/tile_size};
+    Pown* pown = get(p.x, p.y);
+    if (pown == nullptr)
+        click_on_empty_square(Position(p.x, p.y));
+    else
+        pown->clicked();
+}
 
+void MainBattle::click_on_empty_square(Position p) {
+    printf("Click on %d %d\n", p.x(), p.y());
 }
 
 #define NB_BUTTON 1

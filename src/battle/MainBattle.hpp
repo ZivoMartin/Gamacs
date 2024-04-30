@@ -28,10 +28,12 @@ public:
 	int get_dh();
 	int get_ts();
 
+    void click_on_empty_square(Position p);
 	void display_board();
 	void click_on_grid();
 
-	void set(int i, int j, Pown* p);
+	void set(Pown* p);
+    void set_empty(int i, int j);
 	Pown* get(int i, int j);
 	
 private:

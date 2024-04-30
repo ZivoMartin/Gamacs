@@ -16,6 +16,7 @@ public:
 
 	void set_initial_pos(Position p) override;
     void draw() override;
+    void clicked() override;
     
     MainBattle* get_battle();
 
