@@ -11,6 +11,10 @@ PownMovable::PownMovable(Env* env, SpriteSheet sprite_sheet) : Pown(env->get_bat
 
 PownMovable::~PownMovable() {}
 
+int PownMovable::get_turn_pm() {
+	return turn_mp;
+}
+
 bool cond_stop(int nb1, int nb2, bool swap){
     if (!swap) 
         return nb1 < nb2;
@@ -19,7 +23,13 @@ bool cond_stop(int nb1, int nb2, bool swap){
     
 }
 
-void PownMovable::walk_to(Position pos) {
+bool PownMovable::is_valid_move(Position pos) {
+	move_d = std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y());
+	return move_d <= turn_mp;
+}
+
+bool PownMovable::walk_to(Position pos) {
+	if (!is_valid_move(pos)) return false;
     positions.push_back(*get_pos());
     asked_pos = pos;
     int xy[2] = {get_pos()->x(), get_pos()->y()};
@@ -55,6 +65,7 @@ void PownMovable::walk_to(Position pos) {
         positions.push_back(Position(xy[0], xy[1]));
     }
     reach_square();
+	return true;
 }
 
 bool PownMovable::is_moving() {
@@ -67,14 +78,25 @@ void PownMovable::actualise_walk_timer() {
         reach_square();
 }
 
+void PownMovable::move_finished() {
+	turn_mp -= move_d;
+	walk_timer = MOTIONLESS;
+	get_pos()->set_pos(asked_pos.x(), asked_pos.y());
+	reset_move_delta();
+	if (turn_mp == 0) {
+		turn_mp = mp;
+		end_of_turn();
+		get_battle()->end_of_pown_turn();
+	}
+}
+
+void PownMovable::end_of_turn() {}
+
 void PownMovable::reach_square() {
      Position prev = positions.back();
      positions.pop_back();
-    if (positions.empty()) {
-        walk_timer = MOTIONLESS;
-        get_pos()->set_pos(asked_pos.x(), asked_pos.y());
-        reset_move_delta();
-    } else {
+	 if (positions.empty()) move_finished();
+	 else {
         int x = get_pos()->x(), y = get_pos()->y();
         Position next = positions.back();
         if (next.x() == prev.x()) {

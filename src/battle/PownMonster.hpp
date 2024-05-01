@@ -10,6 +10,10 @@ public:
 	PownMonster(Env* env, SpriteSheet monster_sheet);
 	~PownMonster();
 
+	void your_turn() override;
+	void end_of_turn() override;
+	void random_move();
+	
 private:
 
 	

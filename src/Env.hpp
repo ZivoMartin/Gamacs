@@ -46,6 +46,7 @@ public:
 	void talk(Pnj* pnj);
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);
+	int random(int min, int max);
 	
 private:
 	Lablib* lablib;

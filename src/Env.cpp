@@ -6,12 +6,16 @@
 
 
 Env::Env() {
+	srand(time(NULL));
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	running = false;
     init_textures();
 	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
+	for (int i=0; i<100; i++) {
+		printf("%d\n", random(0, 5));
+	}
 }
 
 Env::~Env() {
@@ -160,4 +164,8 @@ void Env::go_game() {
 void Env::go_battle(SpriteSheet monster) {
 	battle->fight(monster);
 	lablib_change_scene(lablib, Battle);
+}
+
+int Env::random(int min, int max){
+	return rand() % (max+1) + min;
 }

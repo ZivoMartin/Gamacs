@@ -4,6 +4,7 @@
 #include "../sprites/Movable.hpp"
 #include "Pown.hpp"
 
+#define DEFAULT_MP 5
 #define MOTIONLESS -1
 #define REACHED 0
 
@@ -16,12 +17,20 @@ public:
     ~PownMovable();
     
     void action() override;
-    void walk_to(Position pos);
+    bool walk_to(Position pos);
     bool is_moving();
     void actualise_walk_timer();
     void reach_square();
+	virtual void move_finished();
+	bool is_valid_move(Position pos);
+	virtual void your_turn() = 0;
+	virtual void end_of_turn();
+	int get_turn_pm();
     
 private:
+	int mp = DEFAULT_MP;
+	int turn_mp = DEFAULT_MP;
+	int move_d;
     Position asked_pos;
     int walk_timer = MOTIONLESS;
     Direction current_dir;

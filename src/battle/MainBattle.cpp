@@ -5,6 +5,7 @@
 #include "PownPlayer.hpp"
 #include "PownMonster.hpp"
 #include "Pown.hpp"
+#include "PownMovable.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
 
@@ -19,6 +20,7 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
 			set_empty(i, j);
     player = new PownPlayer(env);
+	powns.push_back(player);
 	set((Pown*) player);
 }
 
@@ -103,16 +105,41 @@ void MainBattle::click_on_grid() {
     get_player()->click_on_grid(pos);
 }
 
-void MainBattle::click_on_empty_square(Position p) {
-    printf("Click on %d %d\n", p.x(), p.y());
+void MainBattle::click_on_empty_square(Position p) {}
+
+MainBattle* extract_battle(Button* b) {
+	return ((Env*) button_get_env(b))->get_battle();
 }
 
-#define NB_BUTTON 1
+void move_click(Button* b) {
+	MainBattle* battle = extract_battle(b);
+	if (battle->is_player_turn())battle->set_select(Move);
+}
+
+void MainBattle::set_player_turn() {
+	player_turn = true;
+}
+
+void MainBattle::disable_player_turn() {
+	player_turn = false;
+}
+
+bool MainBattle::is_player_turn() {
+	return player_turn;
+}
+
+
+void MainBattle::set_select(Selected select) {
+	this->select = select;
+}
+
+#define NB_BUTTON 2
 void MainBattle::init_lablib(Lablib* lablib) {
 	Scene* battle = create_scene(lablib, NB_BUTTON);
 	set_scene_background(lablib, battle, BATTLE_BG);
 	Button* grid = scene_add_button(battle, 0.5, GRID_DECAL_TOP, 0, 0, "", &b_click_on_grid);
 	button_set_display(grid, &b_display_board);
+	scene_add_button(battle, 0, 0.8, 0.05, 0.05, "move", &move_click);
 	get_env()->set_scene(battle, this);
 }
 
@@ -126,7 +153,19 @@ PownPlayer* MainBattle::get_player() {
     return player;
 }
 
-void MainBattle::fight(SpriteSheet monster) {
-	set(new PownMonster(get_env(), monster));
+void MainBattle::fight(SpriteSheet monster_sheet) {
+	PownMovable* monster = new PownMonster(get_env(), monster_sheet);
+	powns.push_back(monster);
+	set(monster);
 	player->reset_pos();
+	powns[0]->your_turn();
+}
+
+Selected MainBattle::get_select() {
+	return select;
+}
+
+void MainBattle::end_of_pown_turn() {
+	current_pown = (current_pown+1)%powns.size();
+	powns[current_pown]->your_turn();
 }

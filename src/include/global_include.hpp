@@ -12,7 +12,9 @@ extern "C" {
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <algorithm> 
+#include <algorithm>
+#include <random>
+#include <time.h>  
 
 #define MAP_WIDTH 50
 #define MAP_HEIGHT 50

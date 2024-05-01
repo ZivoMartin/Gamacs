@@ -13,8 +13,16 @@
 #define BASE_PLAYER_X 4
 #define BASE_PLAYER_Y 5
 
+typedef enum Selected {
+	Move,
+	Nothing,
+	NbSelect
+} Selected;
+
+
 class Pown;
 class PownPlayer;
+class PownMovable;
 
 class MainBattle : public Renderer {
 
@@ -39,12 +47,23 @@ public:
     void set_empty(int i, int j);
 	Pown* get(int i, int j);
     PownPlayer* get_player();
+	Selected get_select();
+	void set_select(Selected select);
+	void end_of_pown_turn();
+
+	bool is_player_turn();
+	void set_player_turn();
+	void disable_player_turn();
 	
 private:
 	SDL_Texture* square_text;
 	int decal_w, decal_h, tile_size;
     PownPlayer* player;
+	std::vector<PownMovable*> powns;
 	Pown* board[BATTLE_WIDTH][BATTLE_HEIGHT];
+	Selected select = Nothing;
+	int current_pown = 0;
+	bool player_turn = false;
 };
 
 void b_display_board(Button* grid);

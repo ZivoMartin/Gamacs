@@ -21,6 +21,12 @@ public:
     };
 	virtual void update() = 0;
 	virtual Position* get_pos() = 0;
+	int get_x() {
+		return get_pos()->x();
+	}
+	int get_y() {
+		return get_pos()->y();
+	}
 	virtual int get_width() = 0;
 	virtual int get_height() = 0;
 
