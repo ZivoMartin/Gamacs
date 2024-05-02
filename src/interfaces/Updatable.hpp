@@ -20,15 +20,19 @@ public:
         stop = false;
     };
 	virtual void update() = 0;
-	virtual Position* get_pos() = 0;
-	int get_x() {
-		return get_pos()->x();
+	virtual Position get_pos() const = 0;
+    virtual void set_pos(Position pos) = 0;
+    void translate(int dx, int dy) {
+        set_pos(get_pos() + Position(dx, dy));
+    }
+	int get_x() const {
+		return get_pos().x();
 	}
-	int get_y() {
-		return get_pos()->y();
+	int get_y() const {
+		return get_pos().y();
 	}
-	virtual int get_width() = 0;
-	virtual int get_height() = 0;
+	virtual int get_width() const = 0;
+	virtual int get_height() const = 0;
 
 private:
     bool stop = false;

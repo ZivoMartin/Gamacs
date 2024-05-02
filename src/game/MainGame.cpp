@@ -24,7 +24,7 @@ MainGame::~MainGame() {
 	delete txt_bubble;
 }
 
-GamePlayer* MainGame::get_player() {
+GamePlayer* MainGame::get_player() const {
 	return player;
 }
 
@@ -68,10 +68,10 @@ void MainGame::handdle_keypress() {
 void MainGame::update_entities() {
 	int last_col = 0;
 	for (int i=0; i<entities.size(); i++) {
-		int x1 = entities[i]->get_pos()->x(), y1 = entities[i]->get_pos()->y();
+		int x1 = entities[i]->get_pos().x(), y1 = entities[i]->get_pos().y();
 		int j = last_col;
 		while (j < i) {
-			int x2 = entities[j]->get_pos()->x(), y2 = entities[j]->get_pos()->y();
+			int x2 = entities[j]->get_pos().x(), y2 = entities[j]->get_pos().y();
 			if (!((y1 <= (entities[j]->get_height()+y2) && y1 >= y2) || (y2 <= (entities[i]->get_height()+y1) && y2 >= y1))) last_col = j+1;
 			else if ((x1 <= (entities[j]->get_width()+x2) && x1 >= x2) || (x2 <= (entities[i]->get_width()+x1) && x2 >= x1)) {
 				entities[i]->collide(entities[j]);
@@ -82,8 +82,8 @@ void MainGame::update_entities() {
 		entities[i]->update();
 		j = i;
 		while (j >= 1 &&
-			   (entities[j-1]->get_pos()->y() + entities[j-1]->get_height()) >
-			   (entities[j]->get_pos()->y()   + entities[j]->get_height())) {
+			   (entities[j-1]->get_pos().y() + entities[j-1]->get_height()) >
+			   (entities[j]->get_pos().y()   + entities[j]->get_height())) {
 			MapEntity* tmp = entities[j];
 			entities[j] = entities[j-1];
 			entities[--j] = tmp;
@@ -93,8 +93,8 @@ void MainGame::update_entities() {
 
 void MainGame::talk(Pnj* pnj) {
 	if (txt_bubble != nullptr) delete txt_bubble;
-	Position* pos = pnj->get_pos();
-	txt_bubble = new TxtBubble(get_env(), pnj->get_dialog()->c_str(), {pos->x()/PIXEL_TILE_SIZE, pos->y()/PIXEL_TILE_SIZE});
+	Position pos = pnj->get_pos();
+	txt_bubble = new TxtBubble(get_env(), pnj->get_dialog()->c_str(), {pos.x()/PIXEL_TILE_SIZE, pos.y()/PIXEL_TILE_SIZE});
 }
 
 void MainGame::talk_and_inc(Pnj* pnj) {

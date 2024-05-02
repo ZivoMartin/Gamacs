@@ -18,8 +18,8 @@ class Map {
 public:
 	Map(MainGame* game);
 	~Map();
-	void draw();
-	void draw_square(int x, int y, int i, int j);
+	void draw() const;
+	void draw_square(int x, int y, int i, int j) const;
 		
 private:
 	void save_texture(const char* path, int index);

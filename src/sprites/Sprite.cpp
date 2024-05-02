@@ -45,11 +45,11 @@ SDL_Window* Sprite::get_win() const {
 }
 
 
-int Sprite::get_width() {
+int Sprite::get_width() const {
 	return this->width;
 }
 
-int Sprite::get_height() {
+int Sprite::get_height() const {
 	return this->height;
 }
 
@@ -57,12 +57,16 @@ void Sprite::set_width(int w) {
 	this->width = w;
 }
 
+void Sprite::set_pos(Position pos) {
+    this->pos = pos;
+}
+
 void Sprite::set_height(int h) {
 	this->height = h;
 }
 
-Position* Sprite::get_pos() {
-	return &this->pos;
+Position Sprite::get_pos() const {
+	return pos;
 }
 
 void Sprite::set_size(int w, int h) {
@@ -70,18 +74,18 @@ void Sprite::set_size(int w, int h) {
 	set_height(h);
 }
 
-SDL_Texture* Sprite::get_text() {
+SDL_Texture* Sprite::get_text() const {
 	return sprite_sheet;
 }
 
-float Sprite::fx() {
+float Sprite::fx() const {
 	return factors.x;
 }
 
-float Sprite::fy() {
+float Sprite::fy() const {
 	return factors.y;
 }
 
-SpriteSheet Sprite::get_sprite_sheet() {
+SpriteSheet Sprite::get_sprite_sheet() const {
 	return type_sprite_sheet;
 }

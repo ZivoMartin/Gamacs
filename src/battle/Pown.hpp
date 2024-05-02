@@ -18,8 +18,10 @@ public:
     void draw() override;
     void clicked() override;
     
-    MainBattle* get_battle();
-    Position* get_move_delta();
+    MainBattle* get_battle() const;
+    Position get_move_delta() const;
+    void inc_md_x(int x);
+    void inc_md_y(int y);
     void reset_move_delta();
     
 private:

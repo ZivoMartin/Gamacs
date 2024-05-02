@@ -18,14 +18,15 @@ public:
     
     void action() override;
     bool walk_to(Position pos);
-    bool is_moving();
+    bool is_moving() const;
     void actualise_walk_timer();
     void reach_square();
 	virtual void move_finished();
-	bool is_valid_move(Position pos);
+	bool is_valid_move(Position pos) const;
+    bool is_valid_move(Position pos, int* d) const;
 	virtual void your_turn() = 0;
 	virtual void end_of_turn();
-	int get_turn_pm();
+	int get_turn_pm() const;
     
 private:
 	int mp = DEFAULT_MP;

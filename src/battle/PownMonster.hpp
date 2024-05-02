@@ -11,11 +11,12 @@ public:
 	~PownMonster();
 
 	void your_turn() override;
-	void end_of_turn() override;
-	void random_move();
+	void move_finished() override;
+    void end_of_turn() override;
+	Position random_move() const;
 	
 private:
-
+    bool re_walk = true;
 	
 };
 

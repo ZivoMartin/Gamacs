@@ -34,10 +34,10 @@ public:
 	void handdle_keypress() override;
 	void fight(SpriteSheet monster);
 	
-	SDL_Texture* get_square_txt();
-	int get_dw();
-	int get_dh();
-	int get_ts();
+	SDL_Texture* get_square_txt() const;
+	int get_dw() const;
+	int get_dh() const;
+	int get_ts() const;
 
     void click_on_empty_square(Position p);
 	void display_board();
@@ -45,15 +45,18 @@ public:
 
 	void set(Pown* p);
     void set_empty(int i, int j);
-	Pown* get(int i, int j);
-    PownPlayer* get_player();
-	Selected get_select();
+	Pown* get(int i, int j) const;
+    Pown* get(Position p) const;
+    PownPlayer* get_player() const;
+	Selected get_select() const;
 	void set_select(Selected select);
 	void end_of_pown_turn();
 
-	bool is_player_turn();
+	bool is_player_turn() const;
 	void set_player_turn();
 	void disable_player_turn();
+    bool is_valid_pos(Position pos) const;
+    SDL_Color get_current_square_color(Position pos);
 	
 private:
 	SDL_Texture* square_text;

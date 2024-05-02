@@ -27,7 +27,7 @@ void PownPlayer::click_on_grid(Position pos) {
 
 
 void PownPlayer::reset_pos() {
-	get_pos()->set_pos(PLAYER_START_POS);
+	set_pos(Position(PLAYER_START_POS));
 }
 
 void PownPlayer::your_turn() {

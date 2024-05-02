@@ -20,33 +20,33 @@ public:
 
 	void init_renderers();
 	void game_loop();
-	SDL_Window* get_win();
-	SDL_Renderer* get_ren();
+	SDL_Window* get_win() const;
+	SDL_Renderer* get_ren() const;
     void init_textures();
-	bool is_running();
+	bool is_running() const;
 	void handdle_events();
 	void render_menu();
 	bool is_active(SDL_Keycode c);
 	void enable_key(SDL_Keycode c);
 	void disable_key(SDL_Keycode c);
 	
-	Lablib* get_lablib();
-    SDL_Texture* get_text(SpriteSheet i);
-	int win_width();
-	int win_height();
-	int get_now();
-	Position game_dim();
+	Lablib* get_lablib() const;
+    SDL_Texture* get_text(SpriteSheet i) const;
+	int win_width() const;
+	int win_height() const;
+	int get_now() const;
+	Position game_dim() const;
 	void go_battle(SpriteSheet sprite_sheet);
 	void go_game();
 	void set_scene(Scene* scene, Renderer* renderer);
-	MainBattle* get_battle();
-	MainGame* get_game();
+	MainBattle* get_battle() const;
+	MainGame* get_game() const;
 	void set_battle(MainBattle* battle);
 	void set_game(MainGame* game);
 	void talk(Pnj* pnj);
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);
-	int random(int min, int max);
+	int random(int min, int max) const;
 	
 private:
 	Lablib* lablib;

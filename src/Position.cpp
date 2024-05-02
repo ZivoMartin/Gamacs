@@ -18,11 +18,11 @@ Position::Position(SDL_Point p) {
 	set_pos(p.x, p.y);
 }
 	
-int Position::x() {
+int Position::x() const {
 	return the_x;
 }
 
-int Position::y() {
+int Position::y() const {
 	return the_y;
 }
 
@@ -55,13 +55,14 @@ void Position::inc_x(int dx) {
 	set_x(x()+dx);
 }
 
-Position Position::convert_coord_to_pixels(MainGame* game) {
+Position Position::convert_coord_to_pixels(MainGame* game) const {
 	GamePlayer* player = game->get_player();
 	int w, h;
 	SDL_GetWindowSize(game->get_win(), &w, &h);
 	return Position(
-		w/2 - (player->get_pos()->x() - x()),
-		h/2 - (player->get_pos()->y() - y())
+		w/2 - (player->get_pos().x() - x()),
+		h/2 - (player->get_pos().y() - y())
 		);
 }
+
 

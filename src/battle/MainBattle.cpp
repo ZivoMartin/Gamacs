@@ -42,32 +42,40 @@ void MainBattle::render() {
 
 void MainBattle::handdle_keypress() {}
 
-SDL_Texture* MainBattle::get_square_txt() {
+SDL_Texture* MainBattle::get_square_txt() const {
 	return square_text;
 }
 
-int MainBattle::get_dw() {
+bool MainBattle::is_valid_pos(Position pos) const {
+    return pos.x() >= 0 && pos.y() >= 0 && pos.x() < BATTLE_WIDTH && pos.y() < BATTLE_HEIGHT;
+}
+
+int MainBattle::get_dw() const {
 	return decal_w;
 }
 
-int MainBattle::get_dh() {
+int MainBattle::get_dh() const {
 	return decal_h;
 }
 
-int MainBattle::get_ts() {
+int MainBattle::get_ts() const {
 	return tile_size;
 }
 
 void MainBattle::set(Pown* p) {
-	if (p != nullptr) board[p->get_pos()->x()][p->get_pos()->y()] = p;
+	if (p != nullptr) board[p->get_pos().x()][p->get_pos().y()] = p;
 }
 
 void MainBattle::set_empty(int i, int j) {
     board[i][j] = nullptr;
 }
 
-Pown* MainBattle::get(int i, int j) {
+Pown* MainBattle::get(int i, int j) const {
 	return board[i][j];
+}
+
+Pown* MainBattle::get(Position pos) const {
+	return board[pos.x()][pos.y()];
 }
 
 void b_display_board(Button* grid) {
@@ -80,14 +88,28 @@ void b_display_board(Button* grid) {
 	env->get_battle()->display_board();
 }
 
+SDL_Color MainBattle::get_current_square_color(Position pos) {
+    if (get_select() == Move) 
+        if (get_player()->is_valid_move(pos))
+            return {100, 100, 200, 100};
+        else
+            return {200, 100, 100, 100};
+    else 
+        return {100, 100, 100, 100};       
+}
+
+#define EXTRACT_COLOR(c) c.r, c.g, c.b, c.a
+
 void MainBattle::display_board() {
 	SDL_Surface* surf = TTF_RenderText_Blended(lablib_get_font(get_env()->get_lablib()), "", lablib_create_color(0, 0, 0, 255));
 	SDL_Texture* text = SDL_CreateTextureFromSurface(get_ren(), surf);
 	SDL_FreeSurface(surf);
 	for(int i = 0; i < BATTLE_WIDTH; i++){
 		for(int j = 0; j < BATTLE_HEIGHT; j++){
+            SDL_SetRenderDrawColor(get_ren(), EXTRACT_COLOR(get_current_square_color(Position(i, j))));
 			SDL_Rect r = lablib_init_rect(i*tile_size + decal_w, j*tile_size + decal_h, tile_size);
-			SDL_RenderCopy(get_ren(), get_square_txt(), NULL, &r);
+            SDL_RenderDrawRect(get_ren(), &r);         
+            SDL_RenderFillRect(get_ren(), &r);
 		}
 	} 
 }
@@ -116,6 +138,11 @@ void move_click(Button* b) {
 	if (battle->is_player_turn())battle->set_select(Move);
 }
 
+void cancel_click(Button* b) {
+	MainBattle* battle = extract_battle(b);
+	battle->set_select(Nothing);
+}
+
 void MainBattle::set_player_turn() {
 	player_turn = true;
 }
@@ -124,7 +151,7 @@ void MainBattle::disable_player_turn() {
 	player_turn = false;
 }
 
-bool MainBattle::is_player_turn() {
+bool MainBattle::is_player_turn() const {
 	return player_turn;
 }
 
@@ -133,13 +160,17 @@ void MainBattle::set_select(Selected select) {
 	this->select = select;
 }
 
-#define NB_BUTTON 2
+#define NB_BUTTON 3
+#define B_SIZE 0.1
+#define BUTTON_SIZE B_SIZE, B_SIZE
+#define BUTTON_Y 1-B_SIZE
 void MainBattle::init_lablib(Lablib* lablib) {
 	Scene* battle = create_scene(lablib, NB_BUTTON);
 	set_scene_background(lablib, battle, BATTLE_BG);
 	Button* grid = scene_add_button(battle, 0.5, GRID_DECAL_TOP, 0, 0, "", &b_click_on_grid);
 	button_set_display(grid, &b_display_board);
-	scene_add_button(battle, 0, 0.8, 0.05, 0.05, "move", &move_click);
+	scene_add_button(battle, 0.3, BUTTON_Y, BUTTON_SIZE, "move", &move_click);
+    scene_add_button(battle, 0.5, BUTTON_Y, BUTTON_SIZE, "cancel",&cancel_click);
 	get_env()->set_scene(battle, this);
 }
 
@@ -149,7 +180,7 @@ void b_click_on_grid(Button* grid) {
 	env->get_battle()->click_on_grid();
 }
 
-PownPlayer* MainBattle::get_player() {
+PownPlayer* MainBattle::get_player() const {
     return player;
 }
 
@@ -161,7 +192,7 @@ void MainBattle::fight(SpriteSheet monster_sheet) {
 	powns[0]->your_turn();
 }
 
-Selected MainBattle::get_select() {
+Selected MainBattle::get_select() const {
 	return select;
 }
 

@@ -11,11 +11,11 @@ PownMovable::PownMovable(Env* env, SpriteSheet sprite_sheet) : Pown(env->get_bat
 
 PownMovable::~PownMovable() {}
 
-int PownMovable::get_turn_pm() {
+int PownMovable::get_turn_pm() const {
 	return turn_mp;
 }
 
-bool cond_stop(int nb1, int nb2, bool swap){
+bool cond_stop(int nb1, int nb2, bool swap) {
     if (!swap) 
         return nb1 < nb2;
     else
@@ -23,16 +23,20 @@ bool cond_stop(int nb1, int nb2, bool swap){
     
 }
 
-bool PownMovable::is_valid_move(Position pos) {
-	move_d = std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y());
-	return move_d <= turn_mp;
+bool PownMovable::is_valid_move(Position pos) const {
+	return std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y()) <= turn_mp;
+}
+
+bool PownMovable::is_valid_move(Position pos, int* d) const {
+	*d = std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y());
+	return *d <= turn_mp;
 }
 
 bool PownMovable::walk_to(Position pos) {
-	if (!is_valid_move(pos)) return false;
-    positions.push_back(*get_pos());
+	if (!is_valid_move(pos, &move_d)) return false;
+    positions.push_back(get_pos());
     asked_pos = pos;
-    int xy[2] = {get_pos()->x(), get_pos()->y()};
+    int xy[2] = {get_pos().x(), get_pos().y()};
     int i = 0;
     int higher = 0;     // Indice de la position du coordoné de la plus grande distance à parcourir (x par défaut)
     int lower = 1;      // Indice de la position du coordoné de la plus petite distance à parcourir (y par défaut)
@@ -68,7 +72,7 @@ bool PownMovable::walk_to(Position pos) {
 	return true;
 }
 
-bool PownMovable::is_moving() {
+bool PownMovable::is_moving() const {
     return walk_timer > MOTIONLESS;
 }
 
@@ -81,23 +85,24 @@ void PownMovable::actualise_walk_timer() {
 void PownMovable::move_finished() {
 	turn_mp -= move_d;
 	walk_timer = MOTIONLESS;
-	get_pos()->set_pos(asked_pos.x(), asked_pos.y());
+	set_pos(Position(asked_pos.x(), asked_pos.y()));
 	reset_move_delta();
-	if (turn_mp == 0) {
-		turn_mp = mp;
-		end_of_turn();
-		get_battle()->end_of_pown_turn();
-	}
+	if (turn_mp == 0) 
+        end_of_turn();
 }
 
-void PownMovable::end_of_turn() {}
+void PownMovable::end_of_turn() {
+    turn_mp = mp;
+    get_battle()->end_of_pown_turn();
+    move_d = 0;
+}
 
 void PownMovable::reach_square() {
      Position prev = positions.back();
      positions.pop_back();
 	 if (positions.empty()) move_finished();
 	 else {
-        int x = get_pos()->x(), y = get_pos()->y();
+        int x = get_pos().x(), y = get_pos().y();
         Position next = positions.back();
         if (next.x() == prev.x()) {
             walk_timer = std::abs(prev.y() - next.y()) * get_battle()->get_ts();
@@ -115,10 +120,10 @@ void PownMovable::reach_square() {
 void PownMovable::action() {
     actualise_walk_timer();
     if (is_moving()) {
-        if      (current_dir == Left) get_move_delta()->inc_x(-POWN_SPEED);
-        else if (current_dir == Right) get_move_delta()->inc_x(POWN_SPEED);
-        else if (current_dir == Top) get_move_delta()->inc_y(-POWN_SPEED);
-        else if (current_dir == Bot) get_move_delta()->inc_y(POWN_SPEED);
+        if      (current_dir == Left) inc_md_x(-POWN_SPEED);
+        else if (current_dir == Right) inc_md_x(POWN_SPEED);
+        else if (current_dir == Top) inc_md_y(-POWN_SPEED);
+        else if (current_dir == Bot) inc_md_y(POWN_SPEED);
         move(current_dir);
     }
     Pown::draw();

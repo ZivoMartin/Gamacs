@@ -31,18 +31,18 @@ void Map::save_texture(const char* path, int index) {
 	ground_textures[index] =  (SDL_Texture*) cp(IMG_LoadTexture(game->get_ren(), path));
 }
 
-void Map::draw_square(int x, int y, int i, int j) {
+void Map::draw_square(int x, int y, int i, int j) const {
 	SDL_Rect r = {.x=x, .y=y, .w=PIXEL_TILE_SIZE, .h=PIXEL_TILE_SIZE};
 	cc(SDL_RenderCopy(game->get_ren(), ground_textures[map[i][j]], NULL, &r));
 }
 
-void Map::draw() {
+void Map::draw() const {
 	int p = PIXEL_TILE_SIZE;
-	Position* pos = game->get_player()->get_pos();
-	int player_x = pos->x()/p, 
-		player_y = pos->y()/p;
-	int mx = pos->x()%p - p/2,
-		my = pos->y()%p - p/2;
+	Position pos = game->get_player()->get_pos();
+	int player_x = pos.x()/p, 
+		player_y = pos.y()/p;
+	int mx = pos.x()%p - p/2,
+		my = pos.y()%p - p/2;
 	int x=0, y=0;
 	int width = game->get_env()->win_width(), height = game->get_env()->win_height();
 	for (int il=width/2-mx - p, ir = width/2-mx - p; (il+p) > 0 || (ir-p) < width; il-=p, ir+=p){

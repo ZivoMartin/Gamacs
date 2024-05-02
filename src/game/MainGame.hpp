@@ -22,7 +22,7 @@ public:
 	void handdle_keypress() override;
 	void update_entities();	
 	bool stop_inc_action() {return false;}
-	GamePlayer* get_player();
+	GamePlayer* get_player() const;
 	void talk(Pnj* pnj);
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);

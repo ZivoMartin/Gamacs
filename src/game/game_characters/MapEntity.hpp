@@ -12,7 +12,7 @@ public:
 	void set_initial_pos(Position pos) override;
 	virtual void interact_with_player() {}
 	void set_interactible();
-	bool get_can_interact_with_player();
+	bool get_can_interact_with_player() const;
     virtual void draw() override;
     
 private:

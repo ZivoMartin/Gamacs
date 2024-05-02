@@ -40,7 +40,7 @@ void Movable::draw(int x, int y) {
 	cc(SDL_RenderCopy(get_ren(), get_text(), &src, &dest));
 }
 
-int Movable::get_speed() {
+int Movable::get_speed() const {
 	return this->speed;
 }
 
@@ -53,11 +53,11 @@ void Movable::set_sprite_row(int y) {
 	current_sprite.set_y(y);
 }
 
-int Movable::get_sprite_col() {
+int Movable::get_sprite_col() const {
 	return current_sprite.x();
 }
 
-int Movable::get_sprite_row() {
+int Movable::get_sprite_row() const {
 	return current_sprite.y();
 }
 
@@ -95,8 +95,7 @@ void Movable::move(Direction dir, int speed) {
 
 
 void Movable::move(int dx, int dy) {
-	get_pos()->inc_x(dx);
-	get_pos()->inc_y(dy);
+	translate(dx, dy);
 }
 
 
@@ -108,7 +107,7 @@ void Movable::attack(int attack_number) {
 	}
 }
 
-bool Movable::occupated() {
+bool Movable::occupated() const {
 	return is_doing_something;
 }
 

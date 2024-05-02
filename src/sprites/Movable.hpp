@@ -21,11 +21,11 @@ public:
     virtual void move(Direction dir, int speed);
 	virtual void attack(int attack_number);
 	virtual void draw(int x, int y) override;
-	int get_speed();
+	int get_speed() const;
 	void set_speed(int s);
 		
-	int get_sprite_col();
-    int get_sprite_row();
+	int get_sprite_col() const;
+    int get_sprite_row() const;
 	void set_current_sprite(int x, int y);
 	void set_sprite_col(int x);
 	void set_sprite_row(int y);
@@ -33,7 +33,7 @@ public:
 
 	void set_frame_speed(int new_frame_speed);
 	void update_frame();
-	bool occupated();
+	bool occupated() const;
 	void set_activity(bool act);
 	
 private:

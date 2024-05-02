@@ -13,9 +13,6 @@ Env::Env() {
     init_textures();
 	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
-	for (int i=0; i<100; i++) {
-		printf("%d\n", random(0, 5));
-	}
 }
 
 Env::~Env() {
@@ -31,7 +28,7 @@ Env::~Env() {
 }
 
 
-SDL_Texture* Env::get_text(SpriteSheet i) {
+SDL_Texture* Env::get_text(SpriteSheet i) const {
     if (i == NbSpriteSheet) {
         fprintf(stderr, "NbSpritesheet represents the number of texture not a specific one");
         exit(1);
@@ -55,20 +52,20 @@ void Env::set_scene(Scene* scene, Renderer* renderer) {
 }
 
 
-Lablib* Env::get_lablib() {
+Lablib* Env::get_lablib() const {
 	return lablib;
 }
 
 
-int Env::get_now() {
+int Env::get_now() const {
 	return now;
 }
 
-SDL_Window* Env::get_win() {
+SDL_Window* Env::get_win() const {
 	return this->w;
 }
 
-SDL_Renderer* Env::get_ren() {
+SDL_Renderer* Env::get_ren() const {
 	return this->ren;
 }
 
@@ -80,20 +77,20 @@ void Env::set_game(MainGame* game) {
 	this->game = game;
 }
 
-MainGame* Env::get_game() {
+MainGame* Env::get_game() const {
 	return game;
 }
 
-MainBattle* Env::get_battle() {
+MainBattle* Env::get_battle() const {
 	return battle;
 }
 
-bool Env::is_running() {
+bool Env::is_running() const {
 	return this->running;
 }
 
 
-Position Env::game_dim() {
+Position Env::game_dim() const {
 	int x, y;
 	SDL_GetWindowSize(get_win(), &x, &y);
 	return Position(x, y);
@@ -142,15 +139,13 @@ bool Env::is_active(SDL_Keycode c) {
 	return events[c];
 }
 
-
-
-int Env::win_width() {
+int Env::win_width() const {
 	int w, h;
 	SDL_GetWindowSize(get_win(), &w, &h);
 	return w;
 }
 
-int Env::win_height() {
+int Env::win_height() const {
 	int w, h;
 	SDL_GetWindowSize(get_win(), &w, &h);
 	return h;
@@ -166,6 +161,6 @@ void Env::go_battle(SpriteSheet monster) {
 	lablib_change_scene(lablib, Battle);
 }
 
-int Env::random(int min, int max){
+int Env::random(int min, int max) const {
 	return rand() % (max+1) + min;
 }
