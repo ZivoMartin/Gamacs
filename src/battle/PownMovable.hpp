@@ -8,6 +8,7 @@
 #define MOTIONLESS -1
 #define REACHED 0
 
+class SettingAttack;
 class SettingFighter;
 class Env;
 
@@ -29,6 +30,9 @@ public:
 	virtual void your_turn() = 0;
 	virtual void end_of_turn();
 	int get_turn_pm() const;
+
+    bool can_attack_with(Position pos, SettingAttack* attack);
+    void attack();
     
 private:
 	int mp = DEFAULT_MP;

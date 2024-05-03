@@ -4,6 +4,7 @@
 #include "Env.hpp"
 #include "game/game_characters/monsters/Monster.hpp"
 #include "entity_settings/SettingFighter.hpp"
+#include "entity_settings/SettingAttack.hpp"
 
 Env::Env() {
 	srand(time(NULL));
@@ -11,7 +12,8 @@ Env::Env() {
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	running = false;
     init_textures();
-    player_setting = new SettingFighter(this, KindPlayer);
+    init_attacks();
+    player_setting = new SettingFighter(this, PLAYER_KIND);
     lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
 }
@@ -24,22 +26,43 @@ Env::~Env() {
 	std::for_each(renderers.begin(), renderers.end(),  [](std::pair<Scene*, Renderer*> p) { 
 		delete p.second;
 	});
-    for (int i = 0; i<NbSpriteSheet; i++) 
+    for (int i = 0; i<NB_SPRITE_PATH; i++) 
         SDL_DestroyTexture(textures[i]);
+    
 }
 
 
-SDL_Texture* Env::get_text(SpriteSheet i) const {
-    if (i == NbSpriteSheet) {
-        fprintf(stderr, "NbSpritesheet represents the number of texture not a specific one");
+SDL_Texture* Env::get_text(Kind i) const {
+    if (i == NbKind) {
+        fprintf(stderr, "NbKind represents the number of texture not a specific one");
         exit(1);
     }
     return textures[i];
 }
 
+SDL_Texture* Env::get_text(AttackType i) const {
+    if (i == NbAttack) {
+        fprintf(stderr, "NbAttack represents the number of texture not a specific one");
+        exit(1);
+    }
+    return textures[i+NbKind];
+}
+
 void Env::init_textures() {
-    for (int i = 0; i<NbSpriteSheet; i++) 
+    for (int i = 0; i < NB_SPRITE_PATH; i++) 
         textures[i] = IMG_LoadTexture(get_ren(), sprite_sheet_paths[i]);    
+}
+
+void Env::init_attacks() {
+    attacks[DefaultAttack] = new SettingAttack(DefaultAttack);
+}
+
+SettingAttack* Env::get_attack(AttackType attack) {
+    if (attack == NbAttack) {
+        fprintf(stderr, "NbAttack isn't an attack\n");
+        exit(1);
+    }
+    return attacks[attack];
 }
 
 void Env::init_renderers() {

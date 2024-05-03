@@ -3,6 +3,7 @@
 #include "MainBattle.hpp"
 
 #include "../entity_settings/SettingFighter.hpp"
+#include "../entity_settings/SettingAttack.hpp"
 
 #define POWN_SPEED 3
 
@@ -139,3 +140,12 @@ void PownMovable::set_pos(Position pos) {
 	Sprite::set_pos(pos);
 	get_battle()->set(this);
 }
+
+bool PownMovable::can_attack_with(Position pos, SettingAttack* attack) {
+    return true;
+}
+
+void PownMovable::attack() {
+    Movable::attack(1);
+}
+

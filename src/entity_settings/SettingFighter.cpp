@@ -1,8 +1,10 @@
 #include "SettingFighter.hpp"
+#include "SettingAttack.hpp"
 
 SettingFighter::SettingFighter(Env* env, Kind kind) : Setting(env, kind) {
     max_hp = 100;
     current_hp = max_hp;
+    attacks.push_back(new SettingAttack(DefaultAttack));
 }
 
 SettingFighter::SettingFighter(Env* env, Kind kind, int lvl) : Setting(env, kind) {
@@ -25,8 +27,8 @@ int SettingFighter::get_lvl() const {
     return lvl;
 }
 
-std::vector<SDL_Texture*> SettingFighter::sprite_attack() const {
-    return std::vector<SDL_Texture*>();
+std::vector<SettingAttack*> SettingFighter::sprite_attack() const {
+    return attacks;
 }
 
 

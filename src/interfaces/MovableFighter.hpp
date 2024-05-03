@@ -11,7 +11,7 @@ public:
     MovableFighter(Env* env, Kind kind, float fx, float fy);
     MovableFighter(Env* env, SettingFighter* setting, float w, float h);
     SettingFighter* get_setting_fighter() const;
-
+    SettingAttack* get_attack(AttackType attack) const;
 private:
     SettingFighter* setting;
     

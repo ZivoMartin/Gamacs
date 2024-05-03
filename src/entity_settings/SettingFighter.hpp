@@ -3,6 +3,8 @@
 
 #include "Setting.hpp"
 
+class SettingAttack;
+
 class SettingFighter : public Setting {
 
 public:
@@ -17,13 +19,13 @@ public:
     int get_max_hp() const;
     int get_current_hp() const;
     int get_lvl() const;
-    std::vector<SDL_Texture*> sprite_attack() const;
+    std::vector<SettingAttack*> sprite_attack() const;
     
 private:
     int max_hp;
     int current_hp;
     int lvl = 1;
-    
+    std::vector<SettingAttack*> attacks;
 };
 
 #endif

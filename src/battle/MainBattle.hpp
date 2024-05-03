@@ -25,6 +25,7 @@ class Pown;
 class PownPlayer;
 class PownMovable;
 class SettingFighter;
+class SettingFighter;
 
 class MainBattle : public Renderer {
 
@@ -72,6 +73,7 @@ private:
 	Selected select = Nothing;
 	int current_pown = 0;
 	bool player_turn = false;
+    SettingAttack* selected_attack;
 };
 
 void b_display_board(Button* grid);

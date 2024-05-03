@@ -93,7 +93,8 @@ set(SOURCES
     
     src/entity_settings/Setting.cpp
     src/entity_settings/SettingFighter.cpp
-)
+    src/entity_settings/SettingAttack.cpp
+ )   
 
 # Add an executable with the above sources
 add_executable(${PROJECT_NAME} ${SOURCES})

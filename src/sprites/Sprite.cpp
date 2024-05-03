@@ -94,6 +94,3 @@ float Sprite::fy() const {
 	return factors.y;
 }
 
-SpriteSheet Sprite::get_sprite_sheet() const {
-	return setting->get_sprite_sheet();
-}

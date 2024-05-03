@@ -18,12 +18,10 @@ void PownPlayer::move_click(Position pos) {
 	if (!is_moving()) walk_to(pos);
 }
 
-void PownPlayer::nothing_click(Position pos) {
-
-}
+void PownPlayer::nothing_click(Position pos) {}
 
 void PownPlayer::attack_click(Position pos) {
-	attack(1);	
+	attack();
 }
 
 void PownPlayer::click_on_grid(Position pos) {

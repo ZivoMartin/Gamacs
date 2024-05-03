@@ -25,7 +25,6 @@ public:
 	void set_height(int h);
 	void set_size(int w, int h);
 	SDL_Texture* get_text() const;
-	SpriteSheet get_sprite_sheet() const;
 
     Setting* get_setting() const;
     void set_setting(Setting* setting);
@@ -40,7 +39,6 @@ private:
 	SDL_Texture* sprite_sheet;
 	SDL_FPoint factors;
 	Position pos;
-	SpriteSheet type_sprite_sheet;
     Setting* setting;
 
 };

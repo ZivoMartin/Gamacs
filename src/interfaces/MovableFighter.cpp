@@ -13,3 +13,9 @@ MovableFighter::MovableFighter(Env* env, SettingFighter* setting, float fx, floa
 SettingFighter* MovableFighter::get_setting_fighter() const {
     return setting;
 }
+
+SettingAttack* MovableFighter::get_attack(AttackType attack_type) {
+    for (SettingAttack* set : setting->get_attacks()) 
+        if (set->get_type() == attack_type) return set;
+    
+}

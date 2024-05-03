@@ -97,7 +97,9 @@ SDL_Color MainBattle::get_current_square_color(Position pos) {
         else
             return {200, 100, 100, 100};
 	else if (get_select() == Attack)
-		if (!is_empty_square(pos) && get(pos)->is_attackable_by_player())
+		if (!is_empty_square(pos) &&
+            get(pos)->is_attackable_by_player() &&
+            get_player()->can_attack_with(pos, selected_attack)) 
 			return {100, 255, 100, 100};
         else
             return {255, 100, 100, 100};
@@ -161,6 +163,7 @@ void cancel_click(Button* b) {
 void attack_click(Button* b) {
 	MainBattle* battle = extract_battle(b);
 	battle->set_select(Attack);
+    battle->set_selected_attack(battle->get_player()->get_attack(DefaultAttack));
 }
 
 void MainBattle::set_player_turn() {
