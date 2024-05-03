@@ -43,3 +43,4 @@ void Pown::clicked() {
 Position Pown::get_move_delta() const {
     return move_delta;
 }
+

@@ -4,6 +4,7 @@
 #include "../interfaces/Renderer.hpp"
 #include "../include/global_include.hpp"
 
+#define MENU_BG "res/menu_bg.png"
 
 class MainMenu : public Renderer {
 

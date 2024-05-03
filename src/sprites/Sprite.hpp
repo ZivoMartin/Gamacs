@@ -12,7 +12,7 @@ public:
 	Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy);
     Sprite(Env* env, const char* text, float fx, float fy);
 	~Sprite();
-    void set_pos(Position pos) override;
+    virtual void set_pos(Position pos) override;
 	Env* get_env() const override;
 	SDL_Renderer* get_ren() const;
 	SDL_Window* get_win() const;

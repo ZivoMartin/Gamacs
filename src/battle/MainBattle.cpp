@@ -34,10 +34,8 @@ void MainBattle::render() {
 	decal_w = w*0.5 - (tile_size*BATTLE_WIDTH)/2;
 	decal_h = GRID_DECAL_TOP*h;
 	for(int i = 0; i < BATTLE_WIDTH; i++)
-		for(int j = 0; j < BATTLE_HEIGHT; j++) {
-			Pown* pown = get(i, j);
-			if (pown != nullptr) pown->update();
-		}
+		for(int j = 0; j < BATTLE_HEIGHT; j++) 
+			if (!is_empty_square(i, j)) get(i, j)->update();
 }
 
 void MainBattle::handdle_keypress() {}
@@ -70,6 +68,10 @@ void MainBattle::set_empty(int i, int j) {
     board[i][j] = nullptr;
 }
 
+void MainBattle::set_empty(Position pos) {
+    board[pos.x()][pos.y()] = nullptr;
+}
+
 Pown* MainBattle::get(int i, int j) const {
 	return board[i][j];
 }
@@ -94,8 +96,21 @@ SDL_Color MainBattle::get_current_square_color(Position pos) {
             return {100, 100, 200, 100};
         else
             return {200, 100, 100, 100};
+	else if (get_select() == Attack)
+		if (!is_empty_square(pos) && get(pos)->is_attackable_by_player())
+			return {100, 255, 100, 100};
+        else
+            return {255, 100, 100, 100};
     else 
         return {100, 100, 100, 100};       
+}
+
+bool MainBattle::is_empty_square(Position pos) const {
+	return get(pos) == nullptr;
+}
+
+bool MainBattle::is_empty_square(int i, int j) const {
+	return get(i, j) == nullptr;
 }
 
 #define EXTRACT_COLOR(c) c.r, c.g, c.b, c.a
@@ -143,6 +158,11 @@ void cancel_click(Button* b) {
 	battle->set_select(Nothing);
 }
 
+void attack_click(Button* b) {
+	MainBattle* battle = extract_battle(b);
+	battle->set_select(Attack);
+}
+
 void MainBattle::set_player_turn() {
 	player_turn = true;
 }
@@ -155,12 +175,11 @@ bool MainBattle::is_player_turn() const {
 	return player_turn;
 }
 
-
 void MainBattle::set_select(Selected select) {
 	this->select = select;
 }
 
-#define NB_BUTTON 3
+#define NB_BUTTON 4
 #define B_SIZE 0.1
 #define BUTTON_SIZE B_SIZE, B_SIZE
 #define BUTTON_Y 1-B_SIZE
@@ -169,8 +188,9 @@ void MainBattle::init_lablib(Lablib* lablib) {
 	set_scene_background(lablib, battle, BATTLE_BG);
 	Button* grid = scene_add_button(battle, 0.5, GRID_DECAL_TOP, 0, 0, "", &b_click_on_grid);
 	button_set_display(grid, &b_display_board);
-	scene_add_button(battle, 0.3, BUTTON_Y, BUTTON_SIZE, "move", &move_click);
-    scene_add_button(battle, 0.5, BUTTON_Y, BUTTON_SIZE, "cancel",&cancel_click);
+	scene_add_button(battle, 0.3, BUTTON_Y, BUTTON_SIZE, "move",  &move_click);
+    scene_add_button(battle, 0.5, BUTTON_Y, BUTTON_SIZE, "cancel", &cancel_click);
+	scene_add_button(battle, 0.7, BUTTON_Y, BUTTON_SIZE, "attack", &attack_click);
 	get_env()->set_scene(battle, this);
 }
 

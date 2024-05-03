@@ -9,6 +9,7 @@ PownPlayer::PownPlayer(Env* env) : PownMovable(env, PLAYER_SHEET), Player(env) {
 	select_actions.resize(NbSelect);
 	select_actions[Nothing] = &PownPlayer::nothing_click;
 	select_actions[Move] = &PownPlayer::move_click;
+	select_actions[Attack] = &PownPlayer::attack_click;
  }
 
 PownPlayer::~PownPlayer() {}
@@ -18,11 +19,16 @@ void PownPlayer::move_click(Position pos) {
 }
 
 void PownPlayer::nothing_click(Position pos) {
-	
+
+}
+
+void PownPlayer::attack_click(Position pos) {
+	attack(1);	
 }
 
 void PownPlayer::click_on_grid(Position pos) {
-	(this->*(select_actions[get_battle()->get_select()]))(pos);
+  	(this->*(select_actions[get_battle()->get_select()]))(pos);
+	get_battle()->set_select(Nothing);
 }
 
 
@@ -40,3 +46,10 @@ void PownPlayer::end_of_turn() {
 	get_battle()->set_select(Nothing);
 }
 
+bool PownPlayer::is_attackable_by_player() const {
+	return false;
+}
+
+bool PownPlayer::is_attackable_by_monster() const {
+	return true;
+}

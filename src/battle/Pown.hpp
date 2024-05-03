@@ -23,7 +23,9 @@ public:
     void inc_md_x(int x);
     void inc_md_y(int y);
     void reset_move_delta();
-    
+    virtual bool is_attackable_by_player() const = 0;
+	virtual bool is_attackable_by_monster() const = 0;
+	
 private:
     Position move_delta = Position(0, 0);
     MainBattle* battle;

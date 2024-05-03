@@ -16,6 +16,7 @@ void MainMenu::handdle_keypress() {}
 
 void MainMenu::init_lablib(Lablib* lablib) {
 	Scene* menu = create_scene(lablib, 1);
-	scene_add_button(menu, 0.2, 0.2, 0.2, 0.2, "Start", go_game);
+	scene_add_button(menu, 0.4, 0.4, 0.2, 0.2, "Start", go_game);
+	set_scene_background(lablib, menu, MENU_BG);
 	get_env()->set_scene(menu, this);
 }

@@ -16,6 +16,7 @@
 typedef enum Selected {
 	Move,
 	Nothing,
+	Attack,
 	NbSelect
 } Selected;
 
@@ -45,6 +46,9 @@ public:
 
 	void set(Pown* p);
     void set_empty(int i, int j);
+	void set_empty(Position pos);
+	bool is_empty_square(Position pos) const;
+	bool is_empty_square(int i, int j) const;
 	Pown* get(int i, int j) const;
     Pown* get(Position p) const;
     PownPlayer* get_player() const;

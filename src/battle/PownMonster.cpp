@@ -7,9 +7,6 @@
 
 PownMonster::PownMonster(Env* env, SpriteSheet monster_sheet) : PownMovable(env, monster_sheet) {
 	set_initial_pos(Position(BASE_POS_MONSTER));
-    for(int i = 0; i<10; i++) {
-        std::cout << get_env()->random(0, 4) << std::endl;
-    }
 }
 
 PownMonster::~PownMonster() {}
@@ -38,4 +35,12 @@ Position PownMonster::random_move() const {
         || get_battle()->get(get_pos() + random) != nullptr)
         random = pos[get_env()->random(0, 3)];
     return random + get_pos();
+}
+
+bool PownMonster::is_attackable_by_player() const {
+	return true;
+}
+
+bool PownMonster::is_attackable_by_monster() const {
+	return false;
 }

@@ -128,3 +128,10 @@ void PownMovable::action() {
     }
     Pown::draw();
 }
+
+
+void PownMovable::set_pos(Position pos) {
+	get_battle()->set_empty(get_pos());
+	Sprite::set_pos(pos);
+	get_battle()->set(this);
+}

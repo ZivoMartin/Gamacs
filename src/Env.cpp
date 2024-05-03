@@ -151,7 +151,6 @@ int Env::win_height() const {
 	return h;
 }
 
-
 void Env::go_game() {
 	lablib_change_scene(lablib, Game);
 }

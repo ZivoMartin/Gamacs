@@ -16,8 +16,11 @@ public:
 	void reset_pos();
 	void nothing_click(Position pos);
 	void move_click(Position pos);
+	void attack_click(Position pos);
 	void your_turn() override;
 	void end_of_turn() override;
+	bool is_attackable_by_monster() const override;
+	bool is_attackable_by_player() const override;
 	
 private:
 	std::vector<void (PownPlayer::*)(Position)> select_actions;

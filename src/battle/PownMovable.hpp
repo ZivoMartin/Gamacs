@@ -22,6 +22,7 @@ public:
     void actualise_walk_timer();
     void reach_square();
 	virtual void move_finished();
+	void set_pos(Position pos) override;
 	bool is_valid_move(Position pos) const;
     bool is_valid_move(Position pos, int* d) const;
 	virtual void your_turn() = 0;
