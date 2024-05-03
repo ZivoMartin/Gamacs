@@ -8,7 +8,7 @@
 #define MAX_KEYCODE 322
 
 class Renderer;
-class Monster;
+class SettingFighter;
 class MainBattle;
 class MainGame;
 
@@ -36,7 +36,7 @@ public:
 	int win_height() const;
 	int get_now() const;
 	Position game_dim() const;
-	void go_battle(SpriteSheet sprite_sheet);
+	void go_battle(SettingFighter* monster_setting);
 	void go_game();
 	void set_scene(Scene* scene, Renderer* renderer);
 	MainBattle* get_battle() const;
@@ -47,8 +47,11 @@ public:
 	void talk_and_inc(Pnj* pnj);
 	void talk_and_reset(Pnj* pnj);
 	int random(int min, int max) const;
-	
+
+    SettingFighter* get_player_setting();
+    
 private:
+    
 	Lablib* lablib;
 	bool running;
 	SDL_Window* w;
@@ -58,8 +61,9 @@ private:
 	std::map<Scene*, Renderer*> renderers;
 	std::map<SDL_Keycode, bool> events;
 	long long unsigned int now = 0;
-
+    
     SDL_Texture* textures[NbSpriteSheet];
+    SettingFighter* player_setting;
 };
 
 #endif

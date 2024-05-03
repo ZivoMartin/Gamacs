@@ -13,7 +13,7 @@ class Pnj : public Static, public MapEntity {
 	
 public:
 
-	Pnj(Env* env, MainGame* game, SpriteSheet sprite_sheet, Position pos, ActionVec actions);
+	Pnj(Env* env, MainGame* game, Kind pnj_kind, Position pos, ActionVec actions);
 	~Pnj();
 	void update() override;
 	void interact_with_player() override;

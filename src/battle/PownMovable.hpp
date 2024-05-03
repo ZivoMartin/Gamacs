@@ -8,12 +8,13 @@
 #define MOTIONLESS -1
 #define REACHED 0
 
+class SettingFighter;
 class Env;
 
 class PownMovable : public Movable, public Pown {
 
 public:
-    PownMovable(Env* env, SpriteSheet sprite_sheet);
+    PownMovable(Env* env, SettingFighter* setting);
     ~PownMovable();
     
     void action() override;
@@ -36,6 +37,7 @@ private:
     Position asked_pos;
     int walk_timer = MOTIONLESS;
     Direction current_dir;
+    SettingFighter* setting;
     std::vector<Position> positions;
 };
 

@@ -4,7 +4,7 @@
 
 
 Static::Static(Env* env, const char* text, float fx, float fy) : Sprite(env, text, fx, fy) {}
-Static::Static(Env* env, SpriteSheet sprite_sheet, float fx, float fy) : Sprite(env, sprite_sheet, fx, fy) {}
+Static::Static(Env* env, Setting* setting, float fx, float fy) : Sprite(env, setting, fx, fy) {}
 Static::~Static() {}
 
 

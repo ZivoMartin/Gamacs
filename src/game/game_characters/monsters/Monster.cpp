@@ -1,10 +1,10 @@
 #include "Monster.hpp"
 #include "../GamePlayer.hpp"
 #include "../../../Env.hpp"
-
+#include "../../../entity_settings/SettingFighter.hpp"
 #define MONSTER_SPEED 1
 
-Monster::Monster(Env* env, SpriteSheet sprite_sheet, Position pos, float w, float h) : Movable(env, sprite_sheet, w, h) {
+Monster::Monster(Env* env, Kind monster_kind, Position pos, float w, float h) : MovableFighter(env, monster_kind, w, h) {
 	set_initial_pos(pos);
 	set_speed(MONSTER_SPEED);
 	set_interactible();
@@ -31,5 +31,5 @@ void Monster::collide(MapEntity* entity) {
 void Monster::collide(GamePlayer* player) {}
 
 void Monster::interact_with_player() {
-	get_env()->go_battle(get_sprite_sheet());
+	get_env()->go_battle(get_setting_fighter());
 }

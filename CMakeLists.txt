@@ -89,7 +89,10 @@ set(SOURCES
         
     src/interfaces/Player.cpp
     src/interfaces/Renderer.cpp
-
+    src/interfaces/MovableFighter.cpp
+    
+    src/entity_settings/Setting.cpp
+    src/entity_settings/SettingFighter.cpp
 )
 
 # Add an executable with the above sources

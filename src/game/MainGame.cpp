@@ -38,7 +38,7 @@ void MainGame::place_monsters() {
 void MainGame::init_pnj() {
 	ActionVec vec;
 	vec.push_back(std::pair(&MainGame::talk_and_inc, &MainGame::stop_inc_action));
-	Pnj* pnj = new Pnj(get_env(), this, GolemSheet, {14, 21}, vec);
+	Pnj* pnj = new Pnj(get_env(), this, KindGolem, {14, 21}, vec);
 	pnj->set_dialog("../res/test_dialog.txt");
 	entities.push_back(pnj);
 }

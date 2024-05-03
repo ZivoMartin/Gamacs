@@ -5,11 +5,11 @@
 
 #include "../../include/global_include.hpp"
 #include "../../interfaces/Player.hpp"
-#include "../../sprites/Movable.hpp"
+#include "../../interfaces/MovableFighter.hpp"
 
 class Env;
 
-class GamePlayer : public Movable, public Player, public MapEntity {
+class GamePlayer : public MovableFighter, public Player, public MapEntity {
 
 public:
     GamePlayer(Env* env);

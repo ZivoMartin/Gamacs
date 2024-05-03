@@ -24,6 +24,7 @@ typedef enum Selected {
 class Pown;
 class PownPlayer;
 class PownMovable;
+class SettingFighter;
 
 class MainBattle : public Renderer {
 
@@ -33,7 +34,7 @@ public:
 	void init_lablib(Lablib* lablib) override;
 	void render() override;
 	void handdle_keypress() override;
-	void fight(SpriteSheet monster);
+	void fight(SettingFighter* monster);
 	
 	SDL_Texture* get_square_txt() const;
 	int get_dw() const;

@@ -12,7 +12,7 @@ class Env;
 class Movable : public Sprite {
 
 public:
-    Movable(Env* env, SpriteSheet sprite_sheet, float fx, float fy);
+    Movable(Env* env, Setting* setting, float fx, float fy);
 	~Movable();
 	virtual void update() override;
 	virtual void action() = 0;

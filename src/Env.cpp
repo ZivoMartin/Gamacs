@@ -3,7 +3,7 @@
 #include "battle/MainBattle.hpp"
 #include "Env.hpp"
 #include "game/game_characters/monsters/Monster.hpp"
-
+#include "entity_settings/SettingFighter.hpp"
 
 Env::Env() {
 	srand(time(NULL));
@@ -11,7 +11,8 @@ Env::Env() {
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
 	running = false;
     init_textures();
-	lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
+    player_setting = new SettingFighter(this, KindPlayer);
+    lablib = lablib_init(this, get_win(), get_ren(), TotalScene);
 	init_renderers();
 }
 
@@ -155,9 +156,13 @@ void Env::go_game() {
 	lablib_change_scene(lablib, Game);
 }
 
-void Env::go_battle(SpriteSheet monster) {
-	battle->fight(monster);
+void Env::go_battle(SettingFighter* monster_setting) {
+	battle->fight(monster_setting);
 	lablib_change_scene(lablib, Battle);
+}
+
+SettingFighter* Env::get_player_setting() {
+    return player_setting;
 }
 
 int Env::random(int min, int max) const {

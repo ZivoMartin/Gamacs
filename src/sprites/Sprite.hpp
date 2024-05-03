@@ -5,11 +5,12 @@
 #include "../interfaces/Updatable.hpp"
 
 class Env;
+class Setting;
 
 class Sprite : virtual public Updatable {
 
 public:
-	Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy);
+	Sprite(Env* env, Setting* setting, float fx, float fy);
     Sprite(Env* env, const char* text, float fx, float fy);
 	~Sprite();
     virtual void set_pos(Position pos) override;
@@ -25,7 +26,10 @@ public:
 	void set_size(int w, int h);
 	SDL_Texture* get_text() const;
 	SpriteSheet get_sprite_sheet() const;
-	
+
+    Setting* get_setting() const;
+    void set_setting(Setting* setting);
+    
 	float fx() const;
 	float fy() const;
 	
@@ -37,6 +41,7 @@ private:
 	SDL_FPoint factors;
 	Position pos;
 	SpriteSheet type_sprite_sheet;
+    Setting* setting;
 
 };
 

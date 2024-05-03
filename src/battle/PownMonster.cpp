@@ -5,7 +5,7 @@
 #define BASE_POS_MONSTER 1, 0
 
 
-PownMonster::PownMonster(Env* env, SpriteSheet monster_sheet) : PownMovable(env, monster_sheet) {
+PownMonster::PownMonster(Env* env, SettingFighter* setting) : PownMovable(env, setting) {
 	set_initial_pos(Position(BASE_POS_MONSTER));
 }
 

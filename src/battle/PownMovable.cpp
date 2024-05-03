@@ -2,11 +2,15 @@
 #include "../Env.hpp"
 #include "MainBattle.hpp"
 
+#include "../entity_settings/SettingFighter.hpp"
+
 #define POWN_SPEED 3
 
-PownMovable::PownMovable(Env* env, SpriteSheet sprite_sheet) : Pown(env->get_battle()),  Movable(env, sprite_sheet, POWN_SIZE) {
+
+PownMovable::PownMovable(Env* env, SettingFighter* setting) : Pown(env->get_battle()),  Movable(env, setting, POWN_SIZE) {
     set_speed(0);
     set_frame_speed(15);
+    this->setting = setting;
  }
 
 PownMovable::~PownMovable() {}

@@ -1,12 +1,12 @@
 #include "Pnj.hpp"
 #include "../../Env.hpp"
 #include "GamePlayer.hpp"
-
+#include "../../entity_settings/Setting.hpp"
 #define ACTION_TIME 30
 #define BASE_FX 0.07
 #define BASE_FY 0.11
 
-Pnj::Pnj(Env* env, MainGame* game, SpriteSheet sprite_sheet, Position pos, ActionVec actions) : Static(env, sprite_sheet, BASE_FX, BASE_FY) {
+Pnj::Pnj(Env* env, MainGame* game, Kind pnj_kind, Position pos, ActionVec actions) : Static(env, new Setting(env, pnj_kind), BASE_FX, BASE_FY) {
 	set_initial_pos(pos);
 	this->actions = actions;
 	this->game = game;

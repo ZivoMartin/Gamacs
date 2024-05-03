@@ -1,12 +1,12 @@
 #include "Sprite.hpp"
 #include "../Env.hpp"
+#include "../entity_settings/Setting.hpp"
 
 #define BASE_WIDTH 60
 #define BASE_HEIGHT 60
 
-Sprite::Sprite(Env* env, SpriteSheet sprite_sheet, float fx, float fy) {
-	this->sprite_sheet = env->get_text(sprite_sheet);
-	this->type_sprite_sheet = sprite_sheet;
+Sprite::Sprite(Env* env, Setting* setting, float fx, float fy) {
+    set_setting(setting);
     init(env, fx, fy);
 }
 
@@ -75,7 +75,15 @@ void Sprite::set_size(int w, int h) {
 }
 
 SDL_Texture* Sprite::get_text() const {
-	return sprite_sheet;
+	return setting->get_text();
+}
+
+Setting* Sprite::get_setting() const {
+    return setting;
+}
+
+void Sprite::set_setting(Setting* setting) {
+    this->setting = setting;
 }
 
 float Sprite::fx() const {
@@ -87,5 +95,5 @@ float Sprite::fy() const {
 }
 
 SpriteSheet Sprite::get_sprite_sheet() const {
-	return type_sprite_sheet;
+	return setting->get_sprite_sheet();
 }

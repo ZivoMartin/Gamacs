@@ -4,7 +4,7 @@
 
 #define PLAYER_START_POS 7, 5
 
-PownPlayer::PownPlayer(Env* env) : PownMovable(env, PLAYER_SHEET), Player(env) {
+PownPlayer::PownPlayer(Env* env) : PownMovable(env, env->get_player_setting()), Player(env) {
 	set_initial_pos(Position(PLAYER_START_POS));
 	select_actions.resize(NbSelect);
 	select_actions[Nothing] = &PownPlayer::nothing_click;

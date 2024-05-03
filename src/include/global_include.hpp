@@ -60,5 +60,10 @@ static const char* sprite_sheet_paths[NbSpriteSheet] = {
     "../res/golem.png"
 };
 
-
+typedef enum Kind {
+    KindOrc,
+    KindPlayer,
+    KindGolem,
+    NbKind
+} Kind;
 #endif

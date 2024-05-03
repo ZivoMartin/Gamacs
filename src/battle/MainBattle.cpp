@@ -204,8 +204,8 @@ PownPlayer* MainBattle::get_player() const {
     return player;
 }
 
-void MainBattle::fight(SpriteSheet monster_sheet) {
-	PownMovable* monster = new PownMonster(get_env(), monster_sheet);
+void MainBattle::fight(SettingFighter* setting_monster) {
+	PownMovable* monster = new PownMonster(get_env(), setting_monster);
 	powns.push_back(monster);
 	set(monster);
 	player->reset_pos();
