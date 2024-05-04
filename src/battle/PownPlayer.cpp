@@ -21,7 +21,14 @@ void PownPlayer::move_click(Position pos) {
 void PownPlayer::nothing_click(Position pos) {}
 
 void PownPlayer::attack_click(Position pos) {
-	attack();
+    Pown* pown = get_battle()->get(pos);
+    if (pown == nullptr) return;
+    SettingAttack* attack_set = get_battle()->get_selected_attack();
+	if (can_attack_with(pos, attack_set) && pown->is_attackable_by_player()) {
+        Movable::attack(1);
+    }
+            
+        
 }
 
 void PownPlayer::click_on_grid(Position pos) {

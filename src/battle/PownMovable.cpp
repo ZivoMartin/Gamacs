@@ -90,11 +90,13 @@ void PownMovable::actualise_walk_timer() {
 void PownMovable::move_finished() {
 	turn_mp -= move_d;
 	walk_timer = MOTIONLESS;
+    get_battle()->set_empty(get_pos());
 	set_pos(Position(asked_pos.x(), asked_pos.y()));
 	reset_move_delta();
 	if (turn_mp == 0) 
         end_of_turn();
 }
+
 
 void PownMovable::end_of_turn() {
     turn_mp = mp;
