@@ -15,6 +15,7 @@ public:
 	
 	int x() const;
 	int y() const;
+	int range_with(Position pos) const;
 	void set_x(int x);
 	void set_y(int y);
 	void inc_x(int dx);
@@ -22,7 +23,7 @@ public:
 	void set_pos(int x, int y);
 	void set_pos(Position p);
 	Position clone();
-    
+	
 
 	Position convert_coord_to_pixels(MainGame* game) const;
 

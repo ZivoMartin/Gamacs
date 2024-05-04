@@ -86,6 +86,7 @@ set(SOURCES
     src/battle/PownMovable.cpp
     src/battle/PownMonster.cpp
     src/battle/PownPlayer.cpp
+    src/battle/BattleSquare.cpp
         
     src/interfaces/Player.cpp
     src/interfaces/Renderer.cpp

@@ -1,5 +1,6 @@
 #include "MovableFighter.hpp"
 #include "../entity_settings/SettingFighter.hpp"
+#include "../entity_settings/SettingAttack.hpp"
 
 MovableFighter::MovableFighter(Env* env, Kind kind, float fx, float fy) : Movable(env, nullptr, fx, fy){
     setting = new SettingFighter(env, kind);
@@ -14,8 +15,9 @@ SettingFighter* MovableFighter::get_setting_fighter() const {
     return setting;
 }
 
-SettingAttack* MovableFighter::get_attack(AttackType attack_type) {
+SettingAttack* MovableFighter::get_attack(AttackType attack_type) const {
     for (SettingAttack* set : setting->get_attacks()) 
         if (set->get_type() == attack_type) return set;
-    
+    fprintf(stderr, "attack not found\n");
+	exit(1);
 }

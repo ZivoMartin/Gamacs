@@ -8,7 +8,7 @@
 #define POWN_SPEED 3
 
 
-PownMovable::PownMovable(Env* env, SettingFighter* setting) : Pown(env->get_battle()),  Movable(env, setting, POWN_SIZE) {
+PownMovable::PownMovable(Env* env, SettingFighter* setting) : Pown(env->get_battle()),  MovableFighter(env, setting, POWN_SIZE) {
     set_speed(0);
     set_frame_speed(15);
     this->setting = setting;
@@ -29,11 +29,11 @@ bool cond_stop(int nb1, int nb2, bool swap) {
 }
 
 bool PownMovable::is_valid_move(Position pos) const {
-	return std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y()) <= turn_mp;
+	return pos.range_with(get_pos()) <= turn_mp;
 }
 
 bool PownMovable::is_valid_move(Position pos, int* d) const {
-	*d = std::abs(pos.x() - get_x()) + std::abs(pos.y() - get_y());
+	*d = pos.range_with(get_pos());
 	return *d <= turn_mp;
 }
 
@@ -136,13 +136,13 @@ void PownMovable::action() {
 
 
 void PownMovable::set_pos(Position pos) {
-	get_battle()->set_empty(get_pos());
+	get_battle()->set_empty(pos);
 	Sprite::set_pos(pos);
 	get_battle()->set(this);
 }
 
 bool PownMovable::can_attack_with(Position pos, SettingAttack* attack) {
-    return true;
+    return pos.range_with(get_pos()) <= attack->get_range();
 }
 
 void PownMovable::attack() {

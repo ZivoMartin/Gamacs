@@ -25,7 +25,8 @@ class Pown;
 class PownPlayer;
 class PownMovable;
 class SettingFighter;
-class SettingFighter;
+class SettingAttack;
+class BattleSquare;
 
 class MainBattle : public Renderer {
 
@@ -47,12 +48,12 @@ public:
 	void click_on_grid();
 
 	void set(Pown* p);
-    void set_empty(int i, int j);
 	void set_empty(Position pos);
 	bool is_empty_square(Position pos) const;
 	bool is_empty_square(int i, int j) const;
 	Pown* get(int i, int j) const;
     Pown* get(Position p) const;
+	BattleSquare* get_square(Position pos) const;
     PownPlayer* get_player() const;
 	Selected get_select() const;
 	void set_select(Selected select);
@@ -63,13 +64,15 @@ public:
 	void disable_player_turn();
     bool is_valid_pos(Position pos) const;
     SDL_Color get_current_square_color(Position pos);
+	void set_selected_attack(SettingAttack* attack);
+	SettingAttack* get_selected_attack();
 	
 private:
 	SDL_Texture* square_text;
 	int decal_w, decal_h, tile_size;
     PownPlayer* player;
 	std::vector<PownMovable*> powns;
-	Pown* board[BATTLE_WIDTH][BATTLE_HEIGHT];
+	BattleSquare* board[BATTLE_WIDTH][BATTLE_HEIGHT];
 	Selected select = Nothing;
 	int current_pown = 0;
 	bool player_turn = false;

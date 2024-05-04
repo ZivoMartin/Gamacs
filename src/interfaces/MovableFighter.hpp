@@ -3,6 +3,7 @@
 
 #include "../sprites/Movable.hpp"
 
+class SettingAttack;
 class SettingFighter;
 
 class MovableFighter : public Movable {
@@ -12,6 +13,7 @@ public:
     MovableFighter(Env* env, SettingFighter* setting, float w, float h);
     SettingFighter* get_setting_fighter() const;
     SettingAttack* get_attack(AttackType attack) const;
+	
 private:
     SettingFighter* setting;
     

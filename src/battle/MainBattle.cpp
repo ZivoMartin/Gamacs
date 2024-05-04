@@ -6,6 +6,7 @@
 #include "PownMonster.hpp"
 #include "Pown.hpp"
 #include "PownMovable.hpp"
+#include "BattleSquare.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
 
@@ -14,18 +15,24 @@ MainBattle::MainBattle(Env* env, Lablib* lablib) : Renderer(env, lablib) {
 	SDL_Surface* surf = IMG_Load(BATTLE_SQUARE_PATH);
 	square_text = SDL_CreateTextureFromSurface(env->get_ren(), surf);
 	SDL_FreeSurface(surf);
-	init_lablib(lablib);
-	
+	init_lablib(lablib);	
 	for(int i = 0; i < BATTLE_WIDTH; i++)
 		for(int j = 0; j < BATTLE_HEIGHT; j++) 
-			set_empty(i, j);
+			board[i][j] = new BattleSquare(this, Position(i, j));
     player = new PownPlayer(env);
 	powns.push_back(player);
 	set((Pown*) player);
 }
 
 MainBattle::~MainBattle() {
+	for(int i = 0; i < BATTLE_WIDTH; i++)
+		for(int j = 0; j < BATTLE_HEIGHT; j++) 
+			delete board[i][j];
 	SDL_DestroyTexture(square_text);
+}
+
+BattleSquare* MainBattle::get_square(Position pos) const {
+	return board[pos.x()][pos.y()];
 }
 
 void MainBattle::render() {
@@ -60,24 +67,16 @@ int MainBattle::get_ts() const {
 	return tile_size;
 }
 
-void MainBattle::set(Pown* p) {
-	if (p != nullptr) board[p->get_pos().x()][p->get_pos().y()] = p;
-}
-
-void MainBattle::set_empty(int i, int j) {
-    board[i][j] = nullptr;
-}
-
-void MainBattle::set_empty(Position pos) {
-    board[pos.x()][pos.y()] = nullptr;
+void MainBattle::set(Pown* pown) {
+	get_square(pown->get_pos())->set_pown(pown);
 }
 
 Pown* MainBattle::get(int i, int j) const {
-	return board[i][j];
+	return get(Position(i, j));
 }
 
 Pown* MainBattle::get(Position pos) const {
-	return board[pos.x()][pos.y()];
+	return get_square(pos)->get_pown();
 }
 
 void b_display_board(Button* grid) {
@@ -90,29 +89,13 @@ void b_display_board(Button* grid) {
 	env->get_battle()->display_board();
 }
 
-SDL_Color MainBattle::get_current_square_color(Position pos) {
-    if (get_select() == Move) 
-        if (get_player()->is_valid_move(pos))
-            return {100, 100, 200, 100};
-        else
-            return {200, 100, 100, 100};
-	else if (get_select() == Attack)
-		if (!is_empty_square(pos) &&
-            get(pos)->is_attackable_by_player() &&
-            get_player()->can_attack_with(pos, selected_attack)) 
-			return {100, 255, 100, 100};
-        else
-            return {255, 100, 100, 100};
-    else 
-        return {100, 100, 100, 100};       
-}
 
 bool MainBattle::is_empty_square(Position pos) const {
-	return get(pos) == nullptr;
+	return get_square(pos)->is_empty();
 }
 
 bool MainBattle::is_empty_square(int i, int j) const {
-	return get(i, j) == nullptr;
+	return is_empty_square(Position(i, j));
 }
 
 #define EXTRACT_COLOR(c) c.r, c.g, c.b, c.a
@@ -123,7 +106,7 @@ void MainBattle::display_board() {
 	SDL_FreeSurface(surf);
 	for(int i = 0; i < BATTLE_WIDTH; i++){
 		for(int j = 0; j < BATTLE_HEIGHT; j++){
-            SDL_SetRenderDrawColor(get_ren(), EXTRACT_COLOR(get_current_square_color(Position(i, j))));
+            SDL_SetRenderDrawColor(get_ren(), EXTRACT_COLOR(get_square(Position(i, j))->get_color()));
 			SDL_Rect r = lablib_init_rect(i*tile_size + decal_w, j*tile_size + decal_h, tile_size);
             SDL_RenderDrawRect(get_ren(), &r);         
             SDL_RenderFillRect(get_ren(), &r);
@@ -136,11 +119,7 @@ void MainBattle::click_on_grid() {
 	SDL_Point p = lablib_get_last_coordinate(lablib);
 	int w = get_env()->win_width(), h = get_env()->win_height();
     Position pos = Position((p.x - decal_w)/tile_size, (p.y - decal_h)/tile_size);
-    Pown* pown = get(pos.x(), pos.y());
-    if (pown == nullptr)
-        click_on_empty_square(pos);
-    else
-        pown->clicked();
+    get_square(pos)->clicked();
     get_player()->click_on_grid(pos);
 }
 
@@ -162,8 +141,18 @@ void cancel_click(Button* b) {
 
 void attack_click(Button* b) {
 	MainBattle* battle = extract_battle(b);
-	battle->set_select(Attack);
-    battle->set_selected_attack(battle->get_player()->get_attack(DefaultAttack));
+	if (battle->is_player_turn()) {
+		battle->set_select(Attack);
+		battle->set_selected_attack(battle->get_player()->get_attack(DefaultAttack));
+	}
+}
+
+void MainBattle::set_empty(Position pos) {
+	get_square(pos)->set_empty();
+}
+
+void MainBattle::set_selected_attack(SettingAttack* attack) {
+	selected_attack = attack;
 }
 
 void MainBattle::set_player_turn() {
@@ -222,4 +211,8 @@ Selected MainBattle::get_select() const {
 void MainBattle::end_of_pown_turn() {
 	current_pown = (current_pown+1)%powns.size();
 	powns[current_pown]->your_turn();
+}
+
+SettingAttack* MainBattle::get_selected_attack() {
+	return selected_attack;
 }

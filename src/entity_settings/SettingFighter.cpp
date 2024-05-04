@@ -27,7 +27,7 @@ int SettingFighter::get_lvl() const {
     return lvl;
 }
 
-std::vector<SettingAttack*> SettingFighter::sprite_attack() const {
+std::vector<SettingAttack*> SettingFighter::get_attacks() const {
     return attacks;
 }
 

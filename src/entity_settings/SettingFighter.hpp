@@ -19,7 +19,7 @@ public:
     int get_max_hp() const;
     int get_current_hp() const;
     int get_lvl() const;
-    std::vector<SettingAttack*> sprite_attack() const;
+    std::vector<SettingAttack*> get_attacks() const;
     
 private:
     int max_hp;

@@ -1,7 +1,7 @@
 #ifndef SAFE_MOVABLE_POWN
 #define SAFE_MOVABLE_POWN
 
-#include "../sprites/Movable.hpp"
+#include "../interfaces/MovableFighter.hpp"
 #include "Pown.hpp"
 
 #define DEFAULT_MP 5
@@ -12,7 +12,7 @@ class SettingAttack;
 class SettingFighter;
 class Env;
 
-class PownMovable : public Movable, public Pown {
+class PownMovable : public MovableFighter, public Pown {
 
 public:
     PownMovable(Env* env, SettingFighter* setting);

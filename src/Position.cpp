@@ -66,3 +66,6 @@ Position Position::convert_coord_to_pixels(MainGame* game) const {
 }
 
 
+int Position::range_with(Position pos) const {
+	return std::abs(x() - pos.x()) + std::abs(y() - pos.y());
+}
