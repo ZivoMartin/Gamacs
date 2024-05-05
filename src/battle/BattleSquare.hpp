@@ -18,7 +18,9 @@ public:
 	Pown* get_pown();
 	void set_pown(Pown* pown);
 	SDL_Color get_color();
-
+	SDL_Color get_color_move();
+    SDL_Color get_color_attack();
+    
 	bool is_empty();
 	void set_empty();
 	void clicked();
