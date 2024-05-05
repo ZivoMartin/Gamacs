@@ -136,6 +136,11 @@ void cancel_click(Button* b) {
 	battle->set_select(Nothing);
 }
 
+void end_click(Button* b) {
+	MainBattle* battle = extract_battle(b);
+	if (battle->is_player_turn()) battle->get_player()->end_of_turn();
+}
+
 void attack_click(Button* b) {
 	MainBattle* battle = extract_battle(b);
 	if (battle->is_player_turn()) {
@@ -168,7 +173,7 @@ void MainBattle::set_select(Selected select) {
 	this->select = select;
 }
 
-#define NB_BUTTON 4
+#define NB_BUTTON 5
 #define B_SIZE 0.1
 #define BUTTON_SIZE B_SIZE, B_SIZE
 #define BUTTON_Y 1-B_SIZE
@@ -177,6 +182,7 @@ void MainBattle::init_lablib(Lablib* lablib) {
 	set_scene_background(lablib, battle, BATTLE_BG);
 	Button* grid = scene_add_button(battle, 0.5, GRID_DECAL_TOP, 0, 0, "", &b_click_on_grid);
 	button_set_display(grid, &b_display_board);
+	scene_add_button(battle, 0.1, BUTTON_Y, BUTTON_SIZE, "end",  &end_click);
 	scene_add_button(battle, 0.3, BUTTON_Y, BUTTON_SIZE, "move",  &move_click);
     scene_add_button(battle, 0.5, BUTTON_Y, BUTTON_SIZE, "cancel", &cancel_click);
 	scene_add_button(battle, 0.7, BUTTON_Y, BUTTON_SIZE, "attack", &attack_click);

@@ -28,7 +28,6 @@ bool cond_stop(int nb1, int nb2, bool swap) {
         return nb1 < nb2;
     else
         return nb1 > nb2;
-    
 }
 
 bool PownMovable::is_valid_move(Position pos) const {
@@ -96,13 +95,22 @@ void PownMovable::move_finished() {
     get_battle()->set_empty(get_pos());
 	set_pos(Position(asked_pos.x(), asked_pos.y()));
 	reset_move_delta();
-	if (turn_mp == 0) 
+	try_to_end_turn();
+}
+
+void PownMovable::try_to_end_turn() {
+	if (turn_mp == 0 && turn_ap == 0) 
         end_of_turn();
 }
 
+void PownMovable::set_ap(int x) {
+	ap = x;
+	turn_ap = ap;
+}
 
 void PownMovable::end_of_turn() {
     turn_mp = mp;
+	turn_ap = ap;
     get_battle()->end_of_pown_turn();
     move_d = 0;
 }
@@ -148,10 +156,12 @@ void PownMovable::set_pos(Position pos) {
 }
 
 bool PownMovable::can_attack_with(Position pos, SettingAttack* attack) {
-    return pos.range_with(get_pos()) <= attack->get_range();
+    return attack->get_cost() <= turn_ap && pos.range_with(get_pos()) <= attack->get_range();
 }
-void PownMovable::attack() {
-    Movable::attack(1);
+void PownMovable::attack(SettingAttack* attack) {
+	turn_ap -= attack->get_cost();
+	try_to_end_turn();
+	Movable::attack(1);
 }
 
 

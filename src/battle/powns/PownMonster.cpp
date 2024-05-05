@@ -1,12 +1,14 @@
 #include "PownMonster.hpp"
 #include "../MainBattle.hpp"
 #include "../../Env.hpp"
-
+#include "../../entity_settings/SettingFighter.hpp"
+#include "../../entity_settings/SettingAttack.hpp"
 #define BASE_POS_MONSTER 1, 0
 
 
 PownMonster::PownMonster(Env* env, SettingFighter* setting) : PownMovable(env, setting) {
 	set_initial_pos(Position(BASE_POS_MONSTER));
+	set_ap(0);
 }
 
 PownMonster::~PownMonster() {}

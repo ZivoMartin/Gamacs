@@ -11,10 +11,14 @@ public:
     int get_damage() const;
     int get_range() const;
     AttackType get_type() const;
+	int get_cost() const;
+	void set_cost(int);
+	
 private:
     int damage;
     int range;
     AttackType type;
+	int cost;
 };
 
 
