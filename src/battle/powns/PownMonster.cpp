@@ -1,6 +1,6 @@
 #include "PownMonster.hpp"
-#include "MainBattle.hpp"
-#include "../Env.hpp"
+#include "../MainBattle.hpp"
+#include "../../Env.hpp"
 
 #define BASE_POS_MONSTER 1, 0
 

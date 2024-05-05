@@ -1,6 +1,6 @@
 #include "PownPlayer.hpp"
-#include "MainBattle.hpp"
-#include "../Env.hpp"
+#include "../MainBattle.hpp"
+#include "../../Env.hpp"
 
 #define PLAYER_START_POS 7, 5
 
@@ -26,9 +26,8 @@ void PownPlayer::attack_click(Position pos) {
     SettingAttack* attack_set = get_battle()->get_selected_attack();
 	if (can_attack_with(pos, attack_set) && pown->is_attackable_by_player()) {
         Movable::attack(1);
-    }
-            
-        
+		pown->get_attacked_by(attack_set);
+    }        
 }
 
 void PownPlayer::click_on_grid(Position pos) {

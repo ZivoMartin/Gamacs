@@ -1,7 +1,7 @@
 #ifndef SAFE_MOVABLE_POWN
 #define SAFE_MOVABLE_POWN
 
-#include "../interfaces/MovableFighter.hpp"
+#include "../../interfaces/MovableFighter.hpp"
 #include "Pown.hpp"
 
 #define DEFAULT_MP 5
@@ -11,6 +11,7 @@
 class SettingAttack;
 class SettingFighter;
 class Env;
+class LifeBar;
 
 class PownMovable : public MovableFighter, public Pown {
 
@@ -33,6 +34,9 @@ public:
 
     bool can_attack_with(Position pos, SettingAttack* attack);
     void attack();
+	LifeBar* get_life_bar();
+	void get_attacked_by(SettingAttack* attack) override;
+	bool is_full_life();
     
 private:
 	int mp = DEFAULT_MP;
@@ -43,6 +47,7 @@ private:
     Direction current_dir;
     SettingFighter* setting;
     std::vector<Position> positions;
+	LifeBar* life_bar;
 };
 
 

@@ -2,7 +2,7 @@
 #include "SettingAttack.hpp"
 
 SettingFighter::SettingFighter(Env* env, Kind kind) : Setting(env, kind) {
-    max_hp = 100;
+    max_hp = 50;
     current_hp = max_hp;
     attacks.push_back(new SettingAttack(DefaultAttack));
 }
@@ -39,5 +39,9 @@ int SettingFighter::inc_lvl(int x) {
 
 void SettingFighter::set_lvl(int x) {
     lvl = x;
+}
+
+void SettingFighter::inc_current_hp(int x) {
+	current_hp += x;
 }
 

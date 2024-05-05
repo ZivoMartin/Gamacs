@@ -14,6 +14,8 @@ public:
 	virtual void render() = 0;
 	virtual void handdle_keypress() = 0;
 	virtual void init_lablib(Lablib* lablib) = 0;
+	int win_width();
+	int win_height();
 	SDL_Window* get_win();
 	SDL_Renderer* get_ren();
 	Lablib* get_lablib();

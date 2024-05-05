@@ -82,12 +82,13 @@ set(SOURCES
     src/main_menu/MainMenu.cpp
     
     src/battle/MainBattle.cpp
-    src/battle/Pown.cpp
-    src/battle/PownMovable.cpp
-    src/battle/PownMonster.cpp
-    src/battle/PownPlayer.cpp
+    src/battle/powns/Pown.cpp
+    src/battle/powns/PownMovable.cpp
+    src/battle/powns/PownMonster.cpp
+    src/battle/powns/PownPlayer.cpp
     src/battle/BattleSquare.cpp
-        
+    src/battle/LifeBar.cpp
+    
     src/interfaces/Player.cpp
     src/interfaces/Renderer.cpp
     src/interfaces/MovableFighter.cpp

@@ -2,7 +2,7 @@
 #define SAFE_PLAYER_POWN
 
 #include "PownMovable.hpp"
-#include "../interfaces/Player.hpp"
+#include "../../interfaces/Player.hpp"
 
 class Env;
 

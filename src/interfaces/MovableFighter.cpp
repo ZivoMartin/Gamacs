@@ -21,3 +21,7 @@ SettingAttack* MovableFighter::get_attack(AttackType attack_type) const {
     fprintf(stderr, "attack not found\n");
 	exit(1);
 }
+
+int MovableFighter::get_current_hp() const {
+	return get_setting_fighter()->get_current_hp();
+}

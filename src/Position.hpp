@@ -4,6 +4,7 @@
 #include "include/global_include.hpp"
 
 class MainGame;
+class MainBattle;
 
 class Position {
 
@@ -23,7 +24,7 @@ public:
 	void set_pos(int x, int y);
 	void set_pos(Position p);
 	Position clone();
-	
+	Position battle_get_screen_coord(MainBattle* battle) const;
 
 	Position convert_coord_to_pixels(MainGame* game) const;
 

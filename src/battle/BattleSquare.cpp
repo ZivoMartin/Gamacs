@@ -1,7 +1,7 @@
 #include "BattleSquare.hpp"
 #include "MainBattle.hpp"
-#include "PownPlayer.hpp"
-#include "Pown.hpp"
+#include "powns/PownPlayer.hpp"
+#include "powns/Pown.hpp"
 
 #define NOTHING nullptr
 

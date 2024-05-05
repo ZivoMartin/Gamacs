@@ -1,9 +1,9 @@
 #include "PownMovable.hpp"
-#include "../Env.hpp"
-#include "MainBattle.hpp"
-
-#include "../entity_settings/SettingFighter.hpp"
-#include "../entity_settings/SettingAttack.hpp"
+#include "../../Env.hpp"
+#include "../MainBattle.hpp"
+#include "../LifeBar.hpp"
+#include "../../entity_settings/SettingFighter.hpp"
+#include "../../entity_settings/SettingAttack.hpp"
 
 #define POWN_SPEED 3
 
@@ -12,9 +12,12 @@ PownMovable::PownMovable(Env* env, SettingFighter* setting) : Pown(env->get_batt
     set_speed(0);
     set_frame_speed(15);
     this->setting = setting;
+	this->life_bar = new LifeBar(env->get_battle(), this);
  }
 
-PownMovable::~PownMovable() {}
+PownMovable::~PownMovable() {
+	delete get_life_bar();
+}
 
 int PownMovable::get_turn_pm() const {
 	return turn_mp;
@@ -134,6 +137,7 @@ void PownMovable::action() {
         move(current_dir);
     }
     Pown::draw();
+	get_life_bar()->draw();
 }
 
 
@@ -146,8 +150,22 @@ void PownMovable::set_pos(Position pos) {
 bool PownMovable::can_attack_with(Position pos, SettingAttack* attack) {
     return pos.range_with(get_pos()) <= attack->get_range();
 }
-
 void PownMovable::attack() {
     Movable::attack(1);
 }
 
+
+LifeBar* PownMovable::get_life_bar() {
+	return life_bar;
+}
+
+void PownMovable::get_attacked_by(SettingAttack* attack) {
+	SettingFighter* set = get_setting_fighter();
+	set->inc_current_hp(-attack->get_damage());
+	get_life_bar()->actualise_hp();
+}
+
+bool PownMovable::is_full_life() {
+	SettingFighter* set  = get_setting_fighter();
+	return set->get_max_hp() == set->get_current_hp();
+}

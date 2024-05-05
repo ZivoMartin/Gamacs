@@ -2,10 +2,10 @@
 #include "../Env.hpp"
 #include "../sprites/Sprite.hpp"
 #include "../interfaces/Player.hpp"
-#include "PownPlayer.hpp"
-#include "PownMonster.hpp"
-#include "Pown.hpp"
-#include "PownMovable.hpp"
+#include "powns/PownPlayer.hpp"
+#include "powns/PownMonster.hpp"
+#include "powns/Pown.hpp"
+#include "powns/PownMovable.hpp"
 #include "BattleSquare.hpp"
 
 #define SQUARE_COLOR 100, 200, 100, 100
@@ -36,7 +36,7 @@ BattleSquare* MainBattle::get_square(Position pos) const {
 }
 
 void MainBattle::render() {
-	int w = get_env()->win_width(), h = get_env()->win_height();
+	int w = win_width(), h = win_height();
 	tile_size = std::min(w, h) * BATTLE_TILE_SIZE;
 	decal_w = w*0.5 - (tile_size*BATTLE_WIDTH)/2;
 	decal_h = GRID_DECAL_TOP*h;
@@ -101,9 +101,6 @@ bool MainBattle::is_empty_square(int i, int j) const {
 #define EXTRACT_COLOR(c) c.r, c.g, c.b, c.a
 
 void MainBattle::display_board() {
-	SDL_Surface* surf = TTF_RenderText_Blended(lablib_get_font(get_env()->get_lablib()), "", lablib_create_color(0, 0, 0, 255));
-	SDL_Texture* text = SDL_CreateTextureFromSurface(get_ren(), surf);
-	SDL_FreeSurface(surf);
 	for(int i = 0; i < BATTLE_WIDTH; i++){
 		for(int j = 0; j < BATTLE_HEIGHT; j++){
             SDL_SetRenderDrawColor(get_ren(), EXTRACT_COLOR(get_square(Position(i, j))->get_color()));
@@ -117,7 +114,7 @@ void MainBattle::display_board() {
 void MainBattle::click_on_grid() {
 	Lablib* lablib = get_lablib();
 	SDL_Point p = lablib_get_last_coordinate(lablib);
-	int w = get_env()->win_width(), h = get_env()->win_height();
+	int w = win_width(), h = win_height();
     Position pos = Position((p.x - decal_w)/tile_size, (p.y - decal_h)/tile_size);
     get_square(pos)->clicked();
     get_player()->click_on_grid(pos);

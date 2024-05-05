@@ -1,5 +1,5 @@
 #include "Pown.hpp"
-#include "MainBattle.hpp"
+#include "../MainBattle.hpp"
 
 Pown::Pown(MainBattle* battle) {
     this->battle = battle;
@@ -24,11 +24,11 @@ void Pown::inc_md_x(int x) {
 }
 
 void Pown::draw() {
-    int ts = battle->get_ts();
+    Position pixel_pos = get_pos().battle_get_screen_coord(battle);
     Updatable::draw(
-        battle->get_dw()+get_pos().x() * ts + ts/2 - get_width()/2 + move_delta.x(),
-        battle->get_dh()+get_pos().y() * ts - get_height()/3 + move_delta.y()
-    );
+		pixel_pos.x() + get_battle()->get_ts()/2 - get_width()/2 + move_delta.x(),
+		pixel_pos.y() - get_height()/3 + move_delta.y()
+   );
 }
 
 void Pown::reset_move_delta() {
@@ -44,3 +44,4 @@ Position Pown::get_move_delta() const {
     return move_delta;
 }
 
+void Pown::get_attacked_by(SettingAttack* attack) {}
