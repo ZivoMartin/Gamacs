@@ -24,3 +24,11 @@ bool Renderer::is_active(SDL_Keycode c) {
 Lablib* Renderer::get_lablib() {
 	return get_env()->get_lablib();
 }
+
+int Renderer::win_width() {
+	return get_env()->win_width();
+}
+
+int Renderer::win_height() {
+	return get_env()->win_height();
+}

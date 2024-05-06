@@ -1,6 +1,7 @@
 #include "Position.hpp"
 #include "game/MainGame.hpp"
 #include "game/game_characters/GamePlayer.hpp"
+#include "battle/MainBattle.hpp"
 
 Position::Position() {
 	set_pos(0, 0);
@@ -68,4 +69,12 @@ Position Position::convert_coord_to_pixels(MainGame* game) const {
 
 int Position::range_with(Position pos) const {
 	return std::abs(x() - pos.x()) + std::abs(y() - pos.y());
+}
+
+Position Position::battle_get_screen_coord(MainBattle* battle) const {
+	int ts = battle->get_ts();
+    return Position(
+        battle->get_dw()+x() * ts,
+        battle->get_dh()+y() * ts
+    );
 }

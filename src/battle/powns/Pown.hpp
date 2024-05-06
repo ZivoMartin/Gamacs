@@ -1,12 +1,13 @@
 #ifndef SAFE_POWN
 #define SAFE_POWN
 
-#include "../include/global_include.hpp"
-#include "../interfaces/Updatable.hpp"
+#include "../../include/global_include.hpp"
+#include "../../interfaces/Updatable.hpp"
 
 #define POWN_SIZE 0.1, 0.12
 
 class MainBattle;
+class SettingAttack;
 
 class Pown : virtual public Updatable {
     
@@ -17,6 +18,7 @@ public:
 	void set_initial_pos(Position p) override;
     void draw() override;
     void clicked() override;
+	virtual void get_attacked_by(SettingAttack* attack);
     
     MainBattle* get_battle() const;
     Position get_move_delta() const;

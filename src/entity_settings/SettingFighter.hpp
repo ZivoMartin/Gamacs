@@ -15,7 +15,8 @@ public:
     
     int inc_lvl(int);
     void set_lvl(int);
-    
+    void inc_current_hp(int);
+	
     int get_max_hp() const;
     int get_current_hp() const;
     int get_lvl() const;

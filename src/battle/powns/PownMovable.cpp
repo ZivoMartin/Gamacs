@@ -1,9 +1,9 @@
 #include "PownMovable.hpp"
-#include "../Env.hpp"
-#include "MainBattle.hpp"
-
-#include "../entity_settings/SettingFighter.hpp"
-#include "../entity_settings/SettingAttack.hpp"
+#include "../../Env.hpp"
+#include "../MainBattle.hpp"
+#include "../LifeBar.hpp"
+#include "../../entity_settings/SettingFighter.hpp"
+#include "../../entity_settings/SettingAttack.hpp"
 
 #define POWN_SPEED 3
 
@@ -12,9 +12,12 @@ PownMovable::PownMovable(Env* env, SettingFighter* setting) : Pown(env->get_batt
     set_speed(0);
     set_frame_speed(15);
     this->setting = setting;
+	this->life_bar = new LifeBar(env->get_battle(), this);
  }
 
-PownMovable::~PownMovable() {}
+PownMovable::~PownMovable() {
+	delete get_life_bar();
+}
 
 int PownMovable::get_turn_pm() const {
 	return turn_mp;
@@ -25,7 +28,6 @@ bool cond_stop(int nb1, int nb2, bool swap) {
         return nb1 < nb2;
     else
         return nb1 > nb2;
-    
 }
 
 bool PownMovable::is_valid_move(Position pos) const {
@@ -93,13 +95,25 @@ void PownMovable::move_finished() {
     get_battle()->set_empty(get_pos());
 	set_pos(Position(asked_pos.x(), asked_pos.y()));
 	reset_move_delta();
-	if (turn_mp == 0) 
+	try_to_end_turn();
+}
+
+void PownMovable::try_to_end_turn() {
+	if (turn_mp == 0 && turn_ap == 0) 
         end_of_turn();
 }
 
+<<<<<<< HEAD:src/battle/PownMovable.cpp
+=======
+void PownMovable::set_ap(int x) {
+	ap = x;
+	turn_ap = ap;
+}
+>>>>>>> 710eb1490410248403c14bb776e1afc5ae2210ef:src/battle/powns/PownMovable.cpp
 
 void PownMovable::end_of_turn() {
     turn_mp = mp;
+	turn_ap = ap;
     get_battle()->end_of_pown_turn();
     move_d = 0;
 }
@@ -134,6 +148,7 @@ void PownMovable::action() {
         move(current_dir);
     }
     Pown::draw();
+	get_life_bar()->draw();
 }
 
 
@@ -144,10 +159,26 @@ void PownMovable::set_pos(Position pos) {
 }
 
 bool PownMovable::can_attack_with(Position pos, SettingAttack* attack) {
-    return pos.range_with(get_pos()) <= attack->get_range();
+    return attack->get_cost() <= turn_ap && pos.range_with(get_pos()) <= attack->get_range();
+}
+void PownMovable::attack(SettingAttack* attack) {
+	turn_ap -= attack->get_cost();
+	try_to_end_turn();
+	Movable::attack(1);
 }
 
-void PownMovable::attack() {
-    Movable::attack(1);
+
+LifeBar* PownMovable::get_life_bar() {
+	return life_bar;
 }
 
+void PownMovable::get_attacked_by(SettingAttack* attack) {
+	SettingFighter* set = get_setting_fighter();
+	set->inc_current_hp(-attack->get_damage());
+	get_life_bar()->actualise_hp();
+}
+
+bool PownMovable::is_full_life() {
+	SettingFighter* set  = get_setting_fighter();
+	return set->get_max_hp() == set->get_current_hp();
+}

@@ -13,6 +13,7 @@ public:
     MovableFighter(Env* env, SettingFighter* setting, float w, float h);
     SettingFighter* get_setting_fighter() const;
     SettingAttack* get_attack(AttackType attack) const;
+	int get_current_hp() const;
 	
 private:
     SettingFighter* setting;

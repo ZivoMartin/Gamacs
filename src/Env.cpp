@@ -9,7 +9,7 @@
 Env::Env() {
 	srand(time(NULL));
 	cc(SDL_Init(SDL_INIT_VIDEO));
-    cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_RESIZABLE, &this->w, &this->ren));
+    cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_FULLSCREEN, &this->w, &this->ren));
 	running = false;
     init_textures();
     init_attacks();
