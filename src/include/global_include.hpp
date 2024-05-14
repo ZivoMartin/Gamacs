@@ -2,7 +2,9 @@
 #define SAFE_MAIN_INCLUDE
 
 extern "C" {
-	#include "../../Lablib/include/settings.h"	
+	#include "../../Lablib/include/settings.h"
+	void iris_new_request(const char* req);
+	void iris_load_file(const char* path);
 }
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

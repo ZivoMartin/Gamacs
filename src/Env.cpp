@@ -8,13 +8,7 @@
 #include "include/sprite_paths.hpp"
 
 
-extern void iris_new_request(const char* req);
-extern void iris_load_file(const char* path);
-
-
 Env::Env() {
-	// std::string path("/home/martin/Travail/Gamacs/Iris/demo.sql");
-	// iris_load_file(path.c_str());
 	srand(time(NULL));
 	cc(SDL_Init(SDL_INIT_VIDEO));
     cc(SDL_CreateWindowAndRenderer(800, 600, SDL_WINDOW_FULLSCREEN, &this->w, &this->ren));

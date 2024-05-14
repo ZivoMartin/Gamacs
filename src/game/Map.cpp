@@ -7,12 +7,12 @@ using namespace std;
 #include "MainGame.hpp"
 #include "../Env.hpp"
 
-#define ROCK_IMG_PATH "../res/rock_ground.png"
-#define LIGHT_GRASS_IMG_PATH "../res/light_grass.png"
-#define DARK_GRASS_IMG_PATH "../res/dark_grass.png"
-#define LIGHT_GRASS_S_IMG_PATH "../res/light_grassSouth.png"
-#define LIGHT_GRASS_N_IMG_PATH "../res/light_grassNorth.png"
-#define MAP_FILE_PATH "../res/map.txt"
+#define ROCK_IMG_PATH "res/rock_ground.png"
+#define LIGHT_GRASS_IMG_PATH "res/light_grass.png"
+#define DARK_GRASS_IMG_PATH "res/dark_grass.png"
+#define LIGHT_GRASS_S_IMG_PATH "res/light_grassSouth.png"
+#define LIGHT_GRASS_N_IMG_PATH "res/light_grassNorth.png"
+#define MAP_FILE_PATH "res/map.txt"
 
 Map::Map(MainGame* game) {
 	this->game = game;
