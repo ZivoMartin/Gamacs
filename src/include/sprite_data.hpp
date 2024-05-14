@@ -2,6 +2,7 @@
 #define SPRITE_DATA_SAFE
 
 
+#define NB_SPRITE_PATH 4
 #define SPRITE_DECALL_X 34
 #define SPRITE_DECALL_Y 13
 #define SPRITE_W 30

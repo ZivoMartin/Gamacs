@@ -2,7 +2,6 @@
 #define ENV_SAFE
 
 #include "include/global_include.hpp"
-#include "include/sprite_paths.hpp"
 
 #define BACKGROUND_COLOR 100, 80, 160, 255
 
@@ -67,7 +66,7 @@ private:
 	long long unsigned int now = 0;
 
     SettingAttack* attacks[NbAttack];
-    SDL_Texture* textures[NB_SPRITE_PATH];
+    SDL_Texture* textures[4];
     SettingFighter* player_setting;
 };
 

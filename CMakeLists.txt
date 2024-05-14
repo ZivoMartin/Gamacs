@@ -57,6 +57,8 @@ add_library(lablib
     Lablib/lib/input.c
 )
 
+        
+
 include_directories(${SDL2_ALL_INC})
     
 set(SOURCES

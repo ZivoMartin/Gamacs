@@ -103,13 +103,11 @@ void PownMovable::try_to_end_turn() {
         end_of_turn();
 }
 
-<<<<<<< HEAD:src/battle/PownMovable.cpp
-=======
+
 void PownMovable::set_ap(int x) {
 	ap = x;
 	turn_ap = ap;
 }
->>>>>>> 710eb1490410248403c14bb776e1afc5ae2210ef:src/battle/powns/PownMovable.cpp
 
 void PownMovable::end_of_turn() {
     turn_mp = mp;
